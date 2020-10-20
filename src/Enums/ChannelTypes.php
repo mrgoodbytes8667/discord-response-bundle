@@ -4,13 +4,24 @@
 namespace Bytes\DiscordResponseBundle\Enums;
 
 
+use BadMethodCallException;
+use Spatie\Enum\Enum;
+
 /**
  * Class ChannelTypes
  * @package Bytes\DiscordResponseBundle\Enums
  *
- * @todo Refactor to be spatie/enum
+ * @method static self guildText() a text channel within a server
+ * @method static self dm() a direct message between users
+ * @method static self guildVoice() a voice channel within a server
+ * @method static self groupDm() a direct message between multiple users
+ * @method static self guildCategory() an organizational category that contains up to 50 channels
+ * @method static self guildNews() a channel that users can follow and crosspost into their own server
+ * @method static self guildStore() a channel in which game developers can sell their game on Discord
+ *
+ * @link https://github.com/spatie/enum
  */
-class ChannelTypes
+class ChannelTypes extends Enum
 {
     /**
      * a text channel within a server
@@ -47,79 +58,54 @@ class ChannelTypes
      */
     const GUILD_STORE = 6;
 
-
-    /**
-     * @return int[]
-     */
-    public static function all()
-    {
-        return [
-            static::GUILD_TEXT,
-            static::DM,
-            static::GUILD_VOICE,
-            static::GROUP_DM,
-            static::GUILD_CATEGORY,
-            static::GUILD_NEWS,
-            static::GUILD_STORE,
-        ];
-    }
-
-    /**
-     * @param int $value
-     * @return string|null
-     */
-    public static function getName($value)
-    {
-        return static::allNames()[$value];
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function allNames()
-    {
-        $return[0] = 'GUILD_TEXT';
-        $return[1] = 'DM';
-        $return[2] = 'GUILD_VOICE';
-        $return[3] = 'GROUP_DM';
-        $return[4] = 'GUILD_CATEGORY';
-        $return[5] = 'GUILD_NEWS';
-        $return[6] = 'GUILD_STORE';
-        return $return;
-    }
-
     /**
      * @param string $value
-     * @return int|null
+     * @return ChannelTypes|null
+     * @throws BadMethodCallException
      */
     public static function getFromDiscordJS(string $value)
     {
-        switch ($value)
-        {
+        switch ($value) {
             case 'dm':
-                return static::DM;
+                return new self(static::DM);
                 break;
             case 'text':
-                return static::GUILD_TEXT;
+                return new self(static::GUILD_TEXT);
                 break;
             case 'voice':
-                return static::GUILD_VOICE;
+                return new self(static::GUILD_VOICE);
                 break;
             case 'category':
-                return static::GUILD_CATEGORY;
+                return new self(static::GUILD_CATEGORY);
                 break;
             case 'news':
-                return static::GUILD_NEWS;
+                return new self(static::GUILD_NEWS);
                 break;
             case 'store':
-                return static::GUILD_STORE;
+                return new self(static::GUILD_STORE);
                 break;
             case 'unknown':
-                return -1;
+                return new self(-1);
                 break;
             default:
                 return null;
                 break;
         }
+    }
+
+    /**
+     * @return int[]
+     */
+    protected static function values(): array
+    {
+        return [
+            'guildText' => 0,
+            'dm' => 1,
+            'guildVoice' => 2,
+            'groupDm' => 3,
+            'guildCategory' => 4,
+            'guildNews' => 5,
+            'guildStore' => 6,
+        ];
     }
 }

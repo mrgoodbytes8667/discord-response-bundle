@@ -143,7 +143,7 @@ class Channel implements ErrorInterface
     public function setType($type)
     {
         if (!is_numeric($type)) {
-            $type = ChannelTypes::getFromDiscordJS($type);
+            $type = ChannelTypes::getFromDiscordJS($type)->value;
         }
         $this->type = $type;
         return $this;
