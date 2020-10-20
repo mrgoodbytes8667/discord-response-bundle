@@ -4,10 +4,10 @@
 namespace Bytes\DiscordResponseBundle\Objects;
 
 
-use App\Objects\AccessTokenInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\TokenTrait;
+use Bytes\Response\Common\Interfaces\AccessTokenInterface;
 
 /**
  * Class Token
