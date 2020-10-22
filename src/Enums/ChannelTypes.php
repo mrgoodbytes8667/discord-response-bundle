@@ -5,7 +5,7 @@ namespace Bytes\DiscordResponseBundle\Enums;
 
 
 use BadMethodCallException;
-use Spatie\Enum\Enum;
+use Bytes\EnumSerializerBundle\Enums\Enum;
 
 /**
  * Class ChannelTypes

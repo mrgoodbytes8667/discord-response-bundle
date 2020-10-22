@@ -4,7 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Enums;
 
 
-use Spatie\Enum\Enum;
+use Bytes\EnumSerializerBundle\Enums\Enum;
 
 /**
  * Class OAuthPrompts

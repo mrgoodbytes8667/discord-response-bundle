@@ -4,9 +4,8 @@
 namespace Bytes\DiscordResponseBundle\Enums;
 
 
-
+use Bytes\EnumSerializerBundle\Enums\Enum;
 use Illuminate\Support\Arr;
-use Spatie\Enum\Enum;
 
 /**
  * Class OAuthScopes
