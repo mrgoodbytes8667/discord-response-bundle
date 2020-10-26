@@ -39,6 +39,40 @@ class OAuthScopes extends Enum
 {
 
     /**
+     * @param mixed ...$scopes
+     * @return string
+     */
+    public static function buildOAuthString(...$scopes)
+    {
+        return implode(' ', Arr::flatten($scopes));
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getUserScopes()
+    {
+        return [
+            static::IDENTIFY()->value,
+            static::CONNECTIONS()->value,
+            static::GUILDS()->value,
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getBotScopes()
+    {
+        return [
+            static::IDENTIFY()->value,
+            static::CONNECTIONS()->value,
+            static::GUILDS()->value,
+            static::BOT()->value
+        ];
+    }
+
+    /**
      * @return string[]
      */
     protected static function values(): array
@@ -92,40 +126,6 @@ class OAuthScopes extends Enum
             'RELATIONSHIPS_READ' => 'RELATIONSHIPS_READ',
             'ACTIVITIES_READ' => 'ACTIVITIES_READ',
             'ACTIVITIES_WRITE' => 'ACTIVITIES_WRITE',
-        ];
-    }
-
-    /**
-     * @param mixed ...$scopes
-     * @return string
-     */
-    public static function buildOAuthString(...$scopes)
-    {
-        return implode(' ', Arr::flatten($scopes));
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getUserScopes()
-    {
-        return [
-            static::IDENTIFY()->value,
-            static::CONNECTIONS()->value,
-            static::GUILDS()->value,
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getBotScopes()
-    {
-        return [
-            static::IDENTIFY()->value,
-            static::CONNECTIONS()->value,
-            static::GUILDS()->value,
-            static::BOT()->value
         ];
     }
 }
