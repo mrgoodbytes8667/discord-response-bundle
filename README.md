@@ -1,6 +1,6 @@
 # discord-response-bundle
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/mrgoodbytes8667/discord-response-bundle?style=flat)](https://packagist.org/packages/mrgoodbytes8667/discord-response-bundle)
-![Packagist Version](https://img.shields.io/packagist/v/mrgoodbytes8667/discord-response-bundle?style=flat)
+[![Packagist Version](https://img.shields.io/packagist/v/mrgoodbytes8667/discord-response-bundle?style=flat)](https://packagist.org/packages/mrgoodbytes8667/discord-response-bundle)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mrgoodbytes8667/discord-response-bundle/release?style=flat&label=stable)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mrgoodbytes8667/discord-response-bundle/tests?style=flat)
 ![Packagist License](https://img.shields.io/packagist/l/mrgoodbytes8667/discord-response-bundle?style=flat)    
