@@ -88,7 +88,6 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  * @method static self sportsGamesHobbiesAmericanFootball() 🏈
  * @method static self sportsGamesHobbiesBasketballAndHoop() 🏀
  * @method static self sportsGamesHobbiesSoccerBall() ⚽
- * @method static self sportsGamesHobbiesBaseball() ⚾
  * @method static self sportsGamesHobbiesTennisRacquetAndBall() 🎾
  * @method static self sportsGamesHobbiesBilliards() 🎱
  * @method static self sportsGamesHobbiesRugbyFootball() 🏉
@@ -273,7 +272,6 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  * @method static self symbolsNoEntry() ⛔
  * @method static self symbolsBlackUniversalRecyclingSymbol() ♻
  * @method static self symbolsDiamondShapeWithADotInside() 💠
- * @method static self symbolsDoubleCurlyLoop() ➿
  * @method static self otherPineDecoration() 🎍
  * @method static self otherJapaneseDolls() 🎎
  * @method static self otherSchoolSatchel() 🎒
@@ -343,9 +341,6 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  * @method static self otherCrossMark() ❌
  * @method static self otherHeavyLargeCircle() ⭕
  * @method static self otherHeavyMultiplicationX() ✖
- * @method static self otherHeavyPlusSign() ➕
- * @method static self otherHeavyMinusSign() ➕
- * @method static self otherHeavyDivisionSign() ➗
  * @method static self otherBlackSpadeSuit() ♠
  * @method static self otherBlackHeartSuit() ♥
  * @method static self otherBlackClubSuit() ♣
@@ -354,7 +349,6 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  * @method static self otherBallotBoxWithCheck() ☑
  * @method static self otherRadioButton() 🔘
  * @method static self otherLinkSymbol() 🔗
- * @method static self otherCurlyLoop() ➰
  * @method static self otherWavyDash() 〰
  * @method static self otherPartAlternationMark() 〽
  * @method static self otherTridentEmblem() 🔱
@@ -486,7 +480,6 @@ class Emojis extends Enum
             'sportsGamesHobbiesAmericanFootball' => '🏈',
             'sportsGamesHobbiesBasketballAndHoop' => '🏀',
             'sportsGamesHobbiesSoccerBall' => '⚽',
-            'sportsGamesHobbiesBaseball' => '⚾',
             'sportsGamesHobbiesTennisRacquetAndBall' => '🎾',
             'sportsGamesHobbiesBilliards' => '🎱',
             'sportsGamesHobbiesRugbyFootball' => '🏉',
@@ -671,7 +664,6 @@ class Emojis extends Enum
             'symbolsNoEntry' => '⛔',
             'symbolsBlackUniversalRecyclingSymbol' => '♻',
             'symbolsDiamondShapeWithADotInside' => '💠',
-            'symbolsDoubleCurlyLoop' => '➿',
             'otherPineDecoration' => '🎍',
             'otherJapaneseDolls' => '🎎',
             'otherSchoolSatchel' => '🎒',
@@ -741,9 +733,6 @@ class Emojis extends Enum
             'otherCrossMark' => '❌',
             'otherHeavyLargeCircle' => '⭕',
             'otherHeavyMultiplicationX' => '✖',
-            'otherHeavyPlusSign' => '➕',
-            'otherHeavyMinusSign' => '➕',
-            'otherHeavyDivisionSign' => '➗',
             'otherBlackSpadeSuit' => '♠',
             'otherBlackHeartSuit' => '♥',
             'otherBlackClubSuit' => '♣',
@@ -752,7 +741,6 @@ class Emojis extends Enum
             'otherBallotBoxWithCheck' => '☑',
             'otherRadioButton' => '🔘',
             'otherLinkSymbol' => '🔗',
-            'otherCurlyLoop' => '➰',
             'otherWavyDash' => '〰',
             'otherPartAlternationMark' => '〽',
             'otherTridentEmblem' => '🔱',
