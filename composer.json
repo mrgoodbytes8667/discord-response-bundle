@@ -12,8 +12,10 @@
         "symfony/dependency-injection": "^5.1",
         "symfony/framework-bundle": "^5.1",
         "symfony/messenger": "^5.1",
+        "symfony/polyfill-uuid": "^1.20",
         "symfony/serializer": "^5.1",
-        "symfony/string": "^5.1"
+        "symfony/string": "^5.1",
+        "symfony/validator": "^5.1"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.1",
