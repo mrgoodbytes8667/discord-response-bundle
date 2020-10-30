@@ -7,18 +7,22 @@ namespace Bytes\DiscordResponseBundle\Objects\Message;
 /**
  * Class AllowedMentions
  * @package Bytes\DiscordResponseBundle\Objects\Message
+ *
+ * Arrays must be initialized to null or the PropertyAccessor component will fail to serialize.
+ * The property "AllowedMentions::$roles" is not readable because it is typed "array". You should initialize it or
+ * declare a default value instead.
  */
 class AllowedMentions
 {
     /**
      * @var string[]|null
      */
-    private ?array $parse;
+    private ?array $parse = null;
 
     /**
      * @var string[]|null
      */
-    private ?array $roles;
+    private ?array $roles = null;
 
     /**
      * @return string[]|null
