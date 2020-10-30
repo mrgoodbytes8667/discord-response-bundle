@@ -34,9 +34,14 @@ class TestRolesSerializationCase extends TestSerializationCase
     {
         $roles = [];
         for ($i = 0; $i <= $max; $i++) {
-            $roles[] = md5($this->faker->text(30));
+            $roles[] = $this->generateFakeRole();
         }
         return $roles;
+    }
+
+    protected function generateFakeRole()
+    {
+        return md5($this->faker->text(30));
     }
 
     /**

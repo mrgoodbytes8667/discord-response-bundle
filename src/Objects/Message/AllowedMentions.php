@@ -3,6 +3,7 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Message;
 
+use Illuminate\Support\Arr;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -60,12 +61,12 @@ class AllowedMentions
     }
 
     /**
-     * @param string[]|null $roles
+     * @param mixed|null $roles
      * @return $this
      */
-    public function setRoles(?array $roles): self
+    public function setRoles($roles): self
     {
-        $this->roles = $roles;
+        $this->roles = Arr::wrap($roles);
         return $this;
     }
 
@@ -88,11 +89,11 @@ class AllowedMentions
     }
 
     /**
-     * @param array|null $roles
+     * @param mixed|null $roles
      * @param array|null $parse
      * @return static
      */
-    public static function create(?array $roles = null, ?array $parse = null)
+    public static function create($roles = null, ?array $parse = null)
     {
         $hasRoles = !empty($roles);
         $hasParse = !empty($parse);
@@ -112,12 +113,12 @@ class AllowedMentions
     }
 
     /**
-     * @param array $roles
+     * @param mixed $roles
      * @return static
      */
-    public static function createForRoles(array $roles)
+    public static function createForRoles($roles)
     {
-        return static::create($roles);
+        return static::create(Arr::wrap($roles));
     }
 
     /**

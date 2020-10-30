@@ -64,6 +64,19 @@ class AllowedMentionsTest extends TestRolesSerializationCase
 
             $this->assertEquals($manual, $static);
         }
+
+        $role = $this->generateFakeRole();
+
+        $manual = new AllowedMentions();
+        $manual->setRoles($role);
+
+        $static = AllowedMentions::create($role);
+
+        $this->assertEquals($manual, $static);
+
+        $static = AllowedMentions::createForRoles($role);
+
+        $this->assertEquals($manual, $static);
     }
 
     public function testCreateWithParse()
