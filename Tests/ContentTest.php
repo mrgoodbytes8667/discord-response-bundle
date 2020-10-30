@@ -16,12 +16,8 @@ use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
  * Class ContentTest
  * @package Bytes\DiscordResponseBundle\Tests
  */
-class ContentTest extends TestSerializationCase
+class ContentTest extends TestRolesSerializationCase
 {
-    /**
-     * @var Generator
-     */
-    private Generator $faker;
 
     public function testSerializeEveryone()
     {
@@ -44,17 +40,7 @@ class ContentTest extends TestSerializationCase
      */
     protected function generateFakeContentClass(?array $roles = null, ?array $parse = null)
     {
-        $hasRoles = !empty($roles);
-        $hasParse = !empty($parse);
-
-        $allowedMentions = new AllowedMentions();
-        if (!$hasRoles && !$hasParse) {
-            $allowedMentions->setParse(['everyone']);
-        } elseif ($hasParse) {
-            $allowedMentions->setParse($parse);
-        } else {
-            $allowedMentions->setRoles($roles);
-        }
+        $allowedMentions = $this->generateFakeAllowedMentionsClass($roles, $parse);
 
         $content = new Content();
         $content->setEmbed($this->generateFakeEmbed());
@@ -100,7 +86,7 @@ class ContentTest extends TestSerializationCase
             'embed' => $content->getEmbed(),
             'allowed_mentions' => []
         ];
-        if (!empty($content->getAllowedMentions()->getParse())) {
+        if (!is_null($content->getAllowedMentions()->getParse())) {
             $c['allowed_mentions']['parse'] = $content->getAllowedMentions()->getParse();
         }
         if (!empty($content->getAllowedMentions()->getRoles())) {
@@ -116,6 +102,39 @@ class ContentTest extends TestSerializationCase
         $serializer = $this->createSerializer();
 
         $content = $this->generateFakeContentClass();
+
+        $object = $serializer->serialize($content, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
+
+        $de = $serializer->deserialize($object, Content::class, 'json');
+
+        $this->assertEquals($content, $de);
+    }
+
+    public function testSerializeEmptyParse()
+    {
+        $serializer = $this->createSerializer();
+
+        $content = $this->generateFakeContentClass();
+        $allowedMentions = $content->getAllowedMentions();
+        $allowedMentions->setParse([]);
+        $content->setAllowedMentions($allowedMentions);
+
+        $object = $serializer->serialize($content, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
+
+        $c = $this->generateContentArrayFromContent($content);
+
+        $manual = $serializer->serialize($c, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
+        $this->assertEquals($manual, $object);
+    }
+
+    public function testDeserializeEmptyParse()
+    {
+        $serializer = $this->createSerializer();
+
+        $content = $this->generateFakeContentClass();
+        $allowedMentions = $content->getAllowedMentions();
+        $allowedMentions->setParse([]);
+        $content->setAllowedMentions($allowedMentions);
 
         $object = $serializer->serialize($content, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
 
@@ -152,31 +171,6 @@ class ContentTest extends TestSerializationCase
             $de = $serializer->deserialize($object, Content::class, 'json');
 
             $this->assertEquals($content, $de);
-        }
-    }
-
-    /**
-     * @param int $max
-     * @return string[]
-     */
-    protected function generateFakeRoles(int $max)
-    {
-        $roles = [];
-        for($i = 0; $i <= $max; $i++)
-        {
-            $roles[] = md5($this->faker->text(30));
-        }
-        return $roles;
-    }
-
-    /**
-     *
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-        if (empty($this->faker)) {
-            $this->faker = Factory::create();
         }
     }
 }

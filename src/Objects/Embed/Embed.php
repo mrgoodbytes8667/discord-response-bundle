@@ -18,11 +18,17 @@ class Embed
 {
     /**
      * @var string|null
+     * @Assert\Length(
+     *     max = 256
+     * )
      */
     protected $title;
 
     /**
      * @var string|null
+     * @Assert\Length(
+     *     max = 2048
+     * )
      */
     protected $description;
 
