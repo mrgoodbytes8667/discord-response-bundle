@@ -19,6 +19,7 @@
     },
     "require-dev": {
         "doctrine/common": "^3.0",
+        "fzaninotto/faker": "1.9.1",
         "symfony/phpunit-bridge": "^5.1",
         "symfony/var-dumper": "^5.1"
     },

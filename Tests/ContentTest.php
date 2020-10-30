@@ -5,11 +5,23 @@ namespace Bytes\DiscordResponseBundle\Tests;
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\Message\AllowedMentions;
 use Bytes\DiscordResponseBundle\Objects\Message\Content;
+use DateTime;
+use Exception;
+use Faker\Factory;
+use Faker\Generator;
 use Illuminate\Support\Str;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 
+/**
+ * Class ContentTest
+ * @package Bytes\DiscordResponseBundle\Tests
+ */
 class ContentTest extends TestSerializationCase
 {
+    /**
+     * @var Generator
+     */
+    private Generator $faker;
 
     public function testSerializeEveryone()
     {
@@ -25,6 +37,11 @@ class ContentTest extends TestSerializationCase
         $this->assertEquals($manual, $object);
     }
 
+    /**
+     * @param array|null $roles
+     * @param array|null $parse
+     * @return Content
+     */
     protected function generateFakeContentClass(?array $roles = null, ?array $parse = null)
     {
         $hasRoles = !empty($roles);
@@ -47,34 +64,41 @@ class ContentTest extends TestSerializationCase
         return $content;
     }
 
+    /**
+     * @return Embed
+     */
     protected function generateFakeEmbed()
     {
         $embed = new Embed();
 
         try {
-            $now = new \DateTime();
+            $now = new DateTime();
 
-            $embed->setUrl(Str::random());
-            $embed->setFooter(Str::random(), 'https://' . Str::random() . '/image.png');
-            $embed->setAuthor(Str::random(), 'https://www.' . Str::random() . '.com', 'https://www.' . Str::random() . '.com/image.png');
+            $embed->setUrl($this->faker->url);
+            $embed->setFooter($this->faker->text(50), $this->faker->imageUrl());
+            $embed->setAuthor($this->faker->name, $this->faker->url, $this->faker->imageUrl());
 
 
-            $embed->setTitle(Str::random());
-            $embed->setColor('0xFF0000');
-            $embed->setThumbnail('https://www.' . Str::random() . '.com/image.png');
-        } catch (\Exception $x) {
+            $embed->setTitle($this->faker->text(50));
+            $color = (string)Str::of($this->faker->hexColor)->after('#')->prepend('0x');
+            $embed->setColor($color);
+            $embed->setThumbnail($this->faker->imageUrl());
+        } catch (Exception $x) {
             // Nothing you can do...
         }
 
         return $embed;
     }
 
+    /**
+     * @param Content $content
+     * @return array
+     */
     protected function generateContentArrayFromContent(Content $content)
     {
         $c = [
             'embed' => $content->getEmbed(),
-            'allowed_mentions' => [
-            ]
+            'allowed_mentions' => []
         ];
         if (!empty($content->getAllowedMentions()->getParse())) {
             $c['allowed_mentions']['parse'] = $content->getAllowedMentions()->getParse();
@@ -104,26 +128,55 @@ class ContentTest extends TestSerializationCase
     {
         $serializer = $this->createSerializer();
 
-        $content = $this->generateFakeContentClass([Str::random(), Str::random()]);
+        foreach(range(1, 10) as $max) {
+            $content = $this->generateFakeContentClass($this->generateFakeRoles($max));
 
-        $object = $serializer->serialize($content, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
+            $object = $serializer->serialize($content, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
 
-        $c = $this->generateContentArrayFromContent($content);
+            $c = $this->generateContentArrayFromContent($content);
 
-        $manual = $serializer->serialize($c, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
-        $this->assertEquals($manual, $object);
+            $manual = $serializer->serialize($c, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
+            $this->assertEquals($manual, $object);
+        }
     }
 
     public function testDeserializeRoles()
     {
         $serializer = $this->createSerializer();
 
-        $content = $this->generateFakeContentClass([Str::random(), Str::random()]);
+        foreach(range(1, 10) as $max) {
+            $content = $this->generateFakeContentClass($this->generateFakeRoles($max));
 
-        $object = $serializer->serialize($content, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
+            $object = $serializer->serialize($content, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
 
-        $de = $serializer->deserialize($object, Content::class, 'json');
+            $de = $serializer->deserialize($object, Content::class, 'json');
 
-        $this->assertEquals($content, $de);
+            $this->assertEquals($content, $de);
+        }
+    }
+
+    /**
+     * @param int $max
+     * @return string[]
+     */
+    protected function generateFakeRoles(int $max)
+    {
+        $roles = [];
+        for($i = 0; $i <= $max; $i++)
+        {
+            $roles[] = md5($this->faker->text(30));
+        }
+        return $roles;
+    }
+
+    /**
+     *
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+        if (empty($this->faker)) {
+            $this->faker = Factory::create();
+        }
     }
 }
