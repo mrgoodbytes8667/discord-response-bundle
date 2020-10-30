@@ -1,6 +1,6 @@
 <?php
 
-namespace Objects\Message;
+namespace Bytes\DiscordResponseBundle\Tests;
 
 use Bytes\DiscordResponseBundle\Objects\Message\AllowedMentions;
 use Bytes\DiscordResponseBundle\Tests\TestRolesSerializationCase;
@@ -82,38 +82,18 @@ class AllowedMentionsTest extends TestRolesSerializationCase
 
     public function testValidationPass()
     {
-        $validator = Validation::createValidatorBuilder()
-            ->enableAnnotationMapping()
-            ->getValidator();
-
-        foreach ([
+        $this->validationPass([
                      AllowedMentions::create(null, ['everyone', 'users']),
                      AllowedMentions::create($this->generateFakeRoles(1), ['everyone']),
                      AllowedMentions::create(null, []),
-                 ] as $allowedMention) {
-            $violations = $validator->validate($allowedMention);
-            if (0 !== count($violations)) {
-                // there are errors, now you can show them
-                foreach ($violations as $violation) {
-                    $this->fail($violation->getMessage());
-                }
-            }
-            $this->assertEquals(0, count($violations));
-        }
+                 ]);
     }
 
     public function testValidationFail()
     {
-        $validator = Validation::createValidatorBuilder()
-            ->enableAnnotationMapping()
-            ->getValidator();
-
-        foreach ([
+        $this->validationFail([
                      AllowedMentions::create(['a'], ['roles']),
                      AllowedMentions::create(null, ['fake'])
-                 ] as $allowedMention) {
-            $violations = $validator->validate($allowedMention);
-            $this->assertGreaterThanOrEqual(1, count($violations));
-        }
+                 ]);
     }
 }

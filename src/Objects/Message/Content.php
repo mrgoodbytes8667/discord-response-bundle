@@ -6,7 +6,12 @@ namespace Bytes\DiscordResponseBundle\Objects\Message;
 
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Class Content
+ * @package Bytes\DiscordResponseBundle\Objects\Message
+ */
 class Content
 {
     /**
@@ -22,6 +27,9 @@ class Content
 
     /**
      * @var string|null
+     * @Assert\Length(
+     *     max = 2000
+     * )
      */
     private ?string $content;
 
@@ -77,5 +85,27 @@ class Content
     {
         $this->content = $content;
         return $this;
+    }
+
+    /**
+     * @param Embed $embed
+     * @param string|null $content
+     * @param AllowedMentions|null $allowedMentions
+     * @return static
+     */
+    public static function create(Embed $embed, ?string $content, ?AllowedMentions $allowedMentions = null)
+    {
+        if(empty($allowedMentions))
+        {
+            $allowedMentions = AllowedMentions::create();
+        }
+        $static = new static();
+        $static->setEmbed($embed);
+        $static->setAllowedMentions($allowedMentions);
+        if(!empty($content))
+        {
+            $static->setContent($content);
+        }
+        return $static;
     }
 }

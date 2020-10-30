@@ -173,4 +173,18 @@ class ContentTest extends TestRolesSerializationCase
             $this->assertEquals($content, $de);
         }
     }
+
+    public function testValidationPass()
+    {
+        $this->validationPass([
+            Content::create($this->generateFakeEmbed(), $this->faker->text(2000))
+        ]);
+    }
+
+    public function testValidationFail()
+    {
+        $this->validationFail([
+            Content::create($this->generateFakeEmbed(), Str::random(2001))
+        ]);
+    }
 }

@@ -27,13 +27,66 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ProblemNormalizer;
 use Symfony\Component\Serializer\Normalizer\UnwrappingDenormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\RecursiveValidator;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class TestSerializationCase extends TestCase
 {
+    /**
+     * @param string $file
+     * @return string
+     */
+    public static function getFixturesFile(string $file)
+    {
+        return __DIR__ . '/Fixtures/' . $file;
+    }
+
+    /**
+     * @param $validations
+     */
+    public function validationPass($validations)
+    {
+        $validator = $this->getValidator();
+
+        foreach ($validations as $validation) {
+            $violations = $validator->validate($validation);
+            if (0 !== count($violations)) {
+                // there are errors, now you can show them
+                foreach ($violations as $violation) {
+                    $this->fail($violation->getMessage());
+                }
+            }
+            $this->assertEquals(0, count($violations));
+        }
+    }
+
+    /**
+     * @return RecursiveValidator|ValidatorInterface
+     */
+    protected function getValidator()
+    {
+        return Validation::createValidatorBuilder()
+            ->enableAnnotationMapping()
+            ->getValidator();
+    }
+
+    /**
+     * @param $validations
+     */
+    public function validationFail($validations)
+    {
+        $validator = $this->getValidator();
+
+        foreach ($validations as $validation) {
+            $violations = $validator->validate($validation);
+            $this->assertGreaterThanOrEqual(1, count($violations));
+        }
+    }
+
     protected function createSerializer(bool $includeEnumNormalizer = true, bool $includeObjectNormalizer = true, array $prependNormalizers = [], array $appendNormalizers = [])
     {
-        if(empty($appendNormalizers))
-        {
+        if (empty($appendNormalizers)) {
             $appendNormalizers = [
                 new ProblemNormalizer(),
                 new JsonSerializableNormalizer(),
@@ -94,14 +147,5 @@ abstract class TestSerializationCase extends TestCase
             'label' => $label ?? $value,
             'value' => $value
         ]);
-    }
-
-    /**
-     * @param string $file
-     * @return string
-     */
-    public static function getFixturesFile(string $file)
-    {
-        return __DIR__ . '/Fixtures/' . $file;
     }
 }
