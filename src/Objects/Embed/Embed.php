@@ -267,13 +267,15 @@ class Embed
      */
     public function setImage($image): self
     {
-        if (is_string($image)) {
-            $object = new Image();
-            $object->setUrl($image);
-            $image = $object;
-        }
-        if (!($image instanceof Image)) {
-            throw new InvalidArgumentException('The supplied image is not an instance of the Image class or a URL.');
+        if(!empty($image)) {
+            if (is_string($image)) {
+                $object = new Image();
+                $object->setUrl($image);
+                $image = $object;
+            }
+            if (!($image instanceof Image)) {
+                throw new InvalidArgumentException('The supplied image is not an instance of the Image class or a URL.');
+            }
         }
         $this->image = $image;
         return $this;
@@ -294,13 +296,15 @@ class Embed
      */
     public function setThumbnail($thumbnail, bool $uuid = false): self
     {
-        if (is_string($thumbnail)) {
-            $object = new Image();
-            $object->setUrl($thumbnail, $uuid);
-            $thumbnail = $object;
-        }
-        if (!($thumbnail instanceof Image)) {
-            throw new InvalidArgumentException('The supplied image is not an instance of the Image class or a URL.');
+        if(!empty($thumbnail)) {
+            if (is_string($thumbnail)) {
+                $object = new Image();
+                $object->setUrl($thumbnail, $uuid);
+                $thumbnail = $object;
+            }
+            if (!($thumbnail instanceof Image)) {
+                throw new InvalidArgumentException('The supplied image is not an instance of the Image class or a URL.');
+            }
         }
         $this->thumbnail = $thumbnail;
         return $this;
