@@ -4,7 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Objects;
 
 
-use App\Objects\Discord\Embed\Embed;
+use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
