@@ -93,7 +93,7 @@ class Content
      * @param AllowedMentions|null $allowedMentions
      * @return static
      */
-    public static function create(Embed $embed, ?string $content, ?AllowedMentions $allowedMentions = null)
+    public static function create(Embed $embed, ?string $content = null, ?AllowedMentions $allowedMentions = null)
     {
         if(empty($allowedMentions))
         {
