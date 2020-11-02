@@ -31,7 +31,7 @@ class Content
      *     max = 2000
      * )
      */
-    private ?string $content;
+    private ?string $content = null;
 
     /**
      * @return Embed
