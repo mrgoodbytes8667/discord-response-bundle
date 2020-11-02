@@ -25,15 +25,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
       - name: Cache dependencies
-        if: success()
         uses: actions/cache@v2
         with:
-          path: ~/.composer/cache/files
-          key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
-            dependencies-php-${{ matrix.php }}-composer-
-            dependencies-php-
+            ${{ runner.os }}-composer-
 
       - name: Setup PHP
         if: success()
