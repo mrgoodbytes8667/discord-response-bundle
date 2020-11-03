@@ -4,6 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Enums;
 
 use Bytes\EnumSerializerBundle\Enums\Enum;
+use Illuminate\Support\Arr;
 
 /**
  * Class Emojis
@@ -785,5 +786,14 @@ class Emojis extends Enum
             'otherNegativeSquaredCrossMark' => '❎',
             'otherWhiteHeavyCheckMark' => '✅',
         ];
+    }
+
+    /**
+     * Return a random emoji
+     * @return static
+     */
+    public static function random()
+    {
+        return new static(Arr::random(static::toValues()));
     }
 }
