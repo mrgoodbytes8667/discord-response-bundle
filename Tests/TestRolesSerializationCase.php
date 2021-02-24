@@ -12,6 +12,7 @@ class TestRolesSerializationCase extends TestSerializationCase
 
     /**
      * @var Generator
+     * @deprecated v0.5.7
      */
     protected Generator $faker;
 

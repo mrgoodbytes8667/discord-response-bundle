@@ -9,7 +9,14 @@ use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
+use DateTime;
+use DateTimeInterface;
+use Exception;
 
+/**
+ * Class Message
+ * @package Bytes\DiscordResponseBundle\Objects
+ */
 class Message implements ErrorInterface
 {
     use IDTrait, GuildIDTrait, ErrorTrait;
@@ -40,13 +47,13 @@ class Message implements ErrorInterface
 
     /**
      * when this message was sent
-     * @var \DateTimeInterface|null
+     * @var DateTimeInterface|null
      */
     private $timestamp;
 
     /**
      * when this message was edited (or null if never)
-     * @var \DateTimeInterface|null
+     * @var DateTimeInterface|null
      */
     private $editedTimestamp;
 
@@ -222,41 +229,40 @@ class Message implements ErrorInterface
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getTimestamp(): ?\DateTimeInterface
+    public function getTimestamp(): ?DateTimeInterface
     {
         return $this->timestamp;
     }
 
     /**
-     * @param \DateTimeInterface|null $timestamp
+     * @param DateTimeInterface|null $timestamp
      * @return $this
      */
-    public function setTimestamp(?\DateTimeInterface $timestamp): self
+    public function setTimestamp(?DateTimeInterface $timestamp): self
     {
         $this->timestamp = $timestamp;
         return $this;
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getEditedTimestamp(): ?\DateTimeInterface
+    public function getEditedTimestamp(): ?DateTimeInterface
     {
         return $this->editedTimestamp;
     }
 
     /**
-     * @param \DateTimeInterface|string|null $editedTimestamp
+     * @param DateTimeInterface|string|null $editedTimestamp
      * @return $this
-     * @throws \Exception
+     * @throws Exception
      */
     public function setEditedTimestamp($editedTimestamp): self
     {
-        if(is_string($editedTimestamp))
-        {
-            $editedTimestamp = new \DateTime($editedTimestamp);
+        if (is_string($editedTimestamp)) {
+            $editedTimestamp = new DateTime($editedTimestamp);
         }
         $this->editedTimestamp = $editedTimestamp;
         return $this;

@@ -3,12 +3,9 @@
 namespace Bytes\DiscordResponseBundle\Tests;
 
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
-use Bytes\DiscordResponseBundle\Objects\Message\AllowedMentions;
 use Bytes\DiscordResponseBundle\Objects\Message\Content;
 use DateTime;
 use Exception;
-use Faker\Factory;
-use Faker\Generator;
 use Illuminate\Support\Str;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 
@@ -147,7 +144,7 @@ class ContentTest extends TestRolesSerializationCase
     {
         $serializer = $this->createSerializer();
 
-        foreach(range(1, 10) as $max) {
+        foreach (range(1, 10) as $max) {
             $content = $this->generateFakeContentClass($this->generateFakeRoles($max));
 
             $object = $serializer->serialize($content, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
@@ -163,7 +160,7 @@ class ContentTest extends TestRolesSerializationCase
     {
         $serializer = $this->createSerializer();
 
-        foreach(range(1, 10) as $max) {
+        foreach (range(1, 10) as $max) {
             $content = $this->generateFakeContentClass($this->generateFakeRoles($max));
 
             $object = $serializer->serialize($content, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
