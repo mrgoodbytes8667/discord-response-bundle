@@ -8,6 +8,7 @@ use DateTime;
 use Exception;
 use Illuminate\Support\Str;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+use Symfony\Component\String\ByteString;
 
 /**
  * Class ContentTest
@@ -57,15 +58,15 @@ class ContentTest extends TestRolesSerializationCase
         try {
             $now = new DateTime();
 
-            $embed->setUrl($this->faker->url);
-            $embed->setFooter($this->faker->text(50), $this->faker->imageUrl());
-            $embed->setAuthor($this->faker->name, $this->faker->url, $this->faker->imageUrl());
+            $embed->setUrl('https://www.example.com');
+            $embed->setFooter(ByteString::fromRandom(50), 'https://www.example.com/example.png');
+            $embed->setAuthor(ByteString::fromRandom(), 'https://www.example.com', 'https://www.example.com/example.png');
 
 
-            $embed->setTitle($this->faker->text(50));
-            $color = (string)Str::of($this->faker->hexColor)->after('#')->prepend('0x');
+            $embed->setTitle(ByteString::fromRandom(50));
+            $color = ByteString::fromRandom(6, '0123456789ABCDEF')->prepend('0x')->toString();
             $embed->setColor($color);
-            $embed->setThumbnail($this->faker->imageUrl());
+            $embed->setThumbnail('https://www.example.com/example.png');
         } catch (Exception $x) {
             // Nothing you can do...
         }
@@ -174,14 +175,14 @@ class ContentTest extends TestRolesSerializationCase
     public function testValidationPass()
     {
         $this->validationPass([
-            Content::create($this->generateFakeEmbed(), $this->faker->text(2000))
+            Content::create($this->generateFakeEmbed(), ByteString::fromRandom(2000))
         ]);
     }
 
     public function testValidationFail()
     {
         $this->validationFail([
-            Content::create($this->generateFakeEmbed(), Str::random(2001))
+            Content::create($this->generateFakeEmbed(), ByteString::fromRandom(2001))
         ]);
     }
 }

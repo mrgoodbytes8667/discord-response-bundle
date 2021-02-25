@@ -4,9 +4,13 @@ namespace Bytes\DiscordResponseBundle\Tests;
 
 
 use Bytes\DiscordResponseBundle\Objects\Message\AllowedMentions;
-use Faker\Factory;
 use Faker\Generator;
+use Symfony\Component\String\ByteString;
 
+/**
+ * Class TestRolesSerializationCase
+ * @package Bytes\DiscordResponseBundle\Tests
+ */
 class TestRolesSerializationCase extends TestSerializationCase
 {
 
@@ -15,17 +19,6 @@ class TestRolesSerializationCase extends TestSerializationCase
      * @deprecated v0.5.7
      */
     protected Generator $faker;
-
-    /**
-     *
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-        if (empty($this->faker)) {
-            $this->faker = Factory::create();
-        }
-    }
 
     /**
      * @param int $max
@@ -42,7 +35,7 @@ class TestRolesSerializationCase extends TestSerializationCase
 
     protected function generateFakeRole()
     {
-        return md5($this->faker->text(30));
+        return md5(ByteString::fromRandom(30));
     }
 
     /**
