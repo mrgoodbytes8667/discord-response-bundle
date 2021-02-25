@@ -30,10 +30,14 @@ use Illuminate\Support\Arr;
  * @method static self RELATIONSHIPS_READ() allows your app to know a user's friends and implicit relationships - whitelist only
  * @method static self ACTIVITIES_READ() allows your app to fetch data from a user's 'Now Playing/Recently Played' list - whitelist only
  * @method static self ACTIVITIES_WRITE() allows your app to update a user's activity - whitelist only (NOT REQUIRED FOR GAMESDK ACTIVITIY MANAGER) (Whitelist only)
+ * @method static self APPLICATIONS_COMMANDS() allows your app to use Slash Commands in a guild
+ * @method static self APPLICATIONS_COMMANDS_UPDATE() allows your app to update Slash Commands via this bearer token
  *
  * @todo Refactor these to proper camel case functions
  *
  * @link https://github.com/spatie/enum
+ *
+ * @version v0.5.8 As of 2021-02-25 Discord Documentation
  */
 class OAuthScopes extends Enum
 {
@@ -97,6 +101,8 @@ class OAuthScopes extends Enum
             'RELATIONSHIPS_READ' => 'relationships.read',
             'ACTIVITIES_READ' => 'activities.read',
             'ACTIVITIES_WRITE' => 'activities.write',
+            'APPLICATIONS_COMMANDS' => 'applications.commands',
+            'APPLICATIONS_COMMANDS_UPDATE' => 'applications.commands.update',
         ];
     }
 
@@ -126,6 +132,8 @@ class OAuthScopes extends Enum
             'RELATIONSHIPS_READ' => 'RELATIONSHIPS_READ',
             'ACTIVITIES_READ' => 'ACTIVITIES_READ',
             'ACTIVITIES_WRITE' => 'ACTIVITIES_WRITE',
+            'APPLICATIONS_COMMANDS' => 'APPLICATIONS_COMMANDS',
+            'APPLICATIONS_COMMANDS_UPDATE' => 'APPLICATIONS_COMMANDS_UPDATE',
         ];
     }
 }
