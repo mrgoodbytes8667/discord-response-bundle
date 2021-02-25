@@ -14,7 +14,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
  *
  * @property string|null $name 1-100 character choice name
  *
- * @version v0.5.8 As of 2021-02-25 Discord Documentation
+ * @version v0.6.0 As of 2021-02-25 Discord Documentation
  */
 class ApplicationCommandOptionChoice
 {

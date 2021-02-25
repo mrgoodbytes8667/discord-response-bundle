@@ -14,7 +14,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
  * @property string|null $id the ID of the invoked command
  * @property string|null $name the name of the invoked command
  *
- * @version v0.5.8 As of 2021-02-25 Discord Documentation
+ * @version v0.6.0 As of 2021-02-25 Discord Documentation
  */
 class ApplicationCommandInteractionData
 {

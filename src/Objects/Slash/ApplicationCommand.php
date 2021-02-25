@@ -17,7 +17,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
  * @property string|null $id unique id of the command
  * @property string|null $name 3-32 character name matching ^[\w-]{3,32}$
  *
- * @version v0.5.8 As of 2021-02-25 Discord Documentation
+ * @version v0.6.0 As of 2021-02-25 Discord Documentation
  */
 class ApplicationCommand
 {

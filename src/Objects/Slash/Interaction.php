@@ -18,7 +18,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
  * @property string|null $id id of the interaction
  * @property string|null $guildId the guild it was sent from
  *
- * @version v0.5.8 As of 2021-02-25 Discord Documentation
+ * @version v0.6.0 As of 2021-02-25 Discord Documentation
  */
 class Interaction
 {
