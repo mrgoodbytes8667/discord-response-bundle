@@ -7,20 +7,20 @@
         "ext-json": "*",
         "illuminate/support": "^8.0",
         "mrgoodbytes8667/response-bundle": "^1.0",
-        "symfony/config": "^5.1",
-        "symfony/console": "^5.1",
-        "symfony/dependency-injection": "^5.1",
-        "symfony/framework-bundle": "^5.1",
+        "symfony/config": "^5.2",
+        "symfony/console": "^5.2",
+        "symfony/dependency-injection": "^5.2",
+        "symfony/framework-bundle": "^5.2",
         "symfony/polyfill-uuid": "^1.20",
-        "symfony/serializer": "^5.1",
-        "symfony/string": "^5.1",
-        "symfony/validator": "^5.1"
+        "symfony/serializer": "^5.2",
+        "symfony/string": "^5.2",
+        "symfony/validator": "^5.2"
     },
     "require-dev": {
         "doctrine/common": "^3.0",
         "fzaninotto/faker": "1.9.1",
-        "symfony/phpunit-bridge": "^5.1",
-        "symfony/var-dumper": "^5.1"
+        "symfony/phpunit-bridge": "^5.2",
+        "symfony/var-dumper": "^5.2"
     },
     "authors": [
         {

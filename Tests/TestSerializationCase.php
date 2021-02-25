@@ -67,7 +67,8 @@ abstract class TestSerializationCase extends TestCase
     protected function getValidator()
     {
         return Validation::createValidatorBuilder()
-            ->enableAnnotationMapping()
+            ->enableAnnotationMapping(true)
+            ->addDefaultDoctrineAnnotationReader()
             ->getValidator();
     }
 
