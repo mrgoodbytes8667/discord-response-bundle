@@ -78,6 +78,24 @@ class OAuthScopes extends Enum
     /**
      * @return string[]
      */
+    public static function getSlashScopes()
+    {
+        return [
+            static::APPLICATIONS_COMMANDS()->value,
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getBotSlashScopes()
+    {
+        return array_merge(static::getBotScopes(), static::getSlashScopes());
+    }
+
+    /**
+     * @return string[]
+     */
     protected static function values(): array
     {
         return [
