@@ -5,6 +5,7 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 
@@ -14,7 +15,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
  *
  * @link https://discord.com/developers/docs/resources/emoji#emoji-object
  */
-class Emoji implements ErrorInterface
+class Emoji implements ErrorInterface, IdInterface
 {
     use IDTrait, ErrorTrait;
 

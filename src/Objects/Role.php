@@ -5,6 +5,7 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\DeletedTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
@@ -20,9 +21,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *
  * @link https://discord.com/developers/docs/topics/permissions#role-object
  */
-class Role implements ErrorInterface
+class Role implements ErrorInterface, IdInterface
 {
-use IDTrait, NameTrait, ErrorTrait, DeletedTrait;
+    use IDTrait, NameTrait, ErrorTrait, DeletedTrait;
 
     /**
      * integer representation of hexadecimal color code

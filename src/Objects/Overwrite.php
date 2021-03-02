@@ -5,6 +5,7 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 
@@ -16,7 +17,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
  *
  * @property string $id Role or User ID
  */
-class Overwrite implements ErrorInterface
+class Overwrite implements ErrorInterface, IdInterface
 {
     use IDTrait, ErrorTrait;
 

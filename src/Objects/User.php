@@ -5,6 +5,7 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -13,7 +14,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * Class User
  * @package Bytes\DiscordResponseBundle\Objects
  */
-class User implements ErrorInterface
+class User implements ErrorInterface, IdInterface
 {
     use IDTrait, ErrorTrait;
     

@@ -5,6 +5,7 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
@@ -15,7 +16,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
  *
  * @link https://discord.com/developers/docs/resources/user#connection-object
  */
-class Connections implements ErrorInterface
+class Connections implements ErrorInterface, IdInterface
 {
     use IDTrait, NameTrait, ErrorTrait;
 

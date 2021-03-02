@@ -2,6 +2,7 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
+use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 
@@ -16,7 +17,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
  *
  * @version v0.6.0 As of 2021-02-25 Discord Documentation
  */
-class ApplicationCommandInteractionData
+class ApplicationCommandInteractionData implements IdInterface
 {
     use IDTrait, NameTrait;
 

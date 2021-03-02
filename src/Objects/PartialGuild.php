@@ -5,6 +5,7 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
@@ -16,7 +17,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *
  * @link https://discord.com/developers/docs/resources/user#get-current-user-guilds
  */
-class PartialGuild implements ErrorInterface
+class PartialGuild implements ErrorInterface, IdInterface
 {
     use IDTrait, NameTrait, ErrorTrait;
 

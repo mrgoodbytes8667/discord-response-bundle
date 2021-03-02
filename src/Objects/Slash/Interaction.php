@@ -3,6 +3,7 @@
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Enums\InteractionType;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Member;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
@@ -20,7 +21,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
  *
  * @version v0.6.0 As of 2021-02-25 Discord Documentation
  */
-class Interaction
+class Interaction implements IdInterface
 {
     use IDTrait, GuildIDTrait;
 

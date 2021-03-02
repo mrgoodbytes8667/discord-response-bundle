@@ -6,6 +6,7 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
@@ -17,7 +18,7 @@ use Exception;
  * Class Message
  * @package Bytes\DiscordResponseBundle\Objects
  */
-class Message implements ErrorInterface
+class Message implements ErrorInterface, IdInterface
 {
     use IDTrait, GuildIDTrait, ErrorTrait;
 
