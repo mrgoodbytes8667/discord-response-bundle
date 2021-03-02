@@ -2,8 +2,12 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
+use BadMethodCallException;
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Class ApplicationCommandOption
@@ -12,8 +16,6 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
  * @package Bytes\DiscordResponseBundle\Objects\Slash
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoption
- *
- * @property string|null $name 1-32 character name matching ^[\w-]{1,32}$
  *
  * @version v0.6.0 As of 2021-02-25 Discord Documentation
  */
@@ -28,8 +30,27 @@ class ApplicationCommandOption
     private $type;
 
     /**
+     * 1-32 character name matching ^[\w-]{1,32}$
+     * @var string|null
+     * @Assert\Regex("/^[\w-]{1,32}$/")
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 32,
+     *      minMessage = "Your name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your name cannot be longer than {{ limit }} characters"
+     * )
+     */
+    private $name;
+
+    /**
      * 1-100 character description
      * @var string|null
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 100,
+     *      minMessage = "Your description must be at least {{ limit }} characters long",
+     *      maxMessage = "Your description cannot be longer than {{ limit }} characters"
+     * )
      */
     private $description;
 
@@ -41,15 +62,36 @@ class ApplicationCommandOption
 
     /**
      * choices for string and int types for the user to pick from
-     * @var ApplicationCommandOptionChoice[]|null
+     * @var ArrayCollection|ApplicationCommandOptionChoice[]|null
      */
     private $choices;
 
     /**
      * if the option is a subcommand or subcommand group type, this nested options will be the parameters
-     * @var ApplicationCommandOption[]|null
+     * @var ArrayCollection|ApplicationCommandOption[]|null
      */
     private $options;
+
+    /**
+     * @param ApplicationCommandOptionType $type
+     * @param string $name
+     * @param string $description
+     * @param bool $required
+     * @param ApplicationCommandOptionChoice[]|null $choices
+     * @param ApplicationCommandOption[]|null $options
+     * @return static
+     */
+    public static function create(ApplicationCommandOptionType $type, string $name, string $description, bool $required = false, ?array $choices = [], ?array $options = [])
+    {
+        $option = new static();
+        $option->setName($name);
+        $option->setDescription($description);
+        $option->setRequired($required);
+        $option->setChoices($choices);
+        $option->setOptions($options);
+
+        return $option;
+    }
 
     /**
      * @return int|null
@@ -109,7 +151,7 @@ class ApplicationCommandOption
     }
 
     /**
-     * @return $thisChoice[]|null
+     * @return ApplicationCommandOptionChoice[]|null
      */
     public function getChoices(): ?array
     {
@@ -123,6 +165,18 @@ class ApplicationCommandOption
     public function setChoices(?array $choices): self
     {
         $this->choices = $choices;
+        return $this;
+    }
+
+    /**
+     * @param ApplicationCommandOptionChoice $choice
+     * @return $this
+     */
+    public function addChoice(ApplicationCommandOptionChoice $choice): self
+    {
+        if (!$this->choices->contains($choice)) {
+            $this->choices[] = $choice;
+        }
         return $this;
     }
 
@@ -142,5 +196,36 @@ class ApplicationCommandOption
     {
         $this->options = $options;
         return $this;
+    }
+
+    /**
+     * @param ApplicationCommandOption $option
+     * @return $this
+     */
+    public function addOption(ApplicationCommandOption $option): self
+    {
+        if (!$this->options->contains($option)) {
+            $this->options[] = $option;
+        }
+        return $this;
+    }
+
+    /**
+     * @param ExecutionContextInterface $context
+     * @param $payload
+     *
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        try {
+            if (!empty($this->type)) {
+                new ApplicationCommandOptionType($this->type);
+            }
+        } catch (BadMethodCallException $exception) {
+            $context->buildViolation('This is not a valid type.')
+                ->atPath('type')
+                ->addViolation();
+        }
     }
 }
