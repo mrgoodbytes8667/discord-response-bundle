@@ -84,6 +84,7 @@ class ApplicationCommandOption
     public static function create(ApplicationCommandOptionType $type, string $name, string $description, bool $required = false, ?array $choices = [], ?array $options = [])
     {
         $option = new static();
+        $option->setType($type);
         $option->setName($name);
         $option->setDescription($description);
         $option->setRequired($required);
