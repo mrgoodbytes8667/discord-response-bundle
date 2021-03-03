@@ -35,4 +35,12 @@ class InteractionResponseType extends Enum
             "acknowledgeWithSource" => 5,
         ];
     }
+
+    /**
+     * @return int
+     */
+    public function jsonSerialize()
+    {
+        return $this->value;
+    }
 }
