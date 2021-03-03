@@ -2,7 +2,6 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
-use BadMethodCallException;
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -219,11 +218,7 @@ class ApplicationCommandOption
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
-        try {
-            if (!empty($this->type)) {
-                new ApplicationCommandOptionType($this->type);
-            }
-        } catch (BadMethodCallException $exception) {
+        if (!empty($this->type) && !ApplicationCommandOptionType::isValid($this->type)) {
             $context->buildViolation('This is not a valid type.')
                 ->atPath('type')
                 ->addViolation();
