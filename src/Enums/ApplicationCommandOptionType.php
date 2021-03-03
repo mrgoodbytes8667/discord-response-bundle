@@ -42,4 +42,12 @@ class ApplicationCommandOptionType extends Enum
             "role" => 8,
         ];
     }
+
+    /**
+     * @return int
+     */
+    public function jsonSerialize()
+    {
+        return $this->value;
+    }
 }
