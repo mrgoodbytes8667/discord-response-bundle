@@ -59,6 +59,10 @@ class ApplicationCommand implements IdInterface
     /**
      * the parameters for the command
      * @var ApplicationCommandOption[]|ArrayCollection|null
+     * @Assert\Count(
+     *      max = 10,
+     *      maxMessage = "You cannot specify more than {{ limit }} options per command"
+     * )
      */
     private $options;
 
