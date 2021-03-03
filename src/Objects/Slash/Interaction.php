@@ -27,7 +27,7 @@ class Interaction implements IdInterface
 
     /**
      * the type of interaction
-     * @var int|null
+     * @var InteractionType|null
      */
     private $type;
 
@@ -63,22 +63,19 @@ class Interaction implements IdInterface
     private $version;
 
     /**
-     * @return int|null
+     * @return InteractionType|null
      */
-    public function getType(): ?int
+    public function getType(): ?InteractionType
     {
         return $this->type;
     }
 
     /**
-     * @param InteractionType|int|null $type
+     * @param InteractionType|null $type
      * @return Interaction
      */
-    public function setType($type): Interaction
+    public function setType(?InteractionType $type): Interaction
     {
-        if ($type instanceof InteractionType) {
-            $type = $type->value;
-        }
         $this->type = $type;
         return $this;
     }

@@ -37,7 +37,8 @@
         "doctrine/event-manager": "<1.1.1",
         "doctrine/inflector": "<1.4.3",
         "doctrine/lexer": "<1.2.1",
-        "doctrine/persistence": "<2.1.0"
+        "doctrine/persistence": "<2.1.0",
+        "mrgoodbytes8667/enum-serializer-bundle": "<1.2.3"
     },
     "autoload": {
         "psr-4": {

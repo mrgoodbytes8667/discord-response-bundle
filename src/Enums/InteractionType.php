@@ -30,4 +30,12 @@ class InteractionType extends Enum
             "applicationCommand" => 2,
         ];
     }
+
+    /**
+     * @return int
+     */
+    public function jsonSerialize()
+    {
+        return $this->value;
+    }
 }
