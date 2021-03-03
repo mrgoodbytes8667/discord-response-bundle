@@ -62,13 +62,13 @@ class ApplicationCommandOption
 
     /**
      * choices for string and int types for the user to pick from
-     * @var ArrayCollection|ApplicationCommandOptionChoice[]|null
+     * @var ApplicationCommandOptionChoice[]|ArrayCollection|null
      */
     private $choices;
 
     /**
      * if the option is a subcommand or subcommand group type, this nested options will be the parameters
-     * @var ArrayCollection|ApplicationCommandOption[]|null
+     * @var ApplicationCommandOption[]|ArrayCollection|null
      */
     private $options;
 

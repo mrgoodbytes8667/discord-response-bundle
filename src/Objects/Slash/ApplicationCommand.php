@@ -58,7 +58,7 @@ class ApplicationCommand implements IdInterface
 
     /**
      * the parameters for the command
-     * @var ArrayCollection|ApplicationCommandOption[]|null
+     * @var ApplicationCommandOption[]|ArrayCollection|null
      */
     private $options;
 
