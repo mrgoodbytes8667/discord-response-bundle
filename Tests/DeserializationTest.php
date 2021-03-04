@@ -46,10 +46,7 @@ class DeserializationTest extends TestSerializationCase
         $this->assertEquals(372633152, $output->getPermissions());
         $this->assertIsInt($output->getPermissions());
 
-        $this->assertNull($output->getMessage());
-        $this->assertNull($output->getCode());
-        $this->assertNull($output->getRetryAfter());
-        $this->assertNull($output->getGlobal());
+        $this->checkForNullErrors($output);
     }
 
     public function testPartialGuildV8Deserialization()
@@ -66,10 +63,7 @@ class DeserializationTest extends TestSerializationCase
         $this->assertEquals('6815084096', $output->getPermissions());
         $this->assertIsString($output->getPermissions());
 
-        $this->assertNull($output->getMessage());
-        $this->assertNull($output->getCode());
-        $this->assertNull($output->getRetryAfter());
-        $this->assertNull($output->getGlobal());
+        $this->checkForNullErrors($output);
     }
 
     /**
