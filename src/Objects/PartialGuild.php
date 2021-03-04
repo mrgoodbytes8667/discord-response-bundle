@@ -33,7 +33,10 @@ class PartialGuild implements ErrorInterface, IdInterface
     protected $owner;
 
     /**
-     * @var int|null
+     * API v6 returns an integer, API v8 returns a string
+     * @var string|int|null
+     *
+     * @link https://discord.com/developers/docs/change-log#september-24-2020
      */
     protected $permissions;
 
@@ -74,18 +77,18 @@ class PartialGuild implements ErrorInterface, IdInterface
     }
 
     /**
-     * @return int|null
+     * @return string|int|null
      */
-    public function getPermissions(): ?int
+    public function getPermissions()
     {
         return $this->permissions;
     }
 
     /**
-     * @param int|null $permissions
+     * @param string|int|null $permissions
      * @return $this
      */
-    public function setPermissions(?int $permissions): self
+    public function setPermissions($permissions): self
     {
         $this->permissions = $permissions;
         return $this;
