@@ -94,6 +94,40 @@ class ApplicationCommandOption
     }
 
     /**
+     * @param string $name
+     * @param string $description
+     * @param ApplicationCommandOption[]|null $options
+     * @return static
+     */
+    public static function createSubcommand(string $name, string $description, ?array $options = [])
+    {
+        $option = new static();
+        $option->setType(ApplicationCommandOptionType::subCommand());
+        $option->setName($name);
+        $option->setDescription($description);
+        $option->setOptions($options);
+
+        return $option;
+    }
+
+    /**
+     * @param string $name
+     * @param string $description
+     * @param ApplicationCommandOption[]|null $options
+     * @return static
+     */
+    public static function createSubcommandGroup(string $name, string $description, ?array $options = [])
+    {
+        $option = new static();
+        $option->setType(ApplicationCommandOptionType::subCommandGroup());
+        $option->setName($name);
+        $option->setDescription($description);
+        $option->setOptions($options);
+
+        return $option;
+    }
+
+    /**
      * @return int|null
      */
     public function getType(): ?int
