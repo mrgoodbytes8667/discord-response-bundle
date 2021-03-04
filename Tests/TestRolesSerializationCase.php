@@ -13,13 +13,6 @@ use Symfony\Component\String\ByteString;
  */
 class TestRolesSerializationCase extends TestSerializationCase
 {
-
-    /**
-     * @var Generator
-     * @deprecated v0.5.7
-     */
-    protected Generator $faker;
-
     /**
      * @param int $max
      * @return string[]
