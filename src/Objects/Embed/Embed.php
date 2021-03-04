@@ -75,6 +75,37 @@ class Embed
     protected $fields;
 
     /**
+     * @param string|null $title
+     * @param string|null $description
+     * @param string|null $url
+     * @param string|null $thumbnail
+     * @param float|int|null $color
+     * @return static
+     */
+    public static function create(?string $title = null, ?string $description = null, ?string $url = null, ?string $thumbnail = null, $color = null)
+    {
+        $embed = new static();
+        if (!empty($title)) {
+            $embed->setTitle($title);
+        }
+        if (!empty($url)) {
+            $embed->setUrl($url);
+        }
+        if (!is_null($color) && (is_float($color) || is_int($color))) {
+            $embed->setColor($color);
+        }
+        if (!empty($description)) {
+            $embed->setDescription($description);
+        }
+        if (!empty($thumbnail)) {
+            $embed->setThumbnail($thumbnail);
+        }
+
+        return $embed;
+
+    }
+
+    /**
      * @return string|null
      */
     public function getTitle(): ?string
@@ -209,7 +240,7 @@ class Embed
         if (!($field instanceof Field)) {
             throw new InvalidArgumentException('The supplied argument is not an instance of the Field class or text.');
         }
-        if(empty($field->getValue())) {
+        if (empty($field->getValue())) {
             throw new InvalidArgumentException('Field value cannot be blank.');
         }
 
@@ -267,7 +298,7 @@ class Embed
      */
     public function setImage($image): self
     {
-        if(!empty($image)) {
+        if (!empty($image)) {
             if (is_string($image)) {
                 $object = new Image();
                 $object->setUrl($image);
@@ -296,7 +327,7 @@ class Embed
      */
     public function setThumbnail($thumbnail, bool $uuid = false): self
     {
-        if(!empty($thumbnail)) {
+        if (!empty($thumbnail)) {
             if (is_string($thumbnail)) {
                 $object = new Image();
                 $object->setUrl($thumbnail, $uuid);
