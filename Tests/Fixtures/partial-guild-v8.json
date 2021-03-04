@@ -1,0 +1,16 @@
+{
+  "id": "732307126930327628",
+  "name": "PZjj2rimTJQeMYYTCKKw7siBknEUdE",
+  "icon": "cfbc5b55d417d6fee18c89c8122e7fe7",
+  "owner": false,
+  "permissions": "6815084096",
+  "features": [
+    "INVITE_SPLASH",
+    "NEWS",
+    "ANIMATED_ICON",
+    "COMMUNITY",
+    "PREVIEW_ENABLED",
+    "MEMBER_VERIFICATION_GATE_ENABLED",
+    "WELCOME_SCREEN_ENABLED"
+  ]
+}
