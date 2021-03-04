@@ -49,6 +49,14 @@ class PartialGuild implements ErrorInterface, IdInterface
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name ?? $this->id ?? '';
+    }
+
+    /**
      * @param string|null $icon
      * @return $this
      */
