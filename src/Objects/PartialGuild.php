@@ -10,6 +10,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Symfony\Component\Serializer\Annotation\Groups;
+use function Symfony\Component\String\u;
 
 /**
  * Class PartialGuild
@@ -64,6 +65,39 @@ class PartialGuild implements ErrorInterface, IdInterface
     {
         $this->icon = $icon;
         return $this;
+    }
+
+    /**
+     * Create the fully resolvable Url for the guild's icon
+     * @param string $extension
+     * @return string|null
+     */
+    public function getIconUrl(string $extension = 'png'): ?string
+    {
+        $icon = $this->getIcon();
+        if (empty($this->getId()) || empty($icon)) {
+            return null;
+        }
+        switch (strtolower($extension)) {
+            case 'jpg':
+            case 'webp':
+                $extension = strtolower($extension);
+                break;
+            case 'jpeg':
+                $extension = 'jpg';
+                break;
+            case 'gif':
+                $extension = u($icon)->startsWith('a_') ? 'gif' : 'png';
+                break;
+            default:
+                $extension = 'png';
+                break;
+        }
+        return implode('/', [
+            'https://cdn.discordapp.com/icons',
+            $this->getId(),
+            $icon . '.' . $extension
+        ]);
     }
 
     /**
