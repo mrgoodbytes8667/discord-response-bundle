@@ -39,7 +39,7 @@ class InteractionResponseTypeTest extends TestCase
      */
     public function testAcknowledge()
     {
-        $this->expectDeprecation('Since mrgoodbytes8667/discord-response-bundle 0.7.0: The "%s()" method has been deprecated by Discord and will stop functioning on April 9, 2021.');
+        $this->expectDeprecation('Since mrgoodbytes8667/discord-response-bundle 0.7.0: The "%s()" method has been deprecated by Discord and will stop functioning on April 9, 2021. Use `channelMessageWithSource()` or `deferredChannelMessageWithSource()` instead.');
         $entry = InteractionResponseType::acknowledge();
 
         $this->assertNotNull($entry);
@@ -53,7 +53,7 @@ class InteractionResponseTypeTest extends TestCase
      */
     public function testChannelMessage()
     {
-        $this->expectDeprecation('Since mrgoodbytes8667/discord-response-bundle 0.7.0: The "%s()" method has been deprecated by Discord and will stop functioning on April 9, 2021.');
+        $this->expectDeprecation('Since mrgoodbytes8667/discord-response-bundle 0.7.0: The "%s()" method has been deprecated by Discord and will stop functioning on April 9, 2021. Use `channelMessageWithSource()` or `deferredChannelMessageWithSource()` instead.');
         $entry = InteractionResponseType::channelMessage();
 
         $this->assertNotNull($entry);
@@ -67,7 +67,7 @@ class InteractionResponseTypeTest extends TestCase
      */
     public function testAcknowledgeWithSource()
     {
-        $this->expectDeprecation('Since mrgoodbytes8667/discord-response-bundle 0.7.0: The "%s()" method has been deprecated by Discord and will stop functioning on April 9, 2021. Please use deferredChannelMessageWithSource() instead.');
+        $this->expectDeprecation('Since mrgoodbytes8667/discord-response-bundle 0.7.0: The "%s()" method has been deprecated by Discord and will stop functioning on April 9, 2021. Use `deferredChannelMessageWithSource()` instead.');
         $entry = InteractionResponseType::acknowledgeWithSource();
 
         $this->assertNotNull($entry);
