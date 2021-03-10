@@ -66,6 +66,50 @@ class DeserializationTest extends TestSerializationCase
         $this->checkForNullErrors($output);
     }
 
+    public function testV8ArrayErrorDeserialization()
+    {
+        $serializer = $this->createSerializer();
+
+        /** @var User $output */
+        $output = $serializer->deserialize(file_get_contents(self::getFixturesFile('array-error-v8.json')), User::class, 'json');
+
+        $this->assertEquals('Invalid Form Body', $output->getMessage());
+        $this->assertEquals(50035, $output->getCode());
+        $this->assertIsArray($output->getErrors());
+        $this->assertArrayHasKey('activities', $output->getErrors());
+        $this->assertNull($output->getRetryAfter());
+        $this->assertNull($output->getGlobal());
+    }
+
+    public function testV8ObjectErrorDeserialization()
+    {
+        $serializer = $this->createSerializer();
+
+        /** @var User $output */
+        $output = $serializer->deserialize(file_get_contents(self::getFixturesFile('object-error-v8.json')), User::class, 'json');
+
+        $this->assertEquals('Invalid Form Body', $output->getMessage());
+        $this->assertEquals(50035, $output->getCode());
+        $this->assertIsArray($output->getErrors());
+        $this->assertArrayHasKey('access_token', $output->getErrors());
+        $this->assertNull($output->getRetryAfter());
+        $this->assertNull($output->getGlobal());
+    }
+
+    public function testV6UnauthorizedErrorDeserialization()
+    {
+        $serializer = $this->createSerializer();
+
+        /** @var User $output */
+        $output = $serializer->deserialize(file_get_contents(self::getFixturesFile('unauthorized-v6.json')), User::class, 'json');
+
+        $this->assertEquals('401: Unauthorized', $output->getMessage());
+        $this->assertEquals(0, $output->getCode());
+        $this->assertNull($output->getErrors());
+        $this->assertNull($output->getRetryAfter());
+        $this->assertNull($output->getGlobal());
+    }
+
     /**
      * @param ErrorInterface $output
      */

@@ -13,7 +13,7 @@ use Bytes\DiscordResponseBundle\Objects\Message\AllowedMentions;
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#interaction-response-interactionapplicationcommandcallbackdata
  *
- * @version v0.6.0 As of 2021-02-25 Discord Documentation
+ * @version v0.7.0 As of 2021-03-10 Discord Documentation
  */
 class InteractionApplicationCommandCallbackData
 {
@@ -40,6 +40,13 @@ class InteractionApplicationCommandCallbackData
      * @var AllowedMentions|null
      */
     private $allowedMentions;
+
+    /**
+     * set to 64 to make your response ephemeral
+     * @var int|null
+     * @since v0.7.0
+     */
+    private $flags;
 
     /**
      * @return bool|null
@@ -110,6 +117,24 @@ class InteractionApplicationCommandCallbackData
     public function setAllowedMentions(?AllowedMentions $allowedMentions): self
     {
         $this->allowedMentions = $allowedMentions;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getFlags(): ?int
+    {
+        return $this->flags;
+    }
+
+    /**
+     * @param int|null $flags
+     * @return $this
+     */
+    public function setFlags(?int $flags): self
+    {
+        $this->flags = $flags;
         return $this;
     }
 

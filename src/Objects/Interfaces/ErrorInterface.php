@@ -4,9 +4,13 @@
 namespace Bytes\DiscordResponseBundle\Objects\Interfaces;
 
 
+use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
+
 /**
  * Interface ErrorInterface
  * @package Bytes\DiscordResponseBundle\Objects\Interfaces
+ *
+ * @see ErrorTrait
  */
 interface ErrorInterface
 {
@@ -19,4 +23,19 @@ interface ErrorInterface
      * @return int|null
      */
     public function getCode(): ?int;
+
+    /**
+     * @return int|null
+     */
+    public function getRetryAfter(): ?int;
+
+    /**
+     * @return bool|null
+     */
+    public function getGlobal(): ?bool;
+
+    /**
+     * @return mixed|null
+     */
+    public function getErrors();
 }

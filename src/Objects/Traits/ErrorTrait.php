@@ -37,6 +37,14 @@ trait ErrorTrait
     protected $global;
 
     /**
+     * @var mixed|null
+     * New for API v8
+     * @link https://discord.com/developers/docs/reference#error-messages
+     * @since v0.7.0
+     */
+    protected $errors;
+
+    /**
      * @return string|null
      */
     public function getMessage(): ?string
@@ -110,6 +118,22 @@ trait ErrorTrait
         return $this;
     }
 
+    /**
+     * @return mixed|null
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
 
+    /**
+     * @param mixed|null $errors
+     * @return $this
+     */
+    public function setErrors($errors): self
+    {
+        $this->errors = $errors;
+        return $this;
+    }
 
 }
