@@ -2,6 +2,7 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
+use Bytes\DiscordResponseBundle\Objects\Traits\NameDescriptionValueLengthTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use function Symfony\Component\String\u;
@@ -18,7 +19,7 @@ use function Symfony\Component\String\u;
  */
 class ApplicationCommandOptionChoice
 {
-    use NameTrait;
+    use NameTrait, NameDescriptionValueLengthTrait;
 
     /**
      * 1-100 character choice name
@@ -45,7 +46,7 @@ class ApplicationCommandOptionChoice
      */
     public static function create(string $name, $value = '')
     {
-        if(is_string($value) && empty($value)) {
+        if (is_string($value) && empty($value)) {
             $value = u($name)->snake()->toString();
         }
 

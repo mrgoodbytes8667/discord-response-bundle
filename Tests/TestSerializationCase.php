@@ -33,6 +33,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class TestSerializationCase extends TestCase
 {
+    use TestValidatorTrait;
+
     /**
      * @param string $file
      * @return string
@@ -66,10 +68,7 @@ abstract class TestSerializationCase extends TestCase
      */
     protected function getValidator()
     {
-        return Validation::createValidatorBuilder()
-            ->enableAnnotationMapping(true)
-            ->addDefaultDoctrineAnnotationReader()
-            ->getValidator();
+        return $this->validator ?? $this->createValidator();
     }
 
     /**
@@ -148,5 +147,23 @@ abstract class TestSerializationCase extends TestCase
             'label' => $label ?? $value,
             'value' => $value
         ]);
+    }
+
+    /**
+     * This method is called before each test.
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->validator = $this->createValidator();
+    }
+
+    /**
+     * This method is called after each test.
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->validator = null;
     }
 }

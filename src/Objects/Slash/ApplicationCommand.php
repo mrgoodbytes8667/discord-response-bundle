@@ -4,6 +4,7 @@ namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
+use Bytes\DiscordResponseBundle\Objects\Traits\NameDescriptionValueLengthTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ApplicationCommand implements IdInterface
 {
-    use IDTrait, NameTrait;
+    use IDTrait, NameTrait, NameDescriptionValueLengthTrait;
 
     /**
      * unique id of the parent application
@@ -34,13 +35,13 @@ class ApplicationCommand implements IdInterface
     /**
      * 1-32 character name matching ^[\w-]{1,32}$
      * @var string|null
-     * @Assert\Regex("/^[\w-]{1,32}$/")
      * @Assert\Length(
      *      min = 1,
      *      max = 32,
      *      minMessage = "Your name must be at least {{ limit }} characters long",
      *      maxMessage = "Your name cannot be longer than {{ limit }} characters"
      * )
+     * @Assert\Regex("/^[\w-]{1,32}$/")
      */
     private $name;
 
@@ -63,6 +64,7 @@ class ApplicationCommand implements IdInterface
      *      max = 10,
      *      maxMessage = "You cannot specify more than {{ limit }} options per command"
      * )
+     * @Assert\Valid()
      */
     private $options;
 
@@ -146,6 +148,40 @@ class ApplicationCommand implements IdInterface
             $this->options[] = $option;
         }
         return $this;
+    }
+
+    /**
+     * @return int
+     * @Assert\LessThanOrEqual(4000,
+     *      message = "Your combined name, description, and value properties for each command and its subcommands and groups ({{ value }}) cannot be longer than {{ compared_value }} characters"
+     * )
+     */
+    public function getNameDescriptionValueCharacterLengthRecursively()
+    {
+        $length = $this->getNameDescriptionValueCharacterLength();
+        foreach ($this->options ?? [] as $option) {
+            $length += $option->getNameDescriptionValueCharacterLength();
+            if (!empty($option->getOptions())) {
+                foreach ($option->getOptions() as $i) {
+                    $length += $i->getNameDescriptionValueCharacterLength();
+                    foreach ($i->getOptions() as $j) {
+                        $length += $j->getNameDescriptionValueCharacterLength();
+                        if (!empty($j->getChoices())) {
+                            foreach ($j->getChoices() as $k) {
+                                $length += $k->getNameDescriptionValueCharacterLength();
+                            }
+                        }
+                    }
+                }
+            }
+            if (!empty($option->getChoices())) {
+                foreach ($option->getChoices() as $i) {
+                    $length += $i->getNameDescriptionValueCharacterLength();
+                }
+            }
+        }
+
+        return $length;
     }
 
 }

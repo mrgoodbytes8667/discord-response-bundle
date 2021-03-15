@@ -3,6 +3,7 @@
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType;
+use Bytes\DiscordResponseBundle\Objects\Traits\NameDescriptionValueLengthTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -20,7 +21,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ApplicationCommandOption
 {
-    use NameTrait;
+    use NameTrait, NameDescriptionValueLengthTrait;
 
     /**
      * value of ApplicationCommandOptionType
@@ -31,13 +32,13 @@ class ApplicationCommandOption
     /**
      * 1-32 character name matching ^[\w-]{1,32}$
      * @var string|null
-     * @Assert\Regex("/^[\w-]{1,32}$/")
      * @Assert\Length(
      *      min = 1,
      *      max = 32,
      *      minMessage = "Your name must be at least {{ limit }} characters long",
      *      maxMessage = "Your name cannot be longer than {{ limit }} characters"
      * )
+     * @Assert\Regex("/^[\w-]{1,32}$/")
      */
     private $name;
 
@@ -62,12 +63,18 @@ class ApplicationCommandOption
     /**
      * choices for string and int types for the user to pick from
      * @var ApplicationCommandOptionChoice[]|ArrayCollection|null
+     * @Assert\Count(
+     *      max = 10,
+     *      maxMessage = "You cannot specify more than {{ limit }} choices per command/option"
+     * )
+     * @Assert\Valid()
      */
     private $choices;
 
     /**
      * if the option is a subcommand or subcommand group type, this nested options will be the parameters
      * @var ApplicationCommandOption[]|ArrayCollection|null
+     * @Assert\Valid()
      */
     private $options;
 
