@@ -23,6 +23,16 @@ class Token implements ErrorInterface, AccessTokenInterface
     private $guild;
 
     /**
+     * @var string|null
+     */
+    private $error;
+
+    /**
+     * @var string|null
+     */
+    private $errorDescription;
+
+    /**
      * @return Guild|null
      */
     public function getGuild(): ?Guild
@@ -39,5 +49,42 @@ class Token implements ErrorInterface, AccessTokenInterface
         $this->guild = $guild;
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getError(): ?string
+    {
+        return $this->error;
+    }
+
+    /**
+     * @param string|null $error
+     * @return $this
+     */
+    public function setError(?string $error): self
+    {
+        $this->error = $error;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getErrorDescription(): ?string
+    {
+        return $this->errorDescription;
+    }
+
+    /**
+     * @param string|null $errorDescription
+     * @return $this
+     */
+    public function setErrorDescription(?string $errorDescription): self
+    {
+        $this->errorDescription = $errorDescription;
+        return $this;
+    }
+
 
 }
