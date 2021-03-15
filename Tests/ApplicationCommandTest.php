@@ -256,7 +256,7 @@ class ApplicationCommandTest extends TestCase
 
             /** @var ConstraintViolationInterface $violation */
             $violation = $exception->getViolations()[0];
-            $this->assertEquals('You cannot specify more than 10 options per command', $violation->getMessage());
+            $this->assertEquals('You cannot specify more than 25 options per command', $violation->getMessage());
             $this->assertEquals('options', $violation->getPropertyPath());
         }
     }
@@ -277,14 +277,14 @@ class ApplicationCommandTest extends TestCase
     {
         $optionTypes = $this->getCommandOptionTypes();
         $subcommands = [];
-        foreach (range(1, 10) as $index => $optionType) {
+        foreach (range(1, 2) as $index => $optionType) {
             $subcommands[] = Option::createSubcommand(ByteString::fromRandom(5), ByteString::fromRandom(5), [
                 Option::create(Arr::random($optionTypes), ByteString::fromRandom(5), ByteString::fromRandom(5), $index % 2 == 1 ? true : false)
             ]);
         }
 
         $groups = [];
-        foreach (range(1, 11) as $index) {
+        foreach (range(1, 26) as $index) {
             $groups[] = Option::createSubcommandGroup(ByteString::fromRandom(5), ByteString::fromRandom(5), $subcommands);
         }
 
@@ -295,7 +295,7 @@ class ApplicationCommandTest extends TestCase
 
             /** @var ConstraintViolationInterface $violation */
             $violation = $exception->getViolations()[0];
-            $this->assertEquals('You cannot specify more than 10 options per command', $violation->getMessage());
+            $this->assertEquals('You cannot specify more than 25 options per command', $violation->getMessage());
             $this->assertEquals('options', $violation->getPropertyPath());
         }
     }
@@ -304,7 +304,7 @@ class ApplicationCommandTest extends TestCase
     {
         $optionTypes = $this->getCommandOptionTypes();
         $groups = [];
-        foreach (range(1, 11) as $index) {
+        foreach (range(1, 26) as $index) {
             $groups[] = ApplicationCommandOptionChoice::create(ByteString::fromRandom(5));
         }
 
@@ -317,8 +317,34 @@ class ApplicationCommandTest extends TestCase
 
             /** @var ConstraintViolationInterface $violation */
             $violation = $exception->getViolations()[0];
-            $this->assertEquals('You cannot specify more than 10 choices per command/option', $violation->getMessage());
+            $this->assertEquals('You cannot specify more than 25 choices per command/option', $violation->getMessage());
             $this->assertEquals('options[0].choices', $violation->getPropertyPath());
+        }
+    }
+
+    public function testForNameDescriptionValuesTooLong()
+    {
+        $optionTypes = $this->getCommandOptionTypes();
+        $groups = [];
+        foreach (range(1, 25) as $index) {
+            $groups[] = ApplicationCommandOptionChoice::create(ByteString::fromRandom(30));
+        }
+
+        try {
+            $this->validate(ApplicationCommand::create(ByteString::fromRandom(), ByteString::fromRandom(), [
+                Option::create(Arr::random($optionTypes), ByteString::fromRandom(), ByteString::fromRandom(), false, $groups),
+                Option::create(Arr::random($optionTypes), ByteString::fromRandom(), ByteString::fromRandom(), false, $groups),
+                Option::create(Arr::random($optionTypes), ByteString::fromRandom(), ByteString::fromRandom(), false, $groups),
+                Option::create(Arr::random($optionTypes), ByteString::fromRandom(), ByteString::fromRandom(), false, $groups),
+                Option::create(Arr::random($optionTypes), ByteString::fromRandom(), ByteString::fromRandom(), false, $groups),
+            ]));
+        } catch (ValidationFailedException $exception) {
+            $this->assertEquals(1, count($exception->getViolations()));
+
+            /** @var ConstraintViolationInterface $violation */
+            $violation = $exception->getViolations()[0];
+            $this->assertStringMatchesFormat('Your combined name, description, and value properties for each command and its subcommands and groups (%d) cannot be longer than 4000 characters', $violation->getMessage());
+            $this->assertEquals('nameDescriptionValueCharacterLengthRecursively', $violation->getPropertyPath());
         }
     }
 

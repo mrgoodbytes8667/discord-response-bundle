@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class ApplicationCommand
  * An application command is the base "command" model that belongs to an application. This is what you are creating when you POST a new command.
- * A command, or each individual subcommand, can have a maximum of 10 options
+ * A command, or each individual subcommand, can have a maximum of 25 options
  *
  * @package Bytes\DiscordResponseBundle\Objects\Slash
  *
@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @property string|null $id unique id of the command
  *
- * @version v0.6.0 As of 2021-02-25 Discord Documentation
+ * @version v0.6.0 As of 2021-03-15 Discord Documentation
  */
 class ApplicationCommand implements IdInterface
 {
@@ -61,7 +61,7 @@ class ApplicationCommand implements IdInterface
      * the parameters for the command
      * @var ApplicationCommandOption[]|ArrayCollection|null
      * @Assert\Count(
-     *      max = 10,
+     *      max = 25,
      *      maxMessage = "You cannot specify more than {{ limit }} options per command"
      * )
      * @Assert\Valid()

@@ -11,13 +11,13 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Class ApplicationCommandOption
- * You can specify a maximum of 10 choices per option
+ * You can specify a maximum of 25 choices per option
  *
  * @package Bytes\DiscordResponseBundle\Objects\Slash
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoption
  *
- * @version v0.6.0 As of 2021-02-25 Discord Documentation
+ * @version v0.6.0 As of 2021-03-15 Discord Documentation
  */
 class ApplicationCommandOption
 {
@@ -64,7 +64,7 @@ class ApplicationCommandOption
      * choices for string and int types for the user to pick from
      * @var ApplicationCommandOptionChoice[]|ArrayCollection|null
      * @Assert\Count(
-     *      max = 10,
+     *      max = 25,
      *      maxMessage = "You cannot specify more than {{ limit }} choices per command/option"
      * )
      * @Assert\Valid()
