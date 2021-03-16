@@ -6,6 +6,7 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
@@ -18,7 +19,7 @@ use function Symfony\Component\String\u;
  *
  * @link https://discord.com/developers/docs/resources/user#get-current-user-guilds
  */
-class PartialGuild implements ErrorInterface, IdInterface
+class PartialGuild implements ErrorInterface, IdInterface, NameInterface
 {
     use IDTrait, NameTrait, ErrorTrait;
 

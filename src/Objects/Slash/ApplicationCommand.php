@@ -3,6 +3,7 @@
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameDescriptionValueLengthTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
@@ -22,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @version v0.6.0 As of 2021-03-15 Discord Documentation
  */
-class ApplicationCommand implements IdInterface
+class ApplicationCommand implements IdInterface, NameInterface
 {
     use IDTrait, NameTrait, NameDescriptionValueLengthTrait;
 
