@@ -8,6 +8,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameDescriptionValueLengthTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -156,6 +157,7 @@ class ApplicationCommand implements IdInterface, NameInterface
      * @Assert\LessThanOrEqual(4000,
      *      message = "Your combined name, description, and value properties for each command and its subcommands and groups ({{ value }}) cannot be longer than {{ compared_value }} characters"
      * )
+     * @Ignore()
      */
     public function getNameDescriptionValueCharacterLengthRecursively()
     {

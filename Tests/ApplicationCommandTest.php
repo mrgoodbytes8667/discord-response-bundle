@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 class ApplicationCommandTest extends TestCase
 {
-    use TestValidatorTrait;
+    use TestSerializerTrait, TestValidatorTrait;
 
     /**
      * @var ACOT[]
@@ -104,6 +104,17 @@ class ApplicationCommandTest extends TestCase
         }
 
         return $definition;
+    }
+
+    /**
+     * @param $command
+     * @dataProvider provideValidApplicationCommands
+     */
+    public function testSerializerDoesNotReturnIgnoredAnnotation(ApplicationCommand $command)
+    {
+        $serializer = $this->createSerializer();
+        $json = $serializer->serialize($command, 'json');
+        $this->assertStringNotContainsString('nameDescriptionValueCharacterLength', $json);
     }
 
     public function testCreateNameTooLong()

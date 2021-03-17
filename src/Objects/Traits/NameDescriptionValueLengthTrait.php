@@ -3,6 +3,8 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Traits;
 
+use Symfony\Component\Serializer\Annotation\Ignore;
+
 
 /**
  * Trait NameDescriptionValueLengthTrait
@@ -13,6 +15,7 @@ trait NameDescriptionValueLengthTrait
     /**
      * Calculates the combined character length of the name, description, and value fields (if they exist)
      * @return int
+     * @Ignore()
      */
     public function getNameDescriptionValueCharacterLength()
     {
