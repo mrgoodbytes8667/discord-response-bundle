@@ -7,6 +7,8 @@ namespace Bytes\DiscordResponseBundle\Objects\Embed\Traits;
 /**
  * Trait NameTrait
  * @package Bytes\DiscordResponseBundle\Objects\Embed\Traits
+ *
+ * @deprecated v0.7.0 Replace with Bytes\DiscordResponseBundle\Objects\Traits\NameTrait
  */
 trait NameTrait
 {
