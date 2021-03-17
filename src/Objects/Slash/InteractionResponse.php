@@ -6,14 +6,21 @@ use Bytes\DiscordResponseBundle\Enums\InteractionResponseType;
 
 /**
  * Class InteractionResponse
- * After receiving an interaction, you must respond to acknowledge it. This may be a pong for a ping, a message, or simply an acknowledgement that you have received it and will handle the command async.
- * Interaction responses may choose to "eat" the user's command input if you do not wish to have their slash command show up as message in chat. This may be helpful for slash commands, or commands whose responses are asynchronous or ephemeral messages.
+ * After receiving an interaction, you must respond to acknowledge it. You can choose to respond with a message
+ * immediately using type 4, or you can choose to send a deferred response with type 5. If choosing a deferred response,
+ * the user will see a loading state for the interaction, and you'll have up to 15 minutes to edit the original deferred
+ * response using Edit Original Interaction Response.
+ *
+ * A deferred response tells the user "Bot name is thinking"
+ *
+ * Interaction responses can also be public—everyone can see it—or "ephemeral"—only the invoking user can see it. That
+ * is determined by setting flags to 64 on the InteractionApplicationCommandCallbackData.
  *
  * @package Bytes\DiscordResponseBundle\Objects\Slash
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#interaction-response
  *
- * @version v0.6.0 As of 2021-02-25 Discord Documentation
+ * @version v0.7.0 As of 2021-03-17 Discord Documentation
  */
 class InteractionResponse
 {

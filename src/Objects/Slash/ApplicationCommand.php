@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#applicationcommand
  *
- * @property string|null $id unique id of the command
+ * @property string|null $id unique id of the command (snowflake)
  *
  * @version v0.6.0 As of 2021-03-15 Discord Documentation
  */
@@ -28,7 +28,7 @@ class ApplicationCommand implements IdInterface, NameInterface
     use IDTrait, NameTrait, NameDescriptionValueLengthTrait;
 
     /**
-     * unique id of the parent application
+     * unique id of the parent application (snowflake)
      * @var string|null
      */
     private $applicationId;

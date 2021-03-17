@@ -8,6 +8,7 @@ use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Member;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
+use Bytes\DiscordResponseBundle\Objects\User;
 
 /**
  * Class Interaction
@@ -17,10 +18,10 @@ use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#interaction
  *
- * @property string|null $id id of the interaction
- * @property string|null $guildId the guild it was sent from
+ * @property string|null $id id of the interaction (snowflake)
+ * @property string|null $guildId the guild it was sent from (snowflake)
  *
- * @version v0.6.0 As of 2021-02-25 Discord Documentation
+ * @version v0.7.0 As of 2021-03-17 Discord Documentation
  */
 class Interaction implements IdInterface, GuildIdInterface
 {
@@ -47,9 +48,17 @@ class Interaction implements IdInterface, GuildIdInterface
 
     /**
      * guild member data for the invoking user, including permissions
+     * member is sent when the command is invoked in a guild, and user is sent when invoked in a DM
      * @var Member|null
      */
     private $member;
+
+    /**
+     * user object for the invoking user, if invoked in a DM
+     * member is sent when the command is invoked in a guild, and user is sent when invoked in a DM
+     * @var User|null
+     */
+    private $user;
 
     /**
      * a continuation token for responding to the interaction
@@ -132,6 +141,24 @@ class Interaction implements IdInterface, GuildIdInterface
     public function setMember(?Member $member): Interaction
     {
         $this->member = $member;
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     * @return $this
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
         return $this;
     }
 

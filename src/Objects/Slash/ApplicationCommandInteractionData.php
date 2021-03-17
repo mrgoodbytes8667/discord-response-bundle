@@ -13,7 +13,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#interaction-applicationcommandinteractiondata
  *
- * @property string|null $id the ID of the invoked command
+ * @property string|null $id the ID of the invoked command (snowflake)
  * @property string|null $name the name of the invoked command
  *
  * @version v0.6.0 As of 2021-02-25 Discord Documentation

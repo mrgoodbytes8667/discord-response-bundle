@@ -8,6 +8,7 @@ use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
+use Bytes\DiscordResponseBundle\Objects\Slash\MessageInteraction;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
@@ -18,6 +19,8 @@ use Exception;
 /**
  * Class Message
  * @package Bytes\DiscordResponseBundle\Objects
+ *
+ * @version v0.7.0 As of 2021-03-17 Discord Documentation
  */
 class Message implements ErrorInterface, IdInterface, GuildIdInterface
 {
@@ -157,6 +160,28 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface
      * @var integer|null
      */
     private $flags;
+
+    /**
+     * the stickers sent with the message (bots currently can only receive messages with stickers, not send)
+     * @todo
+     * @var mixed
+     */
+    private $stickers;
+
+    /**
+     * the message associated with the message_reference
+     * This field is only returned for messages with a type of 19 (REPLY). If the message is a reply but the
+     * referenced_message field is not present, the backend did not attempt to fetch the message that was being replied
+     * to, so its state is unknown. If the field exists but is null, the referenced message was deleted.
+     * @var Message|null
+     */
+    private $referencedMessage;
+
+    /**
+     * sent if the message is a response to an Interaction
+     * @var MessageInteraction|null
+     */
+    private $interaction;
 
     /**
      * @return string|null
@@ -558,5 +583,39 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface
         return $this;
     }
 
+    /**
+     * @return Message|null
+     */
+    public function getReferencedMessage(): ?Message
+    {
+        return $this->referencedMessage;
+    }
 
+    /**
+     * @param Message|null $referencedMessage
+     * @return $this
+     */
+    public function setReferencedMessage(?Message $referencedMessage): self
+    {
+        $this->referencedMessage = $referencedMessage;
+        return $this;
+    }
+
+    /**
+     * @return MessageInteraction|null
+     */
+    public function getInteraction(): ?MessageInteraction
+    {
+        return $this->interaction;
+    }
+
+    /**
+     * @param MessageInteraction|null $interaction
+     * @return $this
+     */
+    public function setInteraction(?MessageInteraction $interaction): self
+    {
+        $this->interaction = $interaction;
+        return $this;
+    }
 }
