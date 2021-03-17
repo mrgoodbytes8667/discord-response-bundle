@@ -66,6 +66,16 @@ class DeserializationTest extends TestSerializationCase
         $this->checkForNullErrors($output);
     }
 
+    public function testRoleV6Deserialization()
+    {
+        $this->markTestIncomplete('@todo');
+    }
+
+    public function testRoleV8Deserialization()
+    {
+        $this->markTestIncomplete('@todo');
+    }
+
     public function testV8ArrayErrorDeserialization()
     {
         $serializer = $this->createSerializer();
