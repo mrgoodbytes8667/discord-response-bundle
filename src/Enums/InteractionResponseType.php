@@ -31,8 +31,6 @@ class InteractionResponseType extends Enum
     {
         return [
             "pong" => 1,
-            "acknowledge" => 2, // Deprecated
-            "channelMessage" => 3, // Deprecated
             "channelMessageWithSource" => 4,
             "deferredChannelMessageWithSource" => 5,
         ];
@@ -44,41 +42,5 @@ class InteractionResponseType extends Enum
     public function jsonSerialize()
     {
         return $this->value;
-    }
-
-    /**
-     * ACK a command without sending a message, eating the user's input
-     * @return InteractionResponseType
-     * @deprecated v0.7.0 Deprecated by Discord and will stop functioning on April 9, 2021. Use `channelMessageWithSource()` or `deferredChannelMessageWithSource()` instead.
-     * @link https://discord.com/developers/docs/change-log#march-5-2021
-     */
-    public static function acknowledge()
-    {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.7.0', 'The "%s()" method has been deprecated by Discord and will stop functioning on April 9, 2021. Use `channelMessageWithSource()` or `deferredChannelMessageWithSource()` instead.', __METHOD__);
-        return static::make(2);
-    }
-
-    /**
-     * respond with a message, eating the user's input
-     * @return InteractionResponseType
-     * @deprecated v0.7.0 Deprecated by Discord and will stop functioning on April 9, 2021. Use `channelMessageWithSource()` or `deferredChannelMessageWithSource()` instead.
-     * @link https://discord.com/developers/docs/change-log#march-5-2021
-     */
-    public static function channelMessage()
-    {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.7.0', 'The "%s()" method has been deprecated by Discord and will stop functioning on April 9, 2021. Use `channelMessageWithSource()` or `deferredChannelMessageWithSource()` instead.', __METHOD__);
-        return static::make('channelMessage');
-    }
-
-    /**
-     * ACK a command without sending a message, showing the user's input
-     * @return InteractionResponseType
-     * @deprecated v0.7.0 Deprecated by Discord and will stop functioning on April 9, 2021. Use deferredChannelMessageWithSource() instead.
-     * @link https://discord.com/developers/docs/change-log#march-5-2021
-     */
-    public static function acknowledgeWithSource()
-    {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.7.0', 'The "%s()" method has been deprecated by Discord and will stop functioning on April 9, 2021. Use `deferredChannelMessageWithSource()` instead.', __METHOD__);
-        return static::make('deferredChannelMessageWithSource');
     }
 }
