@@ -3,8 +3,14 @@
 [![Packagist Version](https://img.shields.io/packagist/v/mrgoodbytes8667/discord-response-bundle?style=flat)](https://packagist.org/packages/mrgoodbytes8667/discord-response-bundle)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mrgoodbytes8667/discord-response-bundle/release?style=flat&label=stable)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mrgoodbytes8667/discord-response-bundle/tests?style=flat)
-![Packagist License](https://img.shields.io/packagist/l/mrgoodbytes8667/discord-response-bundle?style=flat)    
+![Symfony Version](https://img.shields.io/badge/symfony-^5.2-lightgrey?style=flat)
+![Discord API Version](https://img.shields.io/badge/discord-v6-lightgrey?style=flat)
+![Packagist License](https://img.shields.io/packagist/l/mrgoodbytes8667/discord-response-bundle?style=flat)
+
 A Symfony bundle for Discord API Response objects and enums
+
+## Discord API Support
+Starting with release 0.7, there will be mixed support for the Discord API version 6 along with Discord API version 8. **Not all models are currently fully compatible with v8.**
 
 ## Installation
 
