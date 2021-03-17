@@ -4,11 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Objects;
 
 
-use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\DeletedTrait;
-use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
-use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
-use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**

@@ -4,9 +4,13 @@
 namespace Bytes\DiscordResponseBundle\Objects\Interfaces;
 
 
+use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
+
 /**
  * Interface NameInterface
  * @package Bytes\DiscordResponseBundle\Objects\Interfaces
+ *
+ * @see NameTrait
  */
 interface NameInterface
 {

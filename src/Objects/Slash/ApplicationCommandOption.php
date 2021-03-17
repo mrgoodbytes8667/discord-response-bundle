@@ -3,6 +3,7 @@
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameDescriptionValueLengthTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,7 +20,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @version v0.6.0 As of 2021-03-15 Discord Documentation
  */
-class ApplicationCommandOption
+class ApplicationCommandOption implements NameInterface
 {
     use NameTrait, NameDescriptionValueLengthTrait;
 

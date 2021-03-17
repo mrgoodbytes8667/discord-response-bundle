@@ -2,9 +2,8 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
+use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class ApplicationCommandInteractionDataOption
@@ -19,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @version v0.6.0 As of 2021-02-25 Discord Documentation
  */
-class ApplicationCommandInteractionDataOption
+class ApplicationCommandInteractionDataOption implements NameInterface
 {
     use NameTrait;
 

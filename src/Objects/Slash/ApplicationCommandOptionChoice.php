@@ -2,6 +2,7 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
+use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameDescriptionValueLengthTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,7 +18,7 @@ use function Symfony\Component\String\u;
  *
  * @version v0.6.0 As of 2021-02-25 Discord Documentation
  */
-class ApplicationCommandOptionChoice
+class ApplicationCommandOptionChoice implements NameInterface
 {
     use NameTrait, NameDescriptionValueLengthTrait;
 

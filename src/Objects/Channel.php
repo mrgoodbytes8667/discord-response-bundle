@@ -7,6 +7,7 @@ namespace Bytes\DiscordResponseBundle\Objects;
 use Bytes\DiscordResponseBundle\Enums\ChannelTypes;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\DeletedTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
@@ -19,7 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *
  * @link https://discord.com/developers/docs/resources/channel#channel-object
  */
-class Channel implements ErrorInterface, IdInterface
+class Channel implements ErrorInterface, IdInterface, NameInterface
 {
     use IDTrait, NameTrait, ErrorTrait, DeletedTrait;
 
