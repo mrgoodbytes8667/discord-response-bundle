@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @property string|null $id unique id of the command (snowflake)
  *
- * @version v0.6.0 As of 2021-03-15 Discord Documentation
+ * @version v0.7.0 As of 2021-03-17 Discord Documentation
  */
 class ApplicationCommand implements IdInterface, NameInterface
 {

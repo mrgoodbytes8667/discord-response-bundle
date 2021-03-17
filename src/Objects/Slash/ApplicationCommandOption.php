@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoption
  *
- * @version v0.6.0 As of 2021-03-15 Discord Documentation
+ * @version v0.7.0 As of 2021-03-17 Discord Documentation
  */
 class ApplicationCommandOption implements NameInterface
 {

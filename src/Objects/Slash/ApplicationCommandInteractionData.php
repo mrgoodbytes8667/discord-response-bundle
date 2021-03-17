@@ -16,7 +16,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
  * @property string|null $id the ID of the invoked command (snowflake)
  * @property string|null $name the name of the invoked command
  *
- * @version v0.6.0 As of 2021-02-25 Discord Documentation
+ * @version v0.7.0 As of 2021-03-17 Discord Documentation
  */
 class ApplicationCommandInteractionData implements IdInterface, NameInterface
 {

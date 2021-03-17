@@ -16,7 +16,7 @@ use function Symfony\Component\String\u;
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoptionchoice
  *
- * @version v0.6.0 As of 2021-02-25 Discord Documentation
+ * @version v0.7.0 As of 2021-03-17 Discord Documentation
  */
 class ApplicationCommandOptionChoice implements NameInterface
 {
