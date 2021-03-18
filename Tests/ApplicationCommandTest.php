@@ -7,6 +7,9 @@ use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommand;
 use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommandOption as Option;
 use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommandOptionChoice;
 use Bytes\EnumSerializerBundle\Enums\Enum;
+use Bytes\Tests\Common\TestEnumTrait;
+use Bytes\Tests\Common\TestSerializerTrait;
+use Bytes\Tests\Common\TestValidatorTrait;
 use Generator;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +21,7 @@ use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 class ApplicationCommandTest extends TestCase
 {
-    use TestSerializerTrait, TestValidatorTrait;
+    use TestSerializerTrait, TestValidatorTrait, TestEnumTrait;
 
     /**
      * @var ACOT[]
@@ -49,7 +52,7 @@ class ApplicationCommandTest extends TestCase
         ])];
 
         /** @var ACOT[] $optionTypes */
-        $optionTypes = $this->extractAllFromEnum(ACOT::class);
+        $optionTypes = self::extractAllFromEnum(ACOT::class);
 
         $subcommands = [];
 
@@ -82,28 +85,6 @@ class ApplicationCommandTest extends TestCase
         }
 
         yield ['command' => ApplicationCommand::create(ByteString::fromRandom(), ByteString::fromRandom(), $groups)];
-    }
-
-    /**
-     * @param object|string $enum
-     * @return Enum[]
-     * @throws ReflectionException
-     */
-    protected function extractAllFromEnum($enum)
-    {
-        $reflectionClass = new ReflectionClass($enum);
-
-        $docComment = $reflectionClass->getDocComment();
-
-        preg_match_all('/@method\s+static\s+self\s+([\w_]+)\(\)/', $docComment, $matches);
-
-        $definition = [];
-
-        foreach ($matches[1] as $methodName) {
-            $definition[] = $enum::make($methodName);
-        }
-
-        return $definition;
     }
 
     /**

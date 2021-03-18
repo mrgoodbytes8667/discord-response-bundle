@@ -445,85 +445,86 @@ class SerializationTest extends TestSerializationCase
         new Emojis('abc123');
     }
 
-    public function testJsonErrorCodesSerialization()
+    /**
+     * @dataProvider provideJsonErrorCodes
+     * @param $label
+     * @param $value
+     */
+    public function testJsonErrorCodesSerialization($label, $value)
     {
         $serializer = $this->createSerializer();
+        $output = $serializer->serialize(new JsonErrorCodes($label), 'json');
+        $this->assertEquals($this->buildFixtureResponseIntValue($value, $label), $output);
+    }
 
-        foreach ([
-                     'GENERAL_ERROR' => 0,
-                     'UNKNOWN_ACCOUNT' => 10001,
-                     'UNKNOWN_APPLICATION' => 10002,
-                     'UNKNOWN_CHANNEL' => 10003,
-                     'UNKNOWN_GUILD' => 10004,
-                     'UNKNOWN_INTEGRATION' => 10005,
-                     'UNKNOWN_INVITE' => 10006,
-                     'UNKNOWN_MEMBER' => 10007,
-                     'UNKNOWN_MESSAGE' => 10008,
-                     'UNKNOWN_PERMISSION_OVERWRITE' => 10009,
-                     'UNKNOWN_PROVIDER' => 10010,
-                     'UNKNOWN_ROLE' => 10011,
-                     'UNKNOWN_TOKEN' => 10012,
-                     'UNKNOWN_USER' => 10013,
-                     'UNKNOWN_EMOJI' => 10014,
-                     'UNKNOWN_WEBHOOK' => 10015,
-                     'UNKNOWN_BAN' => 10026,
-                     'UNKNOWN_SKU' => 10027,
-                     'UNKNOWN_STORE_LISTING' => 10028,
-                     'UNKNOWN_ENTITLEMENT' => 10029,
-                     'UNKNOWN_BUILD' => 10030,
-                     'UNKNOWN_LOBBY' => 10031,
-                     'UNKNOWN_BRANCH' => 10032,
-                     'UNKNOWN_REDISTRIBUTABLE' => 10036,
-                     'BOTS_CANNOT_USE_THIS_ENDPOINT' => 20001,
-                     'ONLY_BOTS_CAN_USE_THIS_ENDPOINT' => 20002,
-                     'MAXIMUM_NUMBER_OF_GUILDS_REACHED' => 30001,
-                     'MAXIMUM_NUMBER_OF_FRIENDS_REACHED' => 30002,
-                     'MAXIMUM_NUMBER_OF_PINS_REACHED_FOR_THE_CHANNEL' => 30003,
-                     'MAXIMUM_NUMBER_OF_GUILD_ROLES_REACHED' => 30005,
-                     'MAXIMUM_NUMBER_OF_WEBHOOKS_REACHED' => 30007,
-                     'MAXIMUM_NUMBER_OF_REACTIONS_REACHED' => 30010,
-                     'MAXIMUM_NUMBER_OF_GUILD_CHANNELS_REACHED' => 30013,
-                     'MAXIMUM_NUMBER_OF_ATTACHMENTS_IN_A_MESSAGE_REACHED' => 30015,
-                     'MAXIMUM_NUMBER_OF_INVITES_REACHED' => 30016,
-                     'UNAUTHORIZED' => 40001,
-                     'YOU_NEED_TO_VERIFY_YOUR_ACCOUNT_IN_ORDER_TO_PERFORM_THIS_ACTION' => 40002,
-                     'REQUEST_ENTITY_TOO_LARGE' => 40005,
-                     'THIS_FEATURE_HAS_BEEN_TEMPORARILY_DISABLED_SERVER_SIDE' => 40006,
-                     'THE_USER_IS_BANNED_FROM_THIS_GUILD' => 40007,
-                     'MISSING_ACCESS' => 50001,
-                     'INVALID_ACCOUNT_TYPE' => 50002,
-                     'CANNOT_EXECUTE_ACTION_ON_A_DM_CHANNEL' => 50003,
-                     'GUILD_WIDGET_DISABLED' => 50004,
-                     'CANNOT_EDIT_A_MESSAGE_AUTHORED_BY_ANOTHER_USER' => 50005,
-                     'CANNOT_SEND_AN_EMPTY_MESSAGE' => 50006,
-                     'CANNOT_SEND_MESSAGES_TO_THIS_USER' => 50007,
-                     'CANNOT_SEND_MESSAGES_IN_A_VOICE_CHANNEL' => 50008,
-                     'CHANNEL_VERIFICATION_LEVEL_IS_TOO_HIGH_FOR_YOU_TO_GAIN_ACCESS' => 50009,
-                     'OAUTH2_APPLICATION_DOES_NOT_HAVE_A_BOT' => 50010,
-                     'OAUTH2_APPLICATION_LIMIT_REACHED' => 50011,
-                     'INVALID_OAUTH2_STATE' => 50012,
-                     'YOU_LACK_PERMISSIONS_TO_PERFORM_THAT_ACTION' => 50013,
-                     'INVALID_AUTHENTICATION_TOKEN_PROVIDED' => 50014,
-                     'NOTE_WAS_TOO_LONG' => 50015,
-                     'PROVIDED_TOO_FEW_OR_TOO_MANY_MESSAGES_TO_DELETE' => 50016,
-                     'A_MESSAGE_CAN_ONLY_BE_PINNED_TO_THE_CHANNEL_IT_WAS_SENT_IN' => 50019,
-                     'INVITE_CODE_WAS_EITHER_INVALID_OR_TAKEN' => 50020,
-                     'CANNOT_EXECUTE_ACTION_ON_A_SYSTEM_MESSAGE' => 50021,
-                     'INVALID_OAUTH2_ACCESS_TOKEN_PROVIDED' => 50025,
-                     'A_MESSAGE_PROVIDED_WAS_TOO_OLD_TO_BULK_DELETE' => 50034,
-                     'INVALID_FORM_BODY' => 50035,
-                     'AN_INVITE_WAS_ACCEPTED_TO_A_GUILD_THE_APPLICATIONS_BOT_IS_NOT_IN' => 50036,
-                     'INVALID_API_VERSION_PROVIDED' => 50041,
-                     'REACTION_WAS_BLOCKED' => 90001,
-                     'API_RESOURCE_IS_CURRENTLY_OVERLOADED' => 130000,
-                 ] as $label => $value) {
-            $output = $serializer->serialize(new JsonErrorCodes($label), 'json');
-
-            $this->assertEquals($this->buildFixtureResponseIntValue($value, $label), $output);
-        }
-
-        $this->assertTrue(JsonErrorCodes::isValid('GENERAL_ERROR'));
-        $this->assertFalse(JsonErrorCodes::isValid('abc123'));
+    public function provideJsonErrorCodes()
+    {
+        yield ['label' => 'GENERAL_ERROR' , 'value' =>  0];
+        yield ['label' => 'UNKNOWN_ACCOUNT' , 'value' =>  10001];
+        yield ['label' => 'UNKNOWN_APPLICATION' , 'value' =>  10002];
+        yield ['label' => 'UNKNOWN_CHANNEL' , 'value' =>  10003];
+        yield ['label' => 'UNKNOWN_GUILD' , 'value' =>  10004];
+        yield ['label' => 'UNKNOWN_INTEGRATION' , 'value' =>  10005];
+        yield ['label' => 'UNKNOWN_INVITE' , 'value' =>  10006];
+        yield ['label' => 'UNKNOWN_MEMBER' , 'value' =>  10007];
+        yield ['label' => 'UNKNOWN_MESSAGE' , 'value' =>  10008];
+        yield ['label' => 'UNKNOWN_PERMISSION_OVERWRITE' , 'value' =>  10009];
+        yield ['label' => 'UNKNOWN_PROVIDER' , 'value' =>  10010];
+        yield ['label' => 'UNKNOWN_ROLE' , 'value' =>  10011];
+        yield ['label' => 'UNKNOWN_TOKEN' , 'value' =>  10012];
+        yield ['label' => 'UNKNOWN_USER' , 'value' =>  10013];
+        yield ['label' => 'UNKNOWN_EMOJI' , 'value' =>  10014];
+        yield ['label' => 'UNKNOWN_WEBHOOK' , 'value' =>  10015];
+        yield ['label' => 'UNKNOWN_BAN' , 'value' =>  10026];
+        yield ['label' => 'UNKNOWN_SKU' , 'value' =>  10027];
+        yield ['label' => 'UNKNOWN_STORE_LISTING' , 'value' =>  10028];
+        yield ['label' => 'UNKNOWN_ENTITLEMENT' , 'value' =>  10029];
+        yield ['label' => 'UNKNOWN_BUILD' , 'value' =>  10030];
+        yield ['label' => 'UNKNOWN_LOBBY' , 'value' =>  10031];
+        yield ['label' => 'UNKNOWN_BRANCH' , 'value' =>  10032];
+        yield ['label' => 'UNKNOWN_REDISTRIBUTABLE' , 'value' =>  10036];
+        yield ['label' => 'BOTS_CANNOT_USE_THIS_ENDPOINT' , 'value' =>  20001];
+        yield ['label' => 'ONLY_BOTS_CAN_USE_THIS_ENDPOINT' , 'value' =>  20002];
+        yield ['label' => 'MAXIMUM_NUMBER_OF_GUILDS_REACHED' , 'value' =>  30001];
+        yield ['label' => 'MAXIMUM_NUMBER_OF_FRIENDS_REACHED' , 'value' =>  30002];
+        yield ['label' => 'MAXIMUM_NUMBER_OF_PINS_REACHED_FOR_THE_CHANNEL' , 'value' =>  30003];
+        yield ['label' => 'MAXIMUM_NUMBER_OF_GUILD_ROLES_REACHED' , 'value' =>  30005];
+        yield ['label' => 'MAXIMUM_NUMBER_OF_WEBHOOKS_REACHED' , 'value' =>  30007];
+        yield ['label' => 'MAXIMUM_NUMBER_OF_REACTIONS_REACHED' , 'value' =>  30010];
+        yield ['label' => 'MAXIMUM_NUMBER_OF_GUILD_CHANNELS_REACHED' , 'value' =>  30013];
+        yield ['label' => 'MAXIMUM_NUMBER_OF_ATTACHMENTS_IN_A_MESSAGE_REACHED' , 'value' =>  30015];
+        yield ['label' => 'MAXIMUM_NUMBER_OF_INVITES_REACHED' , 'value' =>  30016];
+        yield ['label' => 'UNAUTHORIZED' , 'value' =>  40001];
+        yield ['label' => 'YOU_NEED_TO_VERIFY_YOUR_ACCOUNT_IN_ORDER_TO_PERFORM_THIS_ACTION' , 'value' =>  40002];
+        yield ['label' => 'REQUEST_ENTITY_TOO_LARGE' , 'value' =>  40005];
+        yield ['label' => 'THIS_FEATURE_HAS_BEEN_TEMPORARILY_DISABLED_SERVER_SIDE' , 'value' =>  40006];
+        yield ['label' => 'THE_USER_IS_BANNED_FROM_THIS_GUILD' , 'value' =>  40007];
+        yield ['label' => 'MISSING_ACCESS' , 'value' =>  50001];
+        yield ['label' => 'INVALID_ACCOUNT_TYPE' , 'value' =>  50002];
+        yield ['label' => 'CANNOT_EXECUTE_ACTION_ON_A_DM_CHANNEL' , 'value' =>  50003];
+        yield ['label' => 'GUILD_WIDGET_DISABLED' , 'value' =>  50004];
+        yield ['label' => 'CANNOT_EDIT_A_MESSAGE_AUTHORED_BY_ANOTHER_USER' , 'value' =>  50005];
+        yield ['label' => 'CANNOT_SEND_AN_EMPTY_MESSAGE' , 'value' =>  50006];
+        yield ['label' => 'CANNOT_SEND_MESSAGES_TO_THIS_USER' , 'value' =>  50007];
+        yield ['label' => 'CANNOT_SEND_MESSAGES_IN_A_VOICE_CHANNEL' , 'value' =>  50008];
+        yield ['label' => 'CHANNEL_VERIFICATION_LEVEL_IS_TOO_HIGH_FOR_YOU_TO_GAIN_ACCESS' , 'value' =>  50009];
+        yield ['label' => 'OAUTH2_APPLICATION_DOES_NOT_HAVE_A_BOT' , 'value' =>  50010];
+        yield ['label' => 'OAUTH2_APPLICATION_LIMIT_REACHED' , 'value' =>  50011];
+        yield ['label' => 'INVALID_OAUTH2_STATE' , 'value' =>  50012];
+        yield ['label' => 'YOU_LACK_PERMISSIONS_TO_PERFORM_THAT_ACTION' , 'value' =>  50013];
+        yield ['label' => 'INVALID_AUTHENTICATION_TOKEN_PROVIDED' , 'value' =>  50014];
+        yield ['label' => 'NOTE_WAS_TOO_LONG' , 'value' =>  50015];
+        yield ['label' => 'PROVIDED_TOO_FEW_OR_TOO_MANY_MESSAGES_TO_DELETE' , 'value' =>  50016];
+        yield ['label' => 'A_MESSAGE_CAN_ONLY_BE_PINNED_TO_THE_CHANNEL_IT_WAS_SENT_IN' , 'value' =>  50019];
+        yield ['label' => 'INVITE_CODE_WAS_EITHER_INVALID_OR_TAKEN' , 'value' =>  50020];
+        yield ['label' => 'CANNOT_EXECUTE_ACTION_ON_A_SYSTEM_MESSAGE' , 'value' =>  50021];
+        yield ['label' => 'INVALID_OAUTH2_ACCESS_TOKEN_PROVIDED' , 'value' =>  50025];
+        yield ['label' => 'A_MESSAGE_PROVIDED_WAS_TOO_OLD_TO_BULK_DELETE' , 'value' =>  50034];
+        yield ['label' => 'INVALID_FORM_BODY' , 'value' =>  50035];
+        yield ['label' => 'AN_INVITE_WAS_ACCEPTED_TO_A_GUILD_THE_APPLICATIONS_BOT_IS_NOT_IN' , 'value' =>  50036];
+        yield ['label' => 'INVALID_API_VERSION_PROVIDED' , 'value' =>  50041];
+        yield ['label' => 'REACTION_WAS_BLOCKED' , 'value' =>  90001];
+        yield ['label' => 'API_RESOURCE_IS_CURRENTLY_OVERLOADED' , 'value' =>  130000];
     }
 
     public function testJsonErrorCodesSerializationBadKey()

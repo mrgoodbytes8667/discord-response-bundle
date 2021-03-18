@@ -4,6 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Tests;
 
 
+use Bytes\DiscordResponseBundle\Objects\Guild;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\PartialGuild;
 use Bytes\DiscordResponseBundle\Objects\User;
@@ -34,14 +35,9 @@ class DeserializationTest extends TestSerializationCase
 
     public function testPartialGuildV6Deserialization()
     {
-        $serializer = $this->createSerializer();
-
         /** @var PartialGuild $output */
-        $output = $serializer->deserialize(file_get_contents(self::getFixturesFile('partial-guild-v6.json')), PartialGuild::class, 'json');
+        $output = $this->deserializeGuild('partial-guild-v6.json', PartialGuild::class);
 
-        $this->assertEquals("732307126930327628", $output->getId());
-        $this->assertEquals("PZjj2rimTJQeMYYTCKKw7siBknEUdE", $output->getName());
-        $this->assertEquals('cfbc5b55d417d6fee18c89c8122e7fe7', $output->getIcon());
         $this->assertFalse($output->getOwner());
         $this->assertEquals(372633152, $output->getPermissions());
         $this->assertIsInt($output->getPermissions());
@@ -51,14 +47,9 @@ class DeserializationTest extends TestSerializationCase
 
     public function testPartialGuildV8Deserialization()
     {
-        $serializer = $this->createSerializer();
-
         /** @var PartialGuild $output */
-        $output = $serializer->deserialize(file_get_contents(self::getFixturesFile('partial-guild-v8.json')), PartialGuild::class, 'json');
+        $output = $this->deserializeGuild('partial-guild-v8.json', PartialGuild::class);
 
-        $this->assertEquals("732307126930327628", $output->getId());
-        $this->assertEquals("PZjj2rimTJQeMYYTCKKw7siBknEUdE", $output->getName());
-        $this->assertEquals('cfbc5b55d417d6fee18c89c8122e7fe7', $output->getIcon());
         $this->assertFalse($output->getOwner());
         $this->assertEquals('6815084096', $output->getPermissions());
         $this->assertIsString($output->getPermissions());
@@ -68,12 +59,82 @@ class DeserializationTest extends TestSerializationCase
 
     public function testRoleV6Deserialization()
     {
-        $this->markTestIncomplete('@todo');
+        /** @var Guild $output */
+        $output = $this->deserializeGuild('guild-v6.json', Guild::class);
+
+        $this->assertNull($output->getOwner());
+        $this->assertNull($output->getPermissions());
+
+        $this->assertCount(2, $output->getRoles());
+
+        $roles = $output->getRoles();
+
+        $role = array_pop($roles);
+        $this->assertEquals('714479665842275767', $role->getId());
+        $this->assertEquals('Manager', $role->getName());
+        $this->assertFalse($role->getMentionable());
+
+        $this->assertIsNumeric($role->getPermissions());
+        $this->assertIsInt($role->getPermissions());
+        $this->assertEquals(104320577, $role->getPermissions());
+
+        $role = array_pop($roles);
+        $this->assertEquals('732307126930327628', $role->getId());
+        $this->assertEquals('@everyone', $role->getName());
+        $this->assertFalse($role->getMentionable());
+
+        $this->assertIsNumeric($role->getPermissions());
+        $this->assertIsInt($role->getPermissions());
+        $this->assertEquals(104320577, $role->getPermissions());
+
+        $this->checkForNullErrors($output);
+    }
+
+    protected function deserializeGuild(string $file, string $class)
+    {
+        $serializer = $this->createSerializer();
+
+        /** @var PartialGuild|Guild $output */
+        $output = $serializer->deserialize(file_get_contents(self::getFixturesFile($file)), $class, 'json');
+
+        $this->assertEquals("732307126930327628", $output->getId());
+        $this->assertEquals("PZjj2rimTJQeMYYTCKKw7siBknEUdE", $output->getName());
+        $this->assertEquals('cfbc5b55d417d6fee18c89c8122e7fe7', $output->getIcon());
+
+        return $output;
     }
 
     public function testRoleV8Deserialization()
     {
-        $this->markTestIncomplete('@todo');
+        /** @var Guild $output */
+        $output = $this->deserializeGuild('guild-v8.json', Guild::class);
+
+        $this->assertNull($output->getOwner());
+        $this->assertNull($output->getPermissions());
+
+        $this->assertCount(2, $output->getRoles());
+
+        $roles = $output->getRoles();
+
+        $role = array_pop($roles);
+        $this->assertEquals('714479665842275767', $role->getId());
+        $this->assertEquals('Manager', $role->getName());
+        $this->assertFalse($role->getMentionable());
+
+        $this->assertIsNumeric($role->getPermissions());
+        $this->assertIsString($role->getPermissions());
+        $this->assertEquals('6546771521', $role->getPermissions());
+
+        $role = array_pop($roles);
+        $this->assertEquals('732307126930327628', $role->getId());
+        $this->assertEquals('@everyone', $role->getName());
+        $this->assertFalse($role->getMentionable());
+
+        $this->assertIsNumeric($role->getPermissions());
+        $this->assertIsString($role->getPermissions());
+        $this->assertEquals('6546771521', $role->getPermissions());
+
+        $this->checkForNullErrors($output);
     }
 
     public function testV8ArrayErrorDeserialization()

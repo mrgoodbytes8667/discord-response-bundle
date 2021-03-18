@@ -1,13 +1,13 @@
 <?php
 
-namespace Bytes\DiscordResponseBundle\Tests;
+namespace Bytes\DiscordResponseBundle\Tests\Enums;
 
 use Bytes\DiscordResponseBundle\Enums\Emojis;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class EmojisTest
- * @package Bytes\DiscordResponseBundle\Tests
+ * @package Bytes\DiscordResponseBundle\Tests\Enums
  */
 class EmojisTest extends TestCase
 {

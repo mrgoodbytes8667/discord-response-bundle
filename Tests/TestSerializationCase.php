@@ -5,10 +5,14 @@ namespace Bytes\DiscordResponseBundle\Tests;
 
 
 use Bytes\EnumSerializerBundle\Serializer\Normalizer\EnumNormalizer;
+use Bytes\Tests\Common\TestValidatorTrait;
 use Doctrine\Common\Annotations\AnnotationReader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
+use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -27,9 +31,9 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ProblemNormalizer;
 use Symfony\Component\Serializer\Normalizer\UnwrappingDenormalizer;
 use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\RecursiveValidator;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 abstract class TestSerializationCase extends TestCase
 {
@@ -119,9 +123,26 @@ abstract class TestSerializationCase extends TestCase
             $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
             $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
 
-            $objectNormalizer = new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter, new PropertyAccessor(), new ReflectionExtractor(), new ClassDiscriminatorFromClassMetadata($classMetadataFactory));
+            $serializerExtractor = new SerializerExtractor($classMetadataFactory);
+            $phpDocExtractor = new PhpDocExtractor();
+            $reflectionExtractor = new ReflectionExtractor();
+
+            // list: SerializerExtractor, ReflectionExtractor, DoctrineExtractor
+            // type: Doctrine, PhpDoc, Reflection
+            // description: PhpDoc
+            // access: Doctrine, Reflection
+            // init: Reflection
+            $propertyInfo = new PropertyInfoExtractor(
+                [$serializerExtractor, $reflectionExtractor],
+                [$phpDocExtractor, $reflectionExtractor],
+                [$phpDocExtractor],
+                [$reflectionExtractor],
+                [$reflectionExtractor]
+            );
+
+            $objectNormalizer = new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter, new PropertyAccessor(), $propertyInfo, new ClassDiscriminatorFromClassMetadata($classMetadataFactory));
             if ($includeEnumNormalizer) {
-                $normalizers[] = new EnumNormalizer($objectNormalizer);
+                $normalizers[] = new EnumNormalizer();
             }
             foreach ($appendNormalizers as $normalizer) {
                 $normalizers[] = $normalizer;
@@ -131,6 +152,12 @@ abstract class TestSerializationCase extends TestCase
             }
         }
         return $normalizers;
+
+        // list: SerializerExtractor, ReflectionExtractor, DoctrineExtractor
+        // type: Doctrine, PhpDoc, Reflection
+        // description: PhpDoc
+        // access: Doctrine, Reflection
+        // init: Reflection
     }
 
     protected function buildFixtureResponse(string $value, string $label = null)
