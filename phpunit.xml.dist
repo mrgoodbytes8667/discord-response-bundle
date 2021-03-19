@@ -19,4 +19,8 @@
             <directory>./vendor</directory>
         </exclude>
     </coverage>
+
+    <php>
+        <env name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
+    </php>
 </phpunit>

@@ -7,7 +7,7 @@
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
         "illuminate/support": "^8.0",
-        "mrgoodbytes8667/response-bundle": "^1.0",
+        "mrgoodbytes8667/response-bundle": "^1.2",
         "symfony/config": "^5.2",
         "symfony/console": "^5.2",
         "symfony/dependency-injection": "^5.2",
@@ -40,7 +40,8 @@
         "doctrine/inflector": "<1.4.3",
         "doctrine/lexer": "<1.2.1",
         "doctrine/persistence": "<2.1.0",
-        "mrgoodbytes8667/enum-serializer-bundle": "<1.2.3"
+        "spatie/enum": "<3.7.2",
+        "symfony/serializer": "<5.2.2"
     },
     "autoload": {
         "psr-4": {
