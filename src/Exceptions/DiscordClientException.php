@@ -11,6 +11,8 @@ use Throwable;
 /**
  * Class DiscordClientException
  * @package Bytes\DiscordResponseBundle\Exceptions
+ *
+ * @codeCoverageIgnore
  */
 class DiscordClientException extends \RuntimeException implements ClientExceptionInterface
 {

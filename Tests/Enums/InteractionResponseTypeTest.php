@@ -6,6 +6,12 @@ use Bytes\DiscordResponseBundle\Enums\InteractionResponseType;
 use PHPUnit\Framework\TestCase;
 use Spatie\Enum\Phpunit\EnumAssertions;
 
+/**
+ * Class InteractionResponseTypeTest
+ * @package Bytes\DiscordResponseBundle\Tests\Enums
+ *
+ * @covers \Bytes\DiscordResponseBundle\Enums\InteractionResponseType
+ */
 class InteractionResponseTypeTest extends TestCase
 {
     use EnumAssertions;

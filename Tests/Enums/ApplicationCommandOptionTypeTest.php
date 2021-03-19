@@ -10,7 +10,7 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  * Class ApplicationCommandOptionTypeTest
  * @package Bytes\DiscordResponseBundle\Tests\Enums
  *
- * @covers ApplicationCommandOptionType
+ * @covers \Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType
  */
 class ApplicationCommandOptionTypeTest extends TestCase
 {
