@@ -236,12 +236,4 @@ class JsonErrorCodes extends Enum
             'API_RESOURCE_IS_CURRENTLY_OVERLOADED' => 'API_RESOURCE_IS_CURRENTLY_OVERLOADED',
         ];
     }
-
-    /**
-     * @return string[]
-     * @deprecated Only included for backwards compatibility
-     */
-    public static function allNames() {
-        return static::labels();
-    }
 }
