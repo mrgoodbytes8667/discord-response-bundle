@@ -4,6 +4,7 @@ namespace Bytes\DiscordResponseBundle\Tests;
 
 use Bytes\DiscordResponseBundle\Objects\Message\AllowedMentions;
 use Bytes\DiscordResponseBundle\Tests\TestRolesSerializationCase;
+use Faker\Factory;
 use Symfony\Component\Validator\Validation;
 
 class AllowedMentionsTest extends TestRolesSerializationCase
@@ -93,6 +94,26 @@ class AllowedMentionsTest extends TestRolesSerializationCase
         }
     }
 
+    /**
+     * @return AllowedMentions
+     */
+    public function testUsers()
+    {
+        $faker = Factory::create();
+        $users = $faker->words(3);
+
+        $manual = new AllowedMentions();
+        $this->assertCount(0, $manual->getUsers() ?? []);
+        $manual->setUsers($users);
+        $this->assertCount(3, $manual->getUsers());
+        foreach($users as $index => $user)
+        {
+            $this->assertEquals($user, $manual->getUsers()[$index]);
+        }
+
+        return $manual;
+    }
+
     public function testValidationPass()
     {
         $this->validationPass([
@@ -102,11 +123,18 @@ class AllowedMentionsTest extends TestRolesSerializationCase
                  ]);
     }
 
-    public function testValidationFail()
+    /**
+     * @depends testUsers
+     * @param AllowedMentions $manual
+     */
+    public function testValidationFail(AllowedMentions $manual)
     {
         $this->validationFail([
                      AllowedMentions::create(['a'], ['roles']),
                      AllowedMentions::create(null, ['fake'])
                  ]);
+
+        $manual->setParse(['users']);
+        $this->validationFail([$manual]);
     }
 }

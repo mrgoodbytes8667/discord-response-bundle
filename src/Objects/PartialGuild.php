@@ -45,7 +45,7 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
     protected $permissions;
 
     /**
-     * @var string[]|ArrayCollection|null
+     * @var string[]|null
      */
     protected $features;
 
@@ -145,7 +145,7 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
     }
 
     /**
-     * @return string[]|ArrayCollection|null
+     * @return string[]|null
      */
     public function getFeatures()
     {
@@ -153,7 +153,7 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
     }
 
     /**
-     * @param string[]|ArrayCollection|null $features
+     * @param string[]|null $features
      * @return $this
      */
     public function setFeatures($features): self
@@ -168,7 +168,7 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
      */
     public function addFeature(string $feature): self
     {
-        if (!$this->features->contains($feature)) {
+        if (!in_array($feature, $this->features ?? [])) {
             $this->features[] = $feature;
         }
         return $this;
