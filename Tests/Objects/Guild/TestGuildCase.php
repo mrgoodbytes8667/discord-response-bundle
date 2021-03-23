@@ -28,7 +28,7 @@ abstract class TestGuildCase extends TestCase
         $this->setupFaker();
         do {
             $extraExtension = $this->faker->fileExtension();
-        } while ($extraExtension == 'gif');
+        } while ($extraExtension == 'gif' || $extraExtension == 'jpg' || $extraExtension == 'webp');
 
         // Test for png responses (the default) including GIF since this is not a valid hash for a gif
         foreach (['png', 'PnG', 'abc', $extraExtension] as $extension) {
