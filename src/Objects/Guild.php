@@ -84,11 +84,6 @@ class Guild extends PartialGuild
     private $emojis;
 
     /**
-     * @var string[]|null
-     */
-    private $features;
-
-    /**
      * @var int|null
      */
     private $mfaLevel;
@@ -439,24 +434,6 @@ class Guild extends PartialGuild
     public function setEmojis(?Emoji $emojis): self
     {
         $this->emojis = $emojis;
-        return $this;
-    }
-
-    /**
-     * @return string[]|null
-     */
-    public function getFeatures(): ?array
-    {
-        return $this->features;
-    }
-
-    /**
-     * @param string[]|null $features
-     * @return $this
-     */
-    public function setFeatures(?array $features): self
-    {
-        $this->features = $features;
         return $this;
     }
 

@@ -41,6 +41,8 @@ class DeserializationTest extends TestSerializationCase
         $this->assertFalse($output->getOwner());
         $this->assertEquals(372633152, $output->getPermissions());
         $this->assertIsInt($output->getPermissions());
+        $this->assertCount(7, $output->getFeatures());
+        $this->assertContains('MEMBER_VERIFICATION_GATE_ENABLED', $output->getFeatures());
 
         $this->checkForNullErrors($output);
     }
@@ -53,6 +55,8 @@ class DeserializationTest extends TestSerializationCase
         $this->assertFalse($output->getOwner());
         $this->assertEquals('6815084096', $output->getPermissions());
         $this->assertIsString($output->getPermissions());
+        $this->assertCount(7, $output->getFeatures());
+        $this->assertContains('MEMBER_VERIFICATION_GATE_ENABLED', $output->getFeatures());
 
         $this->checkForNullErrors($output);
     }

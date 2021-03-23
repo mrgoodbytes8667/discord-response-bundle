@@ -5,11 +5,13 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use function Symfony\Component\String\u;
 
@@ -19,7 +21,7 @@ use function Symfony\Component\String\u;
  *
  * @link https://discord.com/developers/docs/resources/user#get-current-user-guilds
  */
-class PartialGuild implements ErrorInterface, IdInterface, NameInterface
+class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildInterface
 {
     use IDTrait, NameTrait, ErrorTrait;
 
@@ -41,6 +43,11 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface
      * @link https://discord.com/developers/docs/change-log#september-24-2020
      */
     protected $permissions;
+
+    /**
+     * @var string[]|ArrayCollection|null
+     */
+    protected $features;
 
     /**
      * @return string|null
@@ -137,4 +144,33 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface
         return $this;
     }
 
+    /**
+     * @return string[]|ArrayCollection|null
+     */
+    public function getFeatures()
+    {
+        return $this->features;
+    }
+
+    /**
+     * @param string[]|ArrayCollection|null $features
+     * @return $this
+     */
+    public function setFeatures($features): self
+    {
+        $this->features = $features;
+        return $this;
+    }
+
+    /**
+     * @param string $feature
+     * @return $this
+     */
+    public function addFeature(string $feature): self
+    {
+        if (!$this->features->contains($feature)) {
+            $this->features[] = $feature;
+        }
+        return $this;
+    }
 }
