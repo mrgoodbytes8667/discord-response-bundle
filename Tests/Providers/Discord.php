@@ -17,22 +17,6 @@ use Faker\Provider\Internet;
 class Discord extends Base
 {
     /**
-     * @param int|null $prepend
-     * @return string
-     */
-    public function snowflake(?int $prepend = null)
-    {
-        $output = '';
-        if (!is_null($prepend)) {
-            $output = (string)$prepend;
-        }
-        foreach (range(1, 3) as $index) {
-            $output .= (string)$this->generator->numberBetween(100000, 999999);
-        }
-        return substr($output, 0, 18);
-    }
-
-    /**
      * @param bool $isGif
      * @return string
      */
@@ -51,6 +35,22 @@ class Discord extends Base
     public function guildId()
     {
         return self::snowflake(7);
+    }
+
+    /**
+     * @param int|null $prepend
+     * @return string
+     */
+    public function snowflake(?int $prepend = null)
+    {
+        $output = '';
+        if (!is_null($prepend)) {
+            $output = (string)$prepend;
+        }
+        foreach (range(1, 3) as $index) {
+            $output .= (string)$this->generator->numberBetween(100000, 999999);
+        }
+        return substr($output, 0, 18);
     }
 
     /**
@@ -126,5 +126,41 @@ class Discord extends Base
     public function discriminator()
     {
         return str_pad($this->generator->numberBetween(0, 9999), 4, '0', STR_PAD_LEFT);
+    }
+
+    /**
+     * @return string
+     */
+    public function refreshToken()
+    {
+        return self::accessToken();
+    }
+
+    /**
+     * @return string
+     */
+    public function accessToken()
+    {
+        $output = '';
+        foreach (range(1, 30) as $i) {
+            $output .= $this->generator->randomElement(self::getAlphanumerics());
+        }
+        return $output;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getAlphanumerics()
+    {
+        return str_split('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz');
+    }
+
+    /**
+     * @return string
+     */
+    public function tokenType()
+    {
+        return $this->generator->randomElement(['Bot', 'Bearer']);
     }
 }
