@@ -81,15 +81,13 @@ abstract class TestGuildCase extends TestCase
 
     public function testAddSetFeatures()
     {
-        $features = [];
-        do {
-            $feature = $this->faker->word();
-            if(!empty($feature) && !in_array($feature, $features))
-            {
-                $features[] = $feature;
-            }
-        } while(count($features) < 3);
-        $feature = $this->faker->word();
+        $features = [
+            "WELCOME_SCREEN_ENABLED",
+            "NEWS",
+            "COMMUNITY"
+        ];
+
+        $feature = 'ANIMATED_ICON';
 
         $guild = $this->createGuildClass();
         $this->assertNull($guild->getFeatures());
