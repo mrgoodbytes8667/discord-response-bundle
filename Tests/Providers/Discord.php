@@ -6,10 +6,13 @@ namespace Bytes\DiscordResponseBundle\Tests\Providers;
 
 use Faker\Generator;
 use Faker\Provider\Base;
+use Faker\Provider\Internet;
 
 /**
  * Class Discord
  * @package Bytes\DiscordResponseBundle\Tests\Providers
+ *
+ * @property Generator|Internet $generator
  */
 class Discord extends Base
 {
@@ -77,6 +80,14 @@ class Discord extends Base
     /**
      * @return string
      */
+    public function messageId()
+    {
+        return self::snowflake(8);
+    }
+
+    /**
+     * @return string
+     */
     public function guildName()
     {
         return $this->generator->text(100);
@@ -97,5 +108,23 @@ class Discord extends Base
     public function features(int $maxFeatures = 3)
     {
         return $this->generator->words($maxFeatures);
+    }
+
+    /**
+     * [username]#[discriminator]
+     * @return string
+     */
+    public function userNameDiscriminator()
+    {
+        return $this->generator->userName() . '#' . self::discriminator();
+    }
+
+    /**
+     * Zero-padded four digit number
+     * @return string
+     */
+    public function discriminator()
+    {
+        return str_pad($this->generator->numberBetween(0, 9999), 4, '0', STR_PAD_LEFT);
     }
 }
