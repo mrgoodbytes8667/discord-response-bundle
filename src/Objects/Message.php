@@ -5,10 +5,12 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Slash\MessageInteraction;
+use Bytes\DiscordResponseBundle\Objects\Traits\ChannelIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
@@ -20,17 +22,13 @@ use Exception;
  * Class Message
  * @package Bytes\DiscordResponseBundle\Objects
  *
+ * @property string|null $channelID id of the channel the message was sent in
+ *
  * @version v0.7.0 As of 2021-03-17 Discord Documentation
  */
-class Message implements ErrorInterface, IdInterface, GuildIdInterface
+class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelIdInterface
 {
-    use IDTrait, GuildIDTrait, ErrorTrait;
-
-    /**
-     * id of the channel the message was sent in
-     * @var string|null
-     */
-    private $channelId;
+    use IDTrait, GuildIDTrait, ErrorTrait, ChannelIdTrait;
 
     /**
      * the author of this message (not guaranteed to be a valid user, see below)
@@ -182,24 +180,6 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface
      * @var MessageInteraction|null
      */
     private $interaction;
-
-    /**
-     * @return string|null
-     */
-    public function getChannelId(): ?string
-    {
-        return $this->channelId;
-    }
-
-    /**
-     * @param string|null $channelId
-     * @return $this
-     */
-    public function setChannelId(?string $channelId): self
-    {
-        $this->channelId = $channelId;
-        return $this;
-    }
 
     /**
      * @return User|null

@@ -3,9 +3,11 @@
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Enums\InteractionType;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Member;
+use Bytes\DiscordResponseBundle\Objects\Traits\ChannelIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\User;
@@ -20,12 +22,13 @@ use Bytes\DiscordResponseBundle\Objects\User;
  *
  * @property string|null $id id of the interaction (snowflake)
  * @property string|null $guildId the guild it was sent from (snowflake)
+ * @property string|null $channelID the channel it was sent from
  *
  * @version v0.7.0 As of 2021-03-17 Discord Documentation
  */
-class Interaction implements IdInterface, GuildIdInterface
+class Interaction implements IdInterface, GuildIdInterface, ChannelIdInterface
 {
-    use IDTrait, GuildIDTrait;
+    use IDTrait, GuildIDTrait, ChannelIdTrait;
 
     /**
      * the type of interaction
@@ -39,12 +42,6 @@ class Interaction implements IdInterface, GuildIdInterface
      * @var ApplicationCommandInteractionData|null
      */
     private $data;
-
-    /**
-     * the channel it was sent from
-     * @var string|null
-     */
-    private $channelId;
 
     /**
      * guild member data for the invoking user, including permissions
@@ -73,7 +70,7 @@ class Interaction implements IdInterface, GuildIdInterface
     private $version;
 
     /**
-     * @return InteractionType|null
+     * @return $thisType|null
      */
     public function getType(): ?InteractionType
     {
@@ -82,9 +79,9 @@ class Interaction implements IdInterface, GuildIdInterface
 
     /**
      * @param InteractionType|null $type
-     * @return Interaction
+     * @return $this
      */
-    public function setType(?InteractionType $type): Interaction
+    public function setType(?InteractionType $type): self
     {
         $this->type = $type;
         return $this;
@@ -100,29 +97,11 @@ class Interaction implements IdInterface, GuildIdInterface
 
     /**
      * @param ApplicationCommandInteractionData|null $data
-     * @return Interaction
+     * @return $this
      */
-    public function setData(?ApplicationCommandInteractionData $data): Interaction
+    public function setData(?ApplicationCommandInteractionData $data): self
     {
         $this->data = $data;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getChannelId(): ?string
-    {
-        return $this->channelId;
-    }
-
-    /**
-     * @param string|null $channelId
-     * @return Interaction
-     */
-    public function setChannelId(?string $channelId): Interaction
-    {
-        $this->channelId = $channelId;
         return $this;
     }
 
@@ -136,9 +115,9 @@ class Interaction implements IdInterface, GuildIdInterface
 
     /**
      * @param Member|null $member
-     * @return Interaction
+     * @return $this
      */
-    public function setMember(?Member $member): Interaction
+    public function setMember(?Member $member): self
     {
         $this->member = $member;
         return $this;
@@ -172,9 +151,9 @@ class Interaction implements IdInterface, GuildIdInterface
 
     /**
      * @param string|null $token
-     * @return Interaction
+     * @return $this
      */
-    public function setToken(?string $token): Interaction
+    public function setToken(?string $token): self
     {
         $this->token = $token;
         return $this;
@@ -190,9 +169,9 @@ class Interaction implements IdInterface, GuildIdInterface
 
     /**
      * @param int|null $version
-     * @return Interaction
+     * @return $this
      */
-    public function setVersion(?int $version): Interaction
+    public function setVersion(?int $version): self
     {
         $this->version = $version;
         return $this;

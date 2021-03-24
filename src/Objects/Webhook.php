@@ -5,7 +5,9 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 
 use App\Entity\Discord as DiscordEntity;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
+use Bytes\DiscordResponseBundle\Objects\Traits\ChannelIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Illuminate\Support\Str;
 
@@ -13,9 +15,9 @@ use Illuminate\Support\Str;
  * Class Webhook
  * @package Bytes\DiscordResponseBundle\Objects
  */
-class Webhook implements ErrorInterface
+class Webhook implements ErrorInterface, ChannelIdInterface
 {
-    use ErrorTrait;
+    use ErrorTrait, ChannelIdTrait;
 
     /**
      *
@@ -46,11 +48,6 @@ class Webhook implements ErrorInterface
      * @var string|null
      */
     private $avatar;
-
-    /**
-     * @var string|null
-     */
-    private $channelID;
 
     /**
      * @var string|null
@@ -131,24 +128,6 @@ class Webhook implements ErrorInterface
     public function setAvatar(?string $avatar): Webhook
     {
         $this->avatar = $avatar;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getChannelID(): ?string
-    {
-        return $this->channelID;
-    }
-
-    /**
-     * @param string|null $channelID
-     * @return Webhook
-     */
-    public function setChannelID(?string $channelID): Webhook
-    {
-        $this->channelID = $channelID;
         return $this;
     }
 
