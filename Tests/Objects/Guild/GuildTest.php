@@ -4,13 +4,7 @@ namespace Bytes\DiscordResponseBundle\Tests\Objects\Guild;
 
 use Bytes\DiscordResponseBundle\Objects\Guild;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildInterface;
-use Bytes\DiscordResponseBundle\Tests\Providers\Discord;
-use Faker\Factory;
-use Faker\Generator as FakerGenerator;
-use Faker\Provider\File;
-use Faker\Provider\Miscellaneous;
 use Generator;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class GuildTest

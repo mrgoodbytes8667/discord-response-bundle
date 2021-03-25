@@ -4,7 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Tests;
 
 
-use Bytes\DiscordResponseBundle\Tests\Providers\Discord;
+use Bytes\Tests\Common\Faker\Providers\Discord;
 use Faker\Factory;
 use Faker\Generator as FakerGenerator;
 use Faker\Provider\Miscellaneous;
