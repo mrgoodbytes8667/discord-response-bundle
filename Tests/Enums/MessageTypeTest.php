@@ -35,15 +35,23 @@ class MessageTypeTest extends TestCase
     }
 
     /**
-     *
+     * @requires PHP >= 8.0
      */
     public function testInvalidEnums()
     {
         $faker = Factory::create();
 
         $this->assertFalse(MessageType::isValid($faker->valid(function ($value) {
-            return !in_array($value, MessageType::toValues()) && !in_array($value, MessageType::toLabels());
+            return !(in_array($value, MessageType::toValues()) || in_array($value, MessageType::toLabels(), true));
         })->word()));
+    }
+
+    /**
+     *
+     */
+    public function testInvalidEnumsStaticString()
+    {
+        $this->assertFalse(MessageType::isValid('abc'));
     }
 
     /**
