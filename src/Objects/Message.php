@@ -4,6 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Objects;
 
 
+use Bytes\DiscordResponseBundle\Enums\MessageType;
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
@@ -131,7 +132,7 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
 
     /**
      * type of message
-     * @var integer|null
+     * @var integer|null = MessageType::toArray()[$any]
      */
     private $type;
 
@@ -148,8 +149,8 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     private $application;
 
     /**
-     * reference data sent with crossposted messages
-     * @var mixed|null
+     * reference data sent with crossposted messages and replies
+     * @var MessageReference|null
      */
     private $messageReference;
 
@@ -482,12 +483,12 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     }
 
     /**
-     * @param int|null $type
+     * @param MessageType|int|null $type
      * @return $this
      */
-    public function setType(?int $type): self
+    public function setType($type): self
     {
-        $this->type = $type;
+        $this->type = $type instanceof MessageType ? $type->value : $type;
         return $this;
     }
 
@@ -528,18 +529,18 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     }
 
     /**
-     * @return mixed|null
+     * @return MessageReference|null
      */
-    public function getMessageReference()
+    public function getMessageReference(): ?MessageReference
     {
         return $this->messageReference;
     }
 
     /**
-     * @param mixed|null $messageReference
+     * @param MessageReference|null $messageReference
      * @return $this
      */
-    public function setMessageReference($messageReference): self
+    public function setMessageReference(?MessageReference $messageReference): self
     {
         $this->messageReference = $messageReference;
         return $this;

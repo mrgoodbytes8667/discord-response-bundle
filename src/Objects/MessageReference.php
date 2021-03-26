@@ -6,8 +6,10 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ChannelIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
+use Bytes\DiscordResponseBundle\Services\IdNormalizer;
 
 /**
  * Class MessageReference
@@ -72,6 +74,26 @@ class MessageReference implements ChannelIdInterface, GuildIdInterface
         return $this;
     }
 
+    /**
+     * @param IdInterface|string $message
+     * @param ChannelIdInterface|IdInterface|string|null $channel
+     * @param GuildIdInterface|IdInterface|string|null $guild
+     * @param bool $failIfNotExists
+     * @return static
+     */
+    public static function create($message, $channel, $guild, bool $failIfNotExists = true)
+    {
+        $ref = new static();
+        $message = IdNormalizer::normalizeIdArgument($message, 'The "message" argument is required.');
+        $channel = IdNormalizer::normalizeChannelIdArgument($channel, 'The "channel" argument was invalid.', true);
+        $guild = IdNormalizer::normalizeGuildIdArgument($guild, 'The "guild" argument was invalid.', true);
 
+        $ref->setMessageId($message);
+        $ref->setChannelID($channel);
+        $ref->setGuildId($guild);
+        $ref->setFailIfNotExists($failIfNotExists);
+
+        return $ref;
+    }
 
 }
