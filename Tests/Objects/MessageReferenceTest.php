@@ -7,7 +7,7 @@ use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Message;
 use Bytes\DiscordResponseBundle\Objects\MessageReference;
-use Bytes\DiscordResponseBundle\Tests\TestDiscordFakerTrait;
+use Bytes\Tests\Common\Faker\TestDiscordFakerTrait;
 use Generator;
 use PHPUnit\Framework\TestCase;
 

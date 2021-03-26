@@ -81,7 +81,7 @@ class MessageReference implements ChannelIdInterface, GuildIdInterface
      * @param bool $failIfNotExists
      * @return static
      */
-    public static function create($message, $channel, $guild, bool $failIfNotExists = true)
+    public static function create($message, $channel = null, $guild = null, bool $failIfNotExists = true)
     {
         $ref = new static();
         $message = IdNormalizer::normalizeIdArgument($message, 'The "message" argument is required.');

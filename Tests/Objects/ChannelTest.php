@@ -6,7 +6,7 @@ use Bytes\DiscordResponseBundle\Enums\ChannelTypes;
 use Bytes\DiscordResponseBundle\Objects\Channel;
 use Bytes\DiscordResponseBundle\Objects\Overwrite;
 use Bytes\DiscordResponseBundle\Objects\User;
-use Bytes\DiscordResponseBundle\Tests\TestDiscordFakerTrait;
+use Bytes\Tests\Common\Faker\TestDiscordFakerTrait;
 use PHPUnit\Framework\TestCase;
 use Spatie\Enum\Faker\FakerEnumProvider;
 

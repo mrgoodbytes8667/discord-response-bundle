@@ -63,15 +63,26 @@ class IdNormalizer
                 }
                 throw new InvalidArgumentException($message);
             }
+            if(is_string($object))
+            {
+                return $object;
+            }
             if (is_subclass_of($object, $class)) {
                 $id = $object->$method();
                 if (empty($id)) {
-                    throw new InvalidArgumentException($message);
+                    if ($recursivelyNormalize) {
+                        return self::normalizeIdArgument($object, $message, $allowNull);
+                    } else {
+                            if($allowNull) {
+                                return null;
+                            }
+                            throw new InvalidArgumentException($message);
+                    }
                 }
                 return $id;
             }
             if ($recursivelyNormalize) {
-                return self::normalizeIdArgument($object, $message, $recursivelyNormalize);
+                return self::normalizeIdArgument($object, $message, $allowNull);
             } else {
                 throw new InvalidArgumentException($message);
             }
@@ -83,7 +94,6 @@ class IdNormalizer
      * @param string $message
      * @param bool $allowNull
      * @return string|null
-     * @internal
      */
     public static function normalizeIdArgument($object, string $message = '', bool $allowNull = false)
     {
