@@ -6,8 +6,10 @@ namespace Bytes\DiscordResponseBundle\Tests;
 
 use Bytes\DiscordResponseBundle\Objects\Guild;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
+use Bytes\DiscordResponseBundle\Objects\Member;
 use Bytes\DiscordResponseBundle\Objects\PartialGuild;
 use Bytes\DiscordResponseBundle\Objects\User;
+use Bytes\DiscordResponseBundle\Services\DiscordDatetimeInterface;
 
 class DeserializationTest extends TestSerializationCase
 {
@@ -194,5 +196,21 @@ class DeserializationTest extends TestSerializationCase
         $this->assertNull($output->getCode());
         $this->assertNull($output->getRetryAfter());
         $this->assertNull($output->getGlobal());
+    }
+
+    public function testMember()
+    {
+        $serializer = $this->createSerializer();
+
+        /** @var Member $output */
+        $output = $serializer->deserialize(file_get_contents(self::getFixturesFile('member-v8.json')), Member::class, 'json');
+
+        $this->assertInstanceOf(\DateTimeInterface::class, $output->getJoinedAt());
+        $this->assertEquals("2021-03-16T17:12:09.458000+00:00", $output->getJoinedAt()->format(DiscordDatetimeInterface::FORMAT));
+        $this->assertEquals("2021-03-16T17:12:09+00:00", $output->getJoinedAt()->format(DATE_ATOM));
+
+        $this->assertNull($output->getPremiumSince());
+
+        $this->checkForNullErrors($output);
     }
 }
