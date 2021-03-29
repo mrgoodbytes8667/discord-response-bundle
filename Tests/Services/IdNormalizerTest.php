@@ -282,4 +282,12 @@ class IdNormalizerTest extends TestCase
 
         yield ['object' => $object, 'id' => '230858112993375816'];
     }
+
+    /**
+     *
+     */
+    public function testNormalizeMessageIntoIds()
+    {
+        $this->markTestIncomplete('@todo');
+    }
 }

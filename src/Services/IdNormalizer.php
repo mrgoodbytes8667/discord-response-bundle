@@ -7,6 +7,7 @@ namespace Bytes\DiscordResponseBundle\Services;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
+use Bytes\DiscordResponseBundle\Objects\Message;
 use InvalidArgumentException;
 use function Symfony\Component\String\u;
 
@@ -58,13 +59,19 @@ class IdNormalizer
             }
 
             if (is_null($object)) {
-                if($allowNull) {
+                if ($allowNull) {
                     return null;
                 }
                 throw new InvalidArgumentException($message);
             }
-            if(is_string($object))
-            {
+            if (is_string($object)) {
+                if (empty($object)) {
+                    if ($allowNull) {
+                        return null;
+                    } else {
+                        throw new InvalidArgumentException($message);
+                    }
+                }
                 return $object;
             }
             if (is_subclass_of($object, $class)) {
@@ -73,10 +80,10 @@ class IdNormalizer
                     if ($recursivelyNormalize) {
                         return self::normalizeIdArgument($object, $message, $allowNull);
                     } else {
-                            if($allowNull) {
-                                return null;
-                            }
-                            throw new InvalidArgumentException($message);
+                        if ($allowNull) {
+                            return null;
+                        }
+                        throw new InvalidArgumentException($message);
                     }
                 }
                 return $id;
@@ -120,5 +127,28 @@ class IdNormalizer
             throw new InvalidArgumentException($message);
         }
         return $id;
+    }
+
+    /**
+     * @param Message $message
+     * @param string $channelIdMessage
+     * @param string $messageIdMessage
+     * @return array = ['channelId' => '', 'messageId' => '']
+     */
+    public static function normalizeMessageIntoIds(Message $message, string $channelIdMessage, string $messageIdMessage)
+    {
+        $channelId = $message->getChannelID();
+        if (empty($channelId)) {
+            throw new InvalidArgumentException($channelIdMessage);
+        }
+        $messageId = $message->getId();
+        if (empty($messageId)) {
+            throw new InvalidArgumentException($messageIdMessage);
+        }
+
+        return [
+            'channelId' => $channelId,
+            'messageId' => $messageId,
+        ];
     }
 }
