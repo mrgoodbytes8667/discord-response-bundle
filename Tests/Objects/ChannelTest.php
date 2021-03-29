@@ -2,11 +2,12 @@
 
 namespace Bytes\DiscordResponseBundle\Tests\Objects;
 
+use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
+use Bytes\Common\Faker\Providers\Discord;
 use Bytes\DiscordResponseBundle\Enums\ChannelTypes;
 use Bytes\DiscordResponseBundle\Objects\Channel;
 use Bytes\DiscordResponseBundle\Objects\Overwrite;
 use Bytes\DiscordResponseBundle\Objects\User;
-use Bytes\Tests\Common\Faker\TestDiscordFakerTrait;
 use PHPUnit\Framework\TestCase;
 use Spatie\Enum\Faker\FakerEnumProvider;
 
@@ -16,7 +17,14 @@ use Spatie\Enum\Faker\FakerEnumProvider;
  */
 class ChannelTest extends TestCase
 {
-    use TestDiscordFakerTrait;
+    use TestDiscordFakerTrait {
+        TestDiscordFakerTrait::getProviders as parentGetProviders;
+    }
+
+    protected function getProviders()
+    {
+        return array_merge([Discord::class, \Spatie\Enum\Faker\FakerEnumProvider::class], $this->parentGetProviders());
+    }
 
     /**
      *

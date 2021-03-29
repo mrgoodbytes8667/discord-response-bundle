@@ -2,16 +2,18 @@
 
 namespace Bytes\DiscordResponseBundle\Tests;
 
+use Bytes\Common\Faker\Providers\Discord;
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\Message\AllowedMentions;
 use Bytes\DiscordResponseBundle\Objects\Message\Content;
 use Bytes\DiscordResponseBundle\Objects\MessageReference;
-use Bytes\Tests\Common\Faker\Providers\Discord;
 use DateTime;
 use Exception;
 use Faker\Factory;
 use Faker\Generator as FakerGenerator;
 use Faker\Provider\Base;
+use Faker\Provider\Color;
+use Faker\Provider\Internet;
 use Generator;
 use Illuminate\Support\Str;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
@@ -59,25 +61,10 @@ class ContentTest extends TestRolesSerializationCase
      */
     protected function generateFakeEmbed()
     {
-        $embed = new Embed();
-
-        try {
-            $now = new DateTime();
-
-            $embed->setUrl('https://www.example.com');
-            $embed->setFooter(ByteString::fromRandom(50), 'https://www.example.com/example.png');
-            $embed->setAuthor(ByteString::fromRandom(), 'https://www.example.com', 'https://www.example.com/example.png');
-
-
-            $embed->setTitle(ByteString::fromRandom(50));
-            $color = ByteString::fromRandom(6, '0123456789ABCDEF')->prepend('0x')->toString();
-            $embed->setColor($color);
-            $embed->setThumbnail('https://www.example.com/example.png');
-        } catch (Exception $x) {
-            // Nothing you can do...
-        }
-
-        return $embed;
+        /** @var \Faker\Generator|Color|Internet|Discord $faker */
+        $faker = Factory::create();
+        $faker->addProvider(new Discord($faker));
+        return $faker->embed();
     }
 
     /**

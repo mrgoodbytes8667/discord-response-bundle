@@ -2,9 +2,9 @@
 
 namespace Bytes\DiscordResponseBundle\Tests\Objects;
 
+use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Objects\Message;
 use Bytes\DiscordResponseBundle\Objects\MessageReference;
-use Bytes\Tests\Common\Faker\TestDiscordFakerTrait;
 use PHPUnit\Framework\TestCase;
 
 class MessageTest extends TestCase

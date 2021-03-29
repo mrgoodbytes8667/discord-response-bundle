@@ -2,10 +2,10 @@
 
 namespace Bytes\DiscordResponseBundle\Tests\Objects;
 
+use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Objects\Guild;
 use Bytes\DiscordResponseBundle\Objects\Token;
 use Bytes\DiscordResponseBundle\Objects\User;
-use Bytes\Tests\Common\Faker\TestDiscordFakerTrait;
 use PHPUnit\Framework\TestCase;
 
 class TokenTest extends TestCase

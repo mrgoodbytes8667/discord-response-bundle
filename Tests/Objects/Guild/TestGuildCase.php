@@ -3,12 +3,8 @@
 
 namespace Bytes\DiscordResponseBundle\Tests\Objects\Guild;
 
+use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildInterface;
-use Bytes\Tests\Common\Faker\Providers\Discord;
-use Faker\Factory;
-use Faker\Generator as FakerGenerator;
-use Faker\Provider\File;
-use Faker\Provider\Miscellaneous;
 use Generator;
 use PHPUnit\Framework\TestCase;
 
@@ -18,10 +14,13 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class TestGuildCase extends TestCase
 {
+    use TestDiscordFakerTrait;
+
     abstract protected function createGuildClass(): GuildInterface;
 
     /**
      * @return Generator
+     * @todo Can this be changed to a unique generator?
      */
     public function provideIcon()
     {
@@ -144,31 +143,5 @@ abstract class TestGuildCase extends TestCase
         }
 
         $this->assertEquals($name ?? $guildId, $guild);
-    }
-
-    /**
-     * @var Discord|FakerGenerator|Miscellaneous
-     */
-    protected $faker;
-
-    /**
-     * @before
-     */
-    protected function setupFaker(): void
-    {
-        if(is_null($this->faker)) {
-            /** @var FakerGenerator|Discord $faker */
-            $faker = Factory::create();
-            $faker->addProvider(new Discord($faker));
-            $this->faker = $faker;
-        }
-    }
-
-    /**
-     * @after
-     */
-    protected function tearDownFaker(): void
-    {
-        $this->faker = null;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Bytes\DiscordResponseBundle\Tests\Services;
 
+use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Objects\Channel;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
@@ -9,7 +10,6 @@ use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Message;
 use Bytes\DiscordResponseBundle\Objects\PartialGuild;
 use Bytes\DiscordResponseBundle\Services\IdNormalizer;
-use Bytes\Tests\Common\Faker\TestDiscordFakerTrait;
 use Generator;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -247,8 +247,7 @@ class IdNormalizerTest extends TestCase
 
         yield ['object' => $object, 'id' => $id];
 
-        foreach([Message::class, PartialGuild::class, Channel::class] as $class)
-        {
+        foreach ([Message::class, PartialGuild::class, Channel::class] as $class) {
             $id = $this->faker->snowflake();
             $object = new $class();
             $object->setId($id);

@@ -2,8 +2,8 @@
 
 namespace Bytes\DiscordResponseBundle\Tests\Objects;
 
+use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Objects\Overwrite;
-use Bytes\Tests\Common\Faker\TestDiscordFakerTrait;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
