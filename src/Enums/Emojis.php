@@ -796,4 +796,12 @@ class Emojis extends Enum
     {
         return new static(Arr::random(static::toValues()));
     }
+
+    /**
+     * @return string
+     */
+    public static function customEmoji(string $name, string $id)
+    {
+        return sprintf(':%s:%s', $name, $id);
+    }
 }
