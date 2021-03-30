@@ -24,15 +24,17 @@ class IdNormalizerTest extends TestCase
 
     /**
      * @dataProvider provideChannelIds
+     * @dataProvider provideMessage
      * @param $object
-     * @param $id
+     * @param $channelId
+     * @param $messageId
      */
-    public function testNormalizeChannelIdArgument($object, $id)
+    public function testNormalizeChannelIdArgument($object, $channelId, $messageId)
     {
         $message = $this->faker->sentence();
         $result = IdNormalizer::normalizeChannelIdArgument($object, $message, true);
 
-        $this->assertEquals($id, $result);
+        $this->assertEquals($channelId, $result);
     }
 
     /**
@@ -260,13 +262,34 @@ class IdNormalizerTest extends TestCase
      */
     public function provideChannelIds()
     {
+        $this->setupFaker();
+
+        $channelId = $this->faker->channelId();
+
         $object = $this
             ->getMockBuilder(ChannelIdInterface::class)
             ->getMock();
         $object->method('getChannelId')
-            ->willReturn('230858112993375816');
+            ->willReturn($channelId);
 
-        yield ['object' => $object, 'id' => '230858112993375816'];
+        yield ['object' => $object, 'channelId' => $channelId, 'messageId' => null];
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideMessage()
+    {
+        $this->setupFaker();
+
+        $channelId = $this->faker->channelId();
+        $messageId = $this->faker->snowflake();
+
+        $object = new Message();
+        $object->setChannelID($channelId);
+        $object->setId($messageId);
+
+        yield ['object' => $object, 'channelId' => $channelId, 'messageId' => $messageId];
     }
 
     /**
@@ -284,10 +307,55 @@ class IdNormalizerTest extends TestCase
     }
 
     /**
-     *
+     * @dataProvider provideMessage
+     * @param $object
+     * @param $channelId
+     * @param $messageId
      */
-    public function testNormalizeMessageIntoIds()
+    public function testNormalizeMessageIntoIds($object, $channelId, $messageId)
     {
-        $this->markTestIncomplete('@todo');
+        $ids = IdNormalizer::normalizeMessageIntoIds($object,
+            'The "channelId" argument is required and cannot be blank.',
+            'The "messageId" argument is required and cannot be blank.');
+
+        $this->assertArrayHasKey('channelId', $ids);
+        $this->assertArrayHasKey('messageId', $ids);
+
+        $this->assertEquals($channelId, $ids['channelId']);
+        $this->assertEquals($messageId, $ids['messageId']);
+
+    }
+
+    /**
+     * @dataProvider provideInvalidNormalizeMessageIntoIds
+     * @param $object
+     * @param $message
+     */
+    public function testNormalizeMessageIntoIdsInvalidArgument($object, $message)
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($message);
+
+        IdNormalizer::normalizeMessageIntoIds($object,
+            'The "channelId" argument is required and cannot be blank.',
+            'The "messageId" argument is required and cannot be blank.');
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideInvalidNormalizeMessageIntoIds()
+    {
+        $this->setupFaker();
+
+        $object = new Message();
+        $object->setId($this->faker->snowflake());
+
+        yield ['object' => $object, 'message' => 'The "channelId" argument is required and cannot be blank.'];
+
+        $object = new Message();
+        $object->setChannelID($this->faker->channelId());
+
+        yield ['object' => $object, 'message' => 'The "messageId" argument is required and cannot be blank.'];
     }
 }
