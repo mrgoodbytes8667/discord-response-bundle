@@ -4,9 +4,11 @@
 namespace Bytes\DiscordResponseBundle\Tests;
 
 
+use Bytes\DiscordResponseBundle\Objects\Channel;
 use Bytes\DiscordResponseBundle\Objects\Guild;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Member;
+use Bytes\DiscordResponseBundle\Objects\Overwrite;
 use Bytes\DiscordResponseBundle\Objects\PartialGuild;
 use Bytes\DiscordResponseBundle\Objects\User;
 use Bytes\DiscordResponseBundle\Services\DiscordDatetimeInterface;
@@ -212,5 +214,40 @@ class DeserializationTest extends TestSerializationCase
         $this->assertNull($output->getPremiumSince());
 
         $this->checkForNullErrors($output);
+    }
+
+    /**
+     * 
+     */
+    public function testChannels()
+    {
+        $serializer = $this->createSerializer();
+
+        /** @var Channel[] $channels */
+        $channels = $serializer->deserialize(file_get_contents(self::getFixturesFile('channels-v8.json')), '\Bytes\DiscordResponseBundle\Objects\Channel[]', 'json');
+
+        $this->assertCount(12, $channels);
+
+        $channel = $channels[0];
+        $this->assertInstanceOf(Channel::class, $channel);
+        $this->assertEquals('276921226399262614', $channel->getId());
+        $this->assertEquals(6, $channel->getType());
+        $this->assertEquals('721716783525430558', $channel->getGuildId());
+        $this->assertEquals(5, $channel->getPosition());
+        $this->assertEquals('Ad sed blanditiis incidunt quae. Et unde optio corporis. Nihil eum ad odio ab.', $channel->getName());
+
+        $this->assertCount(3, $channel->getPermissionOverwrites());
+        $overwrite = $channel->getPermissionOverwrites()[0];
+
+        $this->assertInstanceOf(Overwrite::class, $overwrite);
+        $this->assertEquals("263397620755496871", $overwrite->getId());
+        $this->assertEquals('role', $overwrite->getType());
+        $this->assertEquals('6546771529', $overwrite->getAllow());
+        $this->assertEquals('6546771529', $overwrite->getDeny());
+
+        foreach($channels as $channel)
+        {
+            $this->checkForNullErrors($channel);
+        }
     }
 }

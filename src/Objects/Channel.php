@@ -13,6 +13,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Class Channel
@@ -61,6 +62,7 @@ class Channel implements ErrorInterface, IdInterface, NameInterface
     /**
      * explicit permission overwrites for members and roles
      * @var Overwrite[]|null
+     * @SerializedName("permission_overwrites")
      */
     private $permissionOverwrites;
 
@@ -238,6 +240,18 @@ class Channel implements ErrorInterface, IdInterface, NameInterface
     public function setPermissionOverwrites(?array $permissionOverwrites): self
     {
         $this->permissionOverwrites = $permissionOverwrites;
+        return $this;
+    }
+
+    /**
+     * @param Overwrite $permissionOverwrites
+     * @return $this
+     */
+    public function addPermissionOverwrite(Overwrite $permissionOverwrites): self
+    {
+        if (!in_array($permissionOverwrites, $this->permissionOverwritess ?? [])) {
+            $this->permissionOverwrites[] = $permissionOverwrites;
+        }
         return $this;
     }
 
