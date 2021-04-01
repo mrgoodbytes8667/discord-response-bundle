@@ -12,6 +12,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Role
@@ -25,6 +26,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Role implements ErrorInterface, IdInterface, NameInterface
 {
     use IDTrait, NameTrait, ErrorTrait, DeletedTrait;
+
+    /**
+     * @var string
+     * @Groups({"discordapi", "discordjs"})
+     * @Assert\AtLeastOneOf({
+     *     @Assert\Blank(),
+     *     @Assert\Length(
+     *          min = 1,
+     *          max = 100,
+     *          minMessage = "Name must be at least {{ limit }} characters long",
+     *          maxMessage = "Name cannot be longer than {{ limit }} characters"
+     *     )
+     * })
+     */
+    private $name;
 
     /**
      * integer representation of hexadecimal color code
