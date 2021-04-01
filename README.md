@@ -1,11 +1,11 @@
 # discord-response-bundle
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/mrgoodbytes8667/discord-response-bundle?style=flat)](https://packagist.org/packages/mrgoodbytes8667/discord-response-bundle)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/mrgoodbytes8667/discord-response-bundle?logo=php&logoColor=FFF&style=flat)](https://packagist.org/packages/mrgoodbytes8667/discord-response-bundle)
 [![Packagist Version](https://img.shields.io/packagist/v/mrgoodbytes8667/discord-response-bundle?style=flat)](https://packagist.org/packages/mrgoodbytes8667/discord-response-bundle)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mrgoodbytes8667/discord-response-bundle/release?style=flat&label=stable)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mrgoodbytes8667/discord-response-bundle/tests?style=flat)
-![Symfony Version](https://img.shields.io/badge/symfony-^5.2-lightgrey?style=flat)
-![Discord API Version](https://img.shields.io/badge/discord-v6-lightgrey?style=flat)
-![Packagist License](https://img.shields.io/packagist/l/mrgoodbytes8667/discord-response-bundle?style=flat)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mrgoodbytes8667/discord-response-bundle/release?label=stable&logo=github&logoColor=FFFFFF&style=flat)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mrgoodbytes8667/discord-response-bundle/tests?logo=github&logoColor=FFFFFF&style=flat)
+![Symfony Version](https://img.shields.io/badge/symfony-%5E5.2-lightgrey?logo=symfony&logoColor=FFFFFF&style=flat)
+![Discord API Version](https://img.shields.io/badge/discord-v6-lightgrey?logo=discord&logoColor=FFFFFF&style=flat)
+![Packagist License](https://img.shields.io/packagist/l/mrgoodbytes8667/discord-response-bundle?logo=creative-commons&logoColor=FFFFFF&style=flat)
 
 A Symfony bundle for Discord API Response objects and enums
 
