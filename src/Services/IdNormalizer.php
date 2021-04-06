@@ -15,8 +15,8 @@ use function Symfony\Component\String\u;
  * Class IdNormalizer
  * @package Bytes\DiscordResponseBundle\Services
  *
- * @method static string normalizeGuildIdArgument($object, string $message, bool $allowNull = false, bool $recursivelyNormalize = true)
- * @method static string normalizeChannelIdArgument($object, string $message, bool $allowNull = false, bool $recursivelyNormalize = true)
+ * @method static string normalizeGuildIdArgument($object, string $message, bool $allowNull = false, bool $recursivelyNormalize = true) Return getGuildId() on an object that implements GuildIdInterface, getId() on object that implements IdInterface, or the string value if $object is a string.
+ * @method static string normalizeChannelIdArgument($object, string $message, bool $allowNull = false, bool $recursivelyNormalize = true) Return getChannelId() on an object that implements ChannelIdInterface, getId() on object that implements IdInterface, or the string value if $object is a string.
  */
 class IdNormalizer
 {
@@ -97,6 +97,7 @@ class IdNormalizer
     }
 
     /**
+     * Return getId() on object that implements IdInterface, or the string value if $object is a string.
      * @param IdInterface|string $object
      * @param string $message
      * @param bool $allowNull
