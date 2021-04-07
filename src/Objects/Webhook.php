@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
 /**
  * Class Webhook
  * @package Bytes\DiscordResponseBundle\Objects
+ *
+ * @deprecated v0.8.1
  */
 class Webhook implements ErrorInterface, ChannelIdInterface
 {
