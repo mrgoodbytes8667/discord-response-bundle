@@ -39,8 +39,12 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  * @method static self UNKNOWN_LOBBY() Unknown lobby
  * @method static self UNKNOWN_BRANCH() Unknown branch
  * @method static self UNKNOWN_REDISTRIBUTABLE() Unknown redistributable
+ * @method static self unknownGuildTemplate() Unknown guild template
+ * @method static self unknownApplicationCommand() Unknown application command
  * @method static self BOTS_CANNOT_USE_THIS_ENDPOINT() Bots cannot use this endpoint
  * @method static self ONLY_BOTS_CAN_USE_THIS_ENDPOINT() Only bots can use this endpoint
+ * @method static self thisMessageCannotBeEditedDueToAnnouncementRateLimits() This message cannot be edited due to announcement rate limits
+ * @method static self theChannelYouAreWritingHasHitTheWriteRateLimit() The channel you are writing has hit the write rate limit
  * @method static self MAXIMUM_NUMBER_OF_GUILDS_REACHED() Maximum number of guilds reached (100)
  * @method static self MAXIMUM_NUMBER_OF_FRIENDS_REACHED() Maximum number of friends reached (1000)
  * @method static self MAXIMUM_NUMBER_OF_PINS_REACHED_FOR_THE_CHANNEL() Maximum number of pins reached for the channel (50)
@@ -50,11 +54,13 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  * @method static self MAXIMUM_NUMBER_OF_GUILD_CHANNELS_REACHED() Maximum number of guild channels reached (500)
  * @method static self MAXIMUM_NUMBER_OF_ATTACHMENTS_IN_A_MESSAGE_REACHED() Maximum number of attachments in a message reached (10)
  * @method static self MAXIMUM_NUMBER_OF_INVITES_REACHED() Maximum number of invites reached (1000)
+ * @method static self guildAlreadyHasATemplate() Guild already has a template
  * @method static self UNAUTHORIZED() Unauthorized. Provide a valid token and try again
  * @method static self YOU_NEED_TO_VERIFY_YOUR_ACCOUNT_IN_ORDER_TO_PERFORM_THIS_ACTION() You need to verify your account in order to perform this action
  * @method static self REQUEST_ENTITY_TOO_LARGE() Request entity too large. Try sending something smaller in size
  * @method static self THIS_FEATURE_HAS_BEEN_TEMPORARILY_DISABLED_SERVER_SIDE() This feature has been temporarily disabled server-side
  * @method static self THE_USER_IS_BANNED_FROM_THIS_GUILD() The user is banned from this guild
+ * @method static self thisMessageHasAlreadyBeenCrossposted() This message has already been crossposted
  * @method static self MISSING_ACCESS() Missing access
  * @method static self INVALID_ACCOUNT_TYPE() Invalid account type
  * @method static self CANNOT_EXECUTE_ACTION_ON_A_DM_CHANNEL() Cannot execute action on a DM channel
@@ -74,11 +80,16 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  * @method static self A_MESSAGE_CAN_ONLY_BE_PINNED_TO_THE_CHANNEL_IT_WAS_SENT_IN() A message can only be pinned to the channel it was sent in
  * @method static self INVITE_CODE_WAS_EITHER_INVALID_OR_TAKEN() Invite code was either invalid or taken
  * @method static self CANNOT_EXECUTE_ACTION_ON_A_SYSTEM_MESSAGE() Cannot execute action on a system message
+ * @method static self cannotExecuteActionOnThisChannelType() Cannot execute action on this channel type
  * @method static self INVALID_OAUTH2_ACCESS_TOKEN_PROVIDED() Invalid OAuth2 access token provided
+ * @method static self invalidWebhookTokenProvided() Invalid webhook token provided
+ * @method static self invalidRecipients() "Invalid Recipient(s)"
  * @method static self A_MESSAGE_PROVIDED_WAS_TOO_OLD_TO_BULK_DELETE() A message provided was too old to bulk delete
  * @method static self INVALID_FORM_BODY() Invalid form body (returned for both application/json and multipart/form-data bodies), or invalid Content-Type provided
  * @method static self AN_INVITE_WAS_ACCEPTED_TO_A_GUILD_THE_APPLICATIONS_BOT_IS_NOT_IN() An invite was accepted to a guild the application's bot is not in
  * @method static self INVALID_API_VERSION_PROVIDED() Invalid API version provided
+ * @method static self cannotDeleteAChannelRequiredForCommunityGuilds() Cannot delete a channel required for Community guilds
+ * @method static self invalidStickerSent() Invalid sticker sent
  * @method static self REACTION_WAS_BLOCKED() Reaction was blocked
  * @method static self API_RESOURCE_IS_CURRENTLY_OVERLOADED() API resource is currently overloaded. Try again a little later
  *
@@ -117,14 +128,14 @@ class JsonErrorCodes extends Enum
             'UNKNOWN_BRANCH' => 10032,
             'UNKNOWN_REDISTRIBUTABLE' => 10036,
 
-            // 10057    Unknown guild template
-            // 10063    Unknown application command
+            'unknownGuildTemplate' => 10057,
+            'unknownApplicationCommand' => 10063,
 
             'BOTS_CANNOT_USE_THIS_ENDPOINT' => 20001,
             'ONLY_BOTS_CAN_USE_THIS_ENDPOINT' => 20002,
 
-            // 20022    This message cannot be edited due to announcement rate limits
-            // 20028    The channel you are writing has hit the write rate limit
+            'thisMessageCannotBeEditedDueToAnnouncementRateLimits' => 20022,
+            'theChannelYouAreWritingHasHitTheWriteRateLimit' => 20028,
 
             'MAXIMUM_NUMBER_OF_GUILDS_REACHED' => 30001,
             'MAXIMUM_NUMBER_OF_FRIENDS_REACHED' => 30002,
@@ -136,7 +147,7 @@ class JsonErrorCodes extends Enum
             'MAXIMUM_NUMBER_OF_ATTACHMENTS_IN_A_MESSAGE_REACHED' => 30015,
             'MAXIMUM_NUMBER_OF_INVITES_REACHED' => 30016,
 
-            // 30031    Guild already has a template
+            'guildAlreadyHasATemplate' => 30031,
 
             'UNAUTHORIZED' => 40001,
             'YOU_NEED_TO_VERIFY_YOUR_ACCOUNT_IN_ORDER_TO_PERFORM_THIS_ACTION' => 40002,
@@ -144,7 +155,7 @@ class JsonErrorCodes extends Enum
             'THIS_FEATURE_HAS_BEEN_TEMPORARILY_DISABLED_SERVER_SIDE' => 40006,
             'THE_USER_IS_BANNED_FROM_THIS_GUILD' => 40007,
 
-            // 40033    This message has already been crossposted
+            'thisMessageHasAlreadyBeenCrossposted' => 40033,
 
             'MISSING_ACCESS' => 50001,
             'INVALID_ACCOUNT_TYPE' => 50002,
@@ -166,20 +177,20 @@ class JsonErrorCodes extends Enum
             'INVITE_CODE_WAS_EITHER_INVALID_OR_TAKEN' => 50020,
             'CANNOT_EXECUTE_ACTION_ON_A_SYSTEM_MESSAGE' => 50021,
 
-            // 50024    Cannot execute action on this channel type
+            'cannotExecuteActionOnThisChannelType' => 50024,
 
             'INVALID_OAUTH2_ACCESS_TOKEN_PROVIDED' => 50025,
 
-            // 50027    Invalid webhook token provided
-            // 50033    "Invalid Recipient(s)"
+            'invalidWebhookTokenProvided' => 50027,
+            'invalidRecipients' => 50033,
 
             'A_MESSAGE_PROVIDED_WAS_TOO_OLD_TO_BULK_DELETE' => 50034,
             'INVALID_FORM_BODY' => 50035,
             'AN_INVITE_WAS_ACCEPTED_TO_A_GUILD_THE_APPLICATIONS_BOT_IS_NOT_IN' => 50036,
             'INVALID_API_VERSION_PROVIDED' => 50041,
 
-            // 50074    Cannot delete a channel required for Community guilds
-            // 50081    Invalid sticker sent
+            'cannotDeleteAChannelRequiredForCommunityGuilds' => 50074,
+            'invalidStickerSent' => 50081,
 
             'REACTION_WAS_BLOCKED' => 90001,
             'API_RESOURCE_IS_CURRENTLY_OVERLOADED' => 130000,
