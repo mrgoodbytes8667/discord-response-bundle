@@ -116,8 +116,16 @@ class JsonErrorCodes extends Enum
             'UNKNOWN_LOBBY' => 10031,
             'UNKNOWN_BRANCH' => 10032,
             'UNKNOWN_REDISTRIBUTABLE' => 10036,
+
+            // 10057    Unknown guild template
+            // 10063    Unknown application command
+
             'BOTS_CANNOT_USE_THIS_ENDPOINT' => 20001,
             'ONLY_BOTS_CAN_USE_THIS_ENDPOINT' => 20002,
+
+            // 20022    This message cannot be edited due to announcement rate limits
+            // 20028    The channel you are writing has hit the write rate limit
+
             'MAXIMUM_NUMBER_OF_GUILDS_REACHED' => 30001,
             'MAXIMUM_NUMBER_OF_FRIENDS_REACHED' => 30002,
             'MAXIMUM_NUMBER_OF_PINS_REACHED_FOR_THE_CHANNEL' => 30003,
@@ -127,11 +135,17 @@ class JsonErrorCodes extends Enum
             'MAXIMUM_NUMBER_OF_GUILD_CHANNELS_REACHED' => 30013,
             'MAXIMUM_NUMBER_OF_ATTACHMENTS_IN_A_MESSAGE_REACHED' => 30015,
             'MAXIMUM_NUMBER_OF_INVITES_REACHED' => 30016,
+
+            // 30031    Guild already has a template
+
             'UNAUTHORIZED' => 40001,
             'YOU_NEED_TO_VERIFY_YOUR_ACCOUNT_IN_ORDER_TO_PERFORM_THIS_ACTION' => 40002,
             'REQUEST_ENTITY_TOO_LARGE' => 40005,
             'THIS_FEATURE_HAS_BEEN_TEMPORARILY_DISABLED_SERVER_SIDE' => 40006,
             'THE_USER_IS_BANNED_FROM_THIS_GUILD' => 40007,
+
+            // 40033    This message has already been crossposted
+
             'MISSING_ACCESS' => 50001,
             'INVALID_ACCOUNT_TYPE' => 50002,
             'CANNOT_EXECUTE_ACTION_ON_A_DM_CHANNEL' => 50003,
@@ -151,11 +165,22 @@ class JsonErrorCodes extends Enum
             'A_MESSAGE_CAN_ONLY_BE_PINNED_TO_THE_CHANNEL_IT_WAS_SENT_IN' => 50019,
             'INVITE_CODE_WAS_EITHER_INVALID_OR_TAKEN' => 50020,
             'CANNOT_EXECUTE_ACTION_ON_A_SYSTEM_MESSAGE' => 50021,
+
+            // 50024    Cannot execute action on this channel type
+
             'INVALID_OAUTH2_ACCESS_TOKEN_PROVIDED' => 50025,
+
+            // 50027    Invalid webhook token provided
+            // 50033    "Invalid Recipient(s)"
+
             'A_MESSAGE_PROVIDED_WAS_TOO_OLD_TO_BULK_DELETE' => 50034,
             'INVALID_FORM_BODY' => 50035,
             'AN_INVITE_WAS_ACCEPTED_TO_A_GUILD_THE_APPLICATIONS_BOT_IS_NOT_IN' => 50036,
             'INVALID_API_VERSION_PROVIDED' => 50041,
+
+            // 50074    Cannot delete a channel required for Community guilds
+            // 50081    Invalid sticker sent
+
             'REACTION_WAS_BLOCKED' => 90001,
             'API_RESOURCE_IS_CURRENTLY_OVERLOADED' => 130000,
         ];
