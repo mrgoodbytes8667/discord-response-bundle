@@ -525,6 +525,18 @@ class SerializationTest extends TestSerializationCase
         yield ['label' => 'INVALID_API_VERSION_PROVIDED' , 'value' =>  50041];
         yield ['label' => 'REACTION_WAS_BLOCKED' , 'value' =>  90001];
         yield ['label' => 'API_RESOURCE_IS_CURRENTLY_OVERLOADED' , 'value' =>  130000];
+
+        yield ['label' => 'unknownGuildTemplate', 'value' => 10057];
+        yield ['label' => 'unknownApplicationCommand', 'value' => 10063];
+        yield ['label' => 'thisMessageCannotBeEditedDueToAnnouncementRateLimits', 'value' => 20022];
+        yield ['label' => 'theChannelYouAreWritingHasHitTheWriteRateLimit', 'value' => 20028];
+        yield ['label' => 'guildAlreadyHasATemplate', 'value' => 30031];
+        yield ['label' => 'thisMessageHasAlreadyBeenCrossposted', 'value' => 40033];
+        yield ['label' => 'cannotExecuteActionOnThisChannelType', 'value' => 50024];
+        yield ['label' => 'invalidWebhookTokenProvided', 'value' => 50027];
+        yield ['label' => 'invalidRecipients', 'value' => 50033];
+        yield ['label' => 'cannotDeleteAChannelRequiredForCommunityGuilds', 'value' => 50074];
+        yield ['label' => 'invalidStickerSent', 'value' => 50081];
     }
 
     public function testJsonErrorCodesSerializationBadKey()
