@@ -2,10 +2,10 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
-use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
+use Bytes\ResponseBundle\Interfaces\IdInterface;
 
 /**
  * Class ApplicationCommandInteractionData

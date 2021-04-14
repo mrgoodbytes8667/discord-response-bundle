@@ -5,9 +5,9 @@ namespace Bytes\DiscordResponseBundle\Tests\Objects;
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
-use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Message;
 use Bytes\DiscordResponseBundle\Objects\MessageReference;
+use Bytes\ResponseBundle\Interfaces\IdInterface;
 use Generator;
 use PHPUnit\Framework\TestCase;
 

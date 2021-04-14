@@ -5,12 +5,12 @@ namespace Bytes\DiscordResponseBundle\Objects\Slash;
 use Bytes\DiscordResponseBundle\Enums\InteractionType;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
-use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Member;
 use Bytes\DiscordResponseBundle\Objects\Traits\ChannelIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\User;
+use Bytes\ResponseBundle\Interfaces\IdInterface;
 
 /**
  * Class Interaction
