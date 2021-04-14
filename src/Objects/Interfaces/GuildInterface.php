@@ -4,6 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Objects\Interfaces;
 
 
+use Bytes\ResponseBundle\Interfaces\IdInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**

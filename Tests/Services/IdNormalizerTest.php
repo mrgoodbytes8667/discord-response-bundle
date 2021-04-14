@@ -3,10 +3,8 @@
 namespace Bytes\DiscordResponseBundle\Tests\Services;
 
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
-use Bytes\DiscordResponseBundle\Objects\Channel;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
-use Bytes\DiscordResponseBundle\Objects\Interfaces\IdInterface;
 use Bytes\DiscordResponseBundle\Objects\Message;
 use Bytes\DiscordResponseBundle\Objects\PartialGuild;
 use Bytes\DiscordResponseBundle\Services\IdNormalizer;
@@ -173,88 +171,6 @@ class IdNormalizerTest extends TestCase
         $result = IdNormalizer::normalizeGuildIdArgument($input, $message, true, false);
 
         $this->assertNull($result);
-    }
-
-    /**
-     * @dataProvider provideValidIds
-     * @param $object
-     * @param $id
-     */
-    public function testNormalizeIdArgument($object, $id)
-    {
-        $message = $this->faker->sentence();
-        $result = IdNormalizer::normalizeIdArgument($object, $message, true);
-
-        $this->assertEquals($id, $result);
-    }
-
-    /**
-     * @dataProvider provideIdsForDisallowNulls
-     * @param $input
-     */
-    public function testNormalizeIdArgumentAllowNullWithNull($input)
-    {
-        $message = $this->faker->sentence();
-        $result = IdNormalizer::normalizeIdArgument($input, $message, true);
-
-        $this->assertNull($result);
-    }
-
-    /**
-     * @dataProvider provideIdsForDisallowNulls
-     * @param $input
-     */
-    public function testNormalizeIdArgumentDisallowNull($input)
-    {
-        $message = $this->faker->sentence();
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage($message);
-        $result = IdNormalizer::normalizeIdArgument($input, $message);
-
-        $this->assertNull($result);
-    }
-
-    /**
-     *
-     */
-    public function testNormalizeIdArgumentMissingMessageObject()
-    {
-        $result = IdNormalizer::normalizeIdArgument(new Message(), '', true);
-
-        $this->assertNull($result);
-    }
-
-    /**
-     *
-     */
-    public function testNormalizeIdArgumentMissingMessageString()
-    {
-        $result = IdNormalizer::normalizeIdArgument('', '', true);
-
-        $this->assertEmpty($result);
-    }
-
-    /**
-     * @return Generator
-     */
-    public function provideValidIds()
-    {
-        $this->setupFaker();
-        $id = $this->faker->snowflake();
-        $object = $this
-            ->getMockBuilder(IdInterface::class)
-            ->getMock();
-        $object->method('getId')
-            ->willReturn($id);
-
-        yield ['object' => $object, 'id' => $id];
-
-        foreach ([Message::class, PartialGuild::class, Channel::class] as $class) {
-            $id = $this->faker->snowflake();
-            $object = new $class();
-            $object->setId($id);
-            yield ['object' => $object, 'id' => $id];
-        }
     }
 
     /**
