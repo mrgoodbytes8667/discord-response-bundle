@@ -86,9 +86,7 @@ class TokenTest extends TestCase
         $scope = $this->faker->sentence();
 
         $token = new Token();
-        $this->assertNull($token->getScope());
-        $this->assertInstanceOf(Token::class, $token->setScope(null));
-        $this->assertNull($token->getScope());
+        $this->assertEmpty($token->getScope());
         $this->assertInstanceOf(Token::class, $token->setScope($scope));
         $this->assertEquals($scope, $token->getScope());
     }
@@ -105,7 +103,7 @@ class TokenTest extends TestCase
         $this->assertInstanceOf(Token::class, $token->setExpiresIn(null));
         $this->assertNull($token->getExpiresIn());
         $this->assertInstanceOf(Token::class, $token->setExpiresIn($expiresIn));
-        $this->assertEquals($expiresIn, $token->getExpiresIn());
+        $this->assertEquals(new \DateInterval('PT' . $expiresIn . 'S'), $token->getExpiresIn());
     }
 
     /**

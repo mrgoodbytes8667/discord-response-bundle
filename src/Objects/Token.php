@@ -6,8 +6,13 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
-use Bytes\DiscordResponseBundle\Objects\Traits\TokenTrait;
-use Bytes\Response\Common\Interfaces\AccessTokenInterface;
+use Bytes\ResponseBundle\Token\AccessTokenCreateUpdateFromTrait;
+use Bytes\ResponseBundle\Token\Interfaces\AccessTokenInterface;
+use Doctrine\ORM\Mapping as ORM;
+use Exception;
+use Illuminate\Support\Arr;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Class Token
@@ -15,7 +20,7 @@ use Bytes\Response\Common\Interfaces\AccessTokenInterface;
  */
 class Token implements ErrorInterface, AccessTokenInterface
 {
-    use TokenTrait, ErrorTrait;
+    use AccessTokenCreateUpdateFromTrait, ErrorTrait;
 
     /**
      * @var Guild|null
@@ -86,5 +91,20 @@ class Token implements ErrorInterface, AccessTokenInterface
         return $this;
     }
 
+    /**
+     * Update the current access token with details from another access token (ie: a refresh token)
+     * @param AccessTokenInterface $token
+     * @return $this
+     * @throws Exception
+     */
+    public function updateFromAccessToken(AccessTokenInterface $token): static
+    {
+        $this->setAccessToken($token->getAccessToken());
+        $this->setRefreshToken($token->getRefreshToken());
+        $this->setExpiresIn($token->getExpiresIn());
+        $this->setScope(implode(' ', Arr::wrap($token->getScope()) ?? []));
+        $this->setTokenType($token->getTokenType());
 
+        return $this;
+    }
 }

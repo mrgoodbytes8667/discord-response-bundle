@@ -3,10 +3,13 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Traits;
 
+trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.0', 'Using "Bytes\DiscordResponseBundle\Objects\Traits\TokenTrait" is deprecated, use "Bytes\ResponseBundle\Token\AccessTokenTrait" instead.');
 
 /**
  * Trait TokenTrait
  * @package Bytes\DiscordResponseBundle\Objects\Traits
+ *
+ * @deprecated Since 0.9.0, use "Bytes\ResponseBundle\Token\AccessTokenTrait" instead
  */
 trait TokenTrait
 {
