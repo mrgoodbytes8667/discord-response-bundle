@@ -5,6 +5,7 @@ namespace Bytes\DiscordResponseBundle\Enums;
 
 
 use Bytes\EnumSerializerBundle\Enums\Enum;
+use Bytes\ResponseBundle\Routing\OAuthPromptInterface;
 
 /**
  * Class OAuthPrompts
@@ -16,6 +17,15 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  *
  * @link https://github.com/spatie/enum
  */
-class OAuthPrompts extends Enum
+class OAuthPrompts extends Enum implements OAuthPromptInterface
 {
+
+    /**
+     * Returns the prompt value
+     * @return string
+     */
+    public function prompt()
+    {
+        return $this->value;
+    }
 }

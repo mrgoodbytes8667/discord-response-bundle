@@ -4,6 +4,7 @@ namespace Bytes\DiscordResponseBundle\Tests\Enums;
 
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType;
 use Bytes\DiscordResponseBundle\Enums\OAuthPrompts;
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Spatie\Enum\Phpunit\EnumAssertions;
 
@@ -40,11 +41,21 @@ class OAuthPromptsTest extends TestCase
     }
 
     /**
-     * @return \Generator
+     * @return Generator
      */
     public function provideEnums()
     {
         yield ['value' => 'none', 'enum' => OAuthPrompts::none()];
         yield ['value' => 'consent', 'enum' => OAuthPrompts::consent()];
+    }
+
+    /**
+     * @dataProvider provideEnums
+     * @param string $value
+     * @param OAuthPrompts $enum
+     */
+    public function testPrompt(string $value, OAuthPrompts $enum)
+    {
+        $this->assertEquals($value, $enum->prompt());
     }
 }
