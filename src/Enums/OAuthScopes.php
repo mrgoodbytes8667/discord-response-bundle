@@ -69,6 +69,14 @@ class OAuthScopes extends Enum
     /**
      * @return string[]
      */
+    public static function getLoginScopes(): array
+    {
+        return static::getUserScopes();
+    }
+
+    /**
+     * @return string[]
+     */
     public static function getBotScopes()
     {
         return [

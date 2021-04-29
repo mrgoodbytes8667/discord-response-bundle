@@ -5,8 +5,10 @@ namespace Bytes\DiscordResponseBundle\Tests\Enums;
 
 
 use Bytes\DiscordResponseBundle\Enums\OAuthScopes;
+use Bytes\Tests\Common\TestEnumTrait;
 use Generator;
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
 use Spatie\Enum\Phpunit\EnumAssertions;
 
 /**
@@ -15,25 +17,26 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  */
 class OAuthScopesTest extends TestCase
 {
-    use EnumAssertions;
+    use EnumAssertions, TestEnumTrait;
 
     /**
      *
      */
-    public function testGetUserScopes()
+    public function testGetUserAndLoginScopes()
     {
-        $scopes = OAuthScopes::getUserScopes();
+        foreach ([OAuthScopes::getUserScopes(), OAuthScopes::getLoginScopes()] as $scopes) {
 
-        $this->assertContains(OAuthScopes::IDENTIFY()->value, $scopes);
-        $this->assertContains(OAuthScopes::CONNECTIONS()->value, $scopes);
-        $this->assertContains(OAuthScopes::GUILDS()->value, $scopes);
+            $this->assertContains(OAuthScopes::IDENTIFY()->value, $scopes);
+            $this->assertContains(OAuthScopes::CONNECTIONS()->value, $scopes);
+            $this->assertContains(OAuthScopes::GUILDS()->value, $scopes);
 
-        $this->assertContainsOnly('string', $scopes);
+            $this->assertContainsOnly('string', $scopes);
 
-        $this->assertNotContains(OAuthScopes::RPC_NOTIFICATIONS_READ()->value, $scopes);
-        $this->assertNotContains(OAuthScopes::BOT()->value, $scopes);
+            $this->assertNotContains(OAuthScopes::RPC_NOTIFICATIONS_READ()->value, $scopes);
+            $this->assertNotContains(OAuthScopes::BOT()->value, $scopes);
 
-        $this->assertEquals(count($scopes), 3);
+            $this->assertCount(3, $scopes);
+        }
     }
 
     /**
@@ -51,8 +54,48 @@ class OAuthScopesTest extends TestCase
         $this->assertContainsOnly('string', $scopes);
 
         $this->assertNotContains(OAuthScopes::RPC_NOTIFICATIONS_READ()->value, $scopes);
+        $this->assertNotContains(OAuthScopes::APPLICATIONS_COMMANDS()->value, $scopes);
 
-        $this->assertEquals(count($scopes), 4);
+        $this->assertCount(4, $scopes);
+    }
+
+    /**
+     *
+     */
+    public function testGetSlashScopes()
+    {
+        $scopes = OAuthScopes::getSlashScopes();
+
+        $this->assertContains(OAuthScopes::APPLICATIONS_COMMANDS()->value, $scopes);
+
+        $this->assertContainsOnly('string', $scopes);
+
+        $this->assertNotContains(OAuthScopes::RPC_NOTIFICATIONS_READ()->value, $scopes);
+        $this->assertNotContains(OAuthScopes::CONNECTIONS()->value, $scopes);
+        $this->assertNotContains(OAuthScopes::GUILDS()->value, $scopes);
+        $this->assertNotContains(OAuthScopes::BOT()->value, $scopes);
+
+        $this->assertCount(1, $scopes);
+    }
+
+    /**
+     *
+     */
+    public function testGetBotSlashScopes()
+    {
+        $scopes = OAuthScopes::getBotSlashScopes();
+
+        $this->assertContains(OAuthScopes::IDENTIFY()->value, $scopes);
+        $this->assertContains(OAuthScopes::CONNECTIONS()->value, $scopes);
+        $this->assertContains(OAuthScopes::GUILDS()->value, $scopes);
+        $this->assertContains(OAuthScopes::BOT()->value, $scopes);
+        $this->assertContains(OAuthScopes::APPLICATIONS_COMMANDS()->value, $scopes);
+
+        $this->assertContainsOnly('string', $scopes);
+
+        $this->assertNotContains(OAuthScopes::RPC_NOTIFICATIONS_READ()->value, $scopes);
+
+        $this->assertCount(5, $scopes);
     }
 
     /**
@@ -106,4 +149,21 @@ class OAuthScopesTest extends TestCase
 
     }
 
+    /**
+     * @throws ReflectionException
+     */
+    public function testEnumLabelsValues()
+    {
+        $values = OAuthScopes::getValues();
+        $this->assertIsArray($values);
+        $this->assertCount(21, $values);
+
+        $labels = OAuthScopes::getLabels();
+
+        $this->assertIsArray($labels);
+        $this->assertCount(21, $labels);
+
+        $methods = $this->extractAllFromEnum(OAuthScopes::class);
+        $this->assertCount(21, $methods);
+    }
 }
