@@ -165,4 +165,12 @@ class Bot extends Application implements TokenValidationResponseInterface
     {
         return true;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasExpired(): bool
+    {
+        return false;
+    }
 }

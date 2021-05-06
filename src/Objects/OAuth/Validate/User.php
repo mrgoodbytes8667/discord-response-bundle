@@ -89,7 +89,7 @@ class User implements TokenValidationResponseInterface
     /**
      * @return bool
      */
-    public function hasExpired()
+    public function hasExpired(): bool
     {
         return $this->expires <= new DateTimeImmutable();
     }
