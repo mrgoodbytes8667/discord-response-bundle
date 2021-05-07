@@ -5,13 +5,21 @@ namespace Bytes\DiscordResponseBundle\Tests\Objects;
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Objects\Guild;
 use Bytes\DiscordResponseBundle\Objects\Token;
-use Bytes\DiscordResponseBundle\Objects\User;
+use Bytes\ResponseBundle\Enums\TokenSource;
+use Bytes\ResponseBundle\Objects\ComparableDateInterval;
+use Bytes\ResponseBundle\Token\Interfaces\AccessTokenInterface;
+use Exception;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class TokenTest
+ * @package Bytes\DiscordResponseBundle\Tests\Objects
+ */
 class TokenTest extends TestCase
 {
     use TestDiscordFakerTrait;
-    
+
     /**
      *
      */
@@ -19,7 +27,7 @@ class TokenTest extends TestCase
     {
         $guild = $this
             ->getMockBuilder(Guild::class)
-            ->getMock();;
+            ->getMock();
 
         $token = new Token();
         $this->assertNull($token->getGuild());
@@ -70,6 +78,9 @@ class TokenTest extends TestCase
         $this->assertEquals($accessToken, $token->getRefreshToken());
     }
 
+    /**
+     * @return Generator
+     */
     public function provideAccessTokens()
     {
         $this->setupFaker();
@@ -103,7 +114,7 @@ class TokenTest extends TestCase
         $this->assertInstanceOf(Token::class, $token->setExpiresIn(null));
         $this->assertNull($token->getExpiresIn());
         $this->assertInstanceOf(Token::class, $token->setExpiresIn($expiresIn));
-        $this->assertEquals(new \DateInterval('PT' . $expiresIn . 'S'), $token->getExpiresIn());
+        $this->assertObjectEquals(ComparableDateInterval::create($expiresIn), ComparableDateInterval::create($token->getExpiresIn()), 'equals');
     }
 
     /**
@@ -136,7 +147,9 @@ class TokenTest extends TestCase
         $this->assertEquals($errorDescription, $token->getErrorDescription());
     }
 
-
+    /**
+     *
+     */
     public function testGetCode()
     {
         $code = $this->faker->randomNumber();
@@ -147,5 +160,28 @@ class TokenTest extends TestCase
         $this->assertNull($token->getCode());
         $this->assertInstanceOf(Token::class, $token->setCode($code));
         $this->assertEquals($code, $token->getCode());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testCreateFromParts()
+    {
+        $token = Token::createFromParts(accessToken: $this->faker->accessToken(), tokenSource: TokenSource::app());
+        $this->assertInstanceOf(AccessTokenInterface::class, $token);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testUpdate()
+    {
+        $token1 = Token::createFromParts(accessToken: $this->faker->unique()->accessToken(), tokenSource: TokenSource::app());
+        $token2 = Token::createFromParts(accessToken: $this->faker->unique()->accessToken(), tokenSource: TokenSource::user());
+        $this->assertNotEquals($token1->getTokenSource(), $token2->getTokenSource());
+        $token1 = $token2->updateFromAccessToken($token2);
+        $this->assertInstanceOf(AccessTokenInterface::class, $token1);
+        $this->assertEquals($token1->getAccessToken(), $token2->getAccessToken());
+        $this->assertEquals($token1->getTokenSource(), $token2->getTokenSource());
     }
 }
