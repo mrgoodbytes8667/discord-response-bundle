@@ -384,6 +384,24 @@ class BotTest extends TestCase
     /**
      *
      */
+    public function testHasExpired()
+    {
+        $validate = new Bot();
+        $this->assertFalse($validate->hasExpired());
+    }
+
+    /**
+     *
+     */
+    public function testGetExpiresAt()
+    {
+        $validate = new Bot();
+        $this->assertNull($validate->getExpiresAt());
+    }
+
+    /**
+     *
+     */
     public function testCreate()
     {
         $this->assertInstanceOf(Bot::class, Bot::create());

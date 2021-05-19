@@ -69,14 +69,6 @@ class User implements TokenValidationResponseInterface
     }
 
     /**
-     * @return DateTimeInterface|null
-     */
-    public function getExpires(): ?DateTimeInterface
-    {
-        return $this->expires;
-    }
-
-    /**
      * @param DateTimeInterface|null $expires
      * @return $this
      */
@@ -210,5 +202,21 @@ class User implements TokenValidationResponseInterface
     public function isAppToken(): bool
     {
         return false;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getExpiresAt(): ?DateTimeInterface
+    {
+        return $this->getExpires();
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getExpires(): ?DateTimeInterface
+    {
+        return $this->expires;
     }
 }
