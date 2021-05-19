@@ -6,6 +6,7 @@ namespace Bytes\DiscordResponseBundle\Objects\OAuth\Validate;
 
 use Bytes\DiscordResponseBundle\Objects\Application;
 use Bytes\ResponseBundle\Token\Interfaces\TokenValidationResponseInterface;
+use DateTimeInterface;
 use InvalidArgumentException;
 
 /**
@@ -75,7 +76,6 @@ class Bot extends Application implements TokenValidationResponseInterface
         }
         return $static;
     }
-
 
     /**
      * @return string|null
@@ -172,5 +172,13 @@ class Bot extends Application implements TokenValidationResponseInterface
     public function hasExpired(): bool
     {
         return false;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getExpiresAt(): ?DateTimeInterface
+    {
+        return null;
     }
 }

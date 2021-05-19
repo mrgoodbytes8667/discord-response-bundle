@@ -57,6 +57,7 @@ class UserTest extends TestCase
         $this->assertNull($user->getExpires());
         $this->assertInstanceOf(User::class, $user->setExpires($expires));
         $this->assertEquals($expires, $user->getExpires());
+        $this->assertEquals($expires, $user->getExpiresAt());
     }
 
     /**
