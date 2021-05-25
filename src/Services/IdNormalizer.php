@@ -74,7 +74,7 @@ class IdNormalizer extends BaseIdNormalizer
                 }
                 return $object;
             }
-            if (is_subclass_of($object, $class)) {
+            if (is_subclass_of($object, $class) || (is_object($object) && method_exists($object, $method))) {
                 $id = $object->$method();
                 if (empty($id)) {
                     if ($recursivelyNormalize) {
