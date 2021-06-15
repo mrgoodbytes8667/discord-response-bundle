@@ -1,6 +1,6 @@
 {
     "name": "mrgoodbytes8667/discord-response-bundle",
-    "description": "A Symfony bundle for Discord API Response objects and enums",
+    "description": "A Symfony bundle for Discord API response objects and enums",
     "type": "symfony-bundle",
     "license": "CC-BY-NC-4.0",
     "require": {
@@ -8,14 +8,14 @@
         "ext-json": "*",
         "illuminate/support": "^8.0",
         "mrgoodbytes8667/response-bundle": "dev-main",
-        "symfony/config": "^5.2",
-        "symfony/console": "^5.2",
-        "symfony/dependency-injection": "^5.2",
-        "symfony/framework-bundle": "^5.2",
+        "symfony/config": "^5.3",
+        "symfony/console": "^5.3",
+        "symfony/dependency-injection": "^5.3",
+        "symfony/framework-bundle": "^5.3",
         "symfony/polyfill-uuid": "^1.20",
-        "symfony/serializer": "^5.2",
-        "symfony/string": "^5.2",
-        "symfony/validator": "^5.2"
+        "symfony/serializer": "^5.3",
+        "symfony/string": "^5.3",
+        "symfony/validator": "^5.3"
     },
     "require-dev": {
         "doctrine/common": "^3.0",
@@ -23,8 +23,8 @@
         "mrgoodbytes8667/test-common": ">=0.0.17",
         "mrgoodbytes8667/test-common-faker": "^0.3.1",
         "mrgoodbytes8667/test-discord-faker": ">=0.0.7",
-        "symfony/phpunit-bridge": "^5.2",
-        "symfony/var-dumper": "^5.2"
+        "symfony/test-pack": "^1.0",
+        "symfony/var-dumper": "^5.3"
     },
     "authors": [
         {
@@ -43,6 +43,7 @@
         "doctrine/inflector": "<1.4.3",
         "doctrine/lexer": "<1.2.1",
         "doctrine/persistence": "<2.1.0",
+        "phpunit/phpunit": "<9.5",
         "spatie/enum": "<3.7.2",
         "symfony/serializer": "<5.2.2"
     },
