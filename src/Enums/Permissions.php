@@ -162,14 +162,19 @@ class Permissions extends Enum
 
     /**
      * @param int $flags
-     * @return string[]
+     * @param bool $asArrayOfEnums
+     * @return static[]|string[]
      */
-    public static function getPermissions(int $flags)
+    public static function getPermissions(int $flags, bool $asArrayOfEnums = false): ?array
     {
         $return = [];
-        foreach (static::labels() as $index => $value) {
-            if (static::hasFlag($flags, $index)) {
-                $return[] = $value;
+        foreach (static::values() as $index => $value) {
+            if (static::hasFlag($flags, $value)) {
+                if($asArrayOfEnums) {
+                    $return[] = static::from($index);
+                } else {
+                    $return[] = $index;
+                }
             }
         }
 
