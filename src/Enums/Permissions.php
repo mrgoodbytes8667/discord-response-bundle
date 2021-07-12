@@ -13,6 +13,8 @@ use Illuminate\Support\Arr;
  *
  * @link https://discord.com/developers/docs/topics/permissions
  *
+ * @version v0.9.1 As of 2021-07-12 Discord Documentation
+ *
  * @method static self CREATE_INSTANT_INVITE() Allows creation of instant invites
  * @method static self KICK_MEMBERS() Allows kicking members
  * @method static self BAN_MEMBERS() Allows banning members
@@ -44,6 +46,11 @@ use Illuminate\Support\Arr;
  * @method static self MANAGE_ROLES() Allows management and editing of roles
  * @method static self MANAGE_WEBHOOKS() Allows management and editing of webhooks
  * @method static self MANAGE_EMOJIS() Allows management and editing of emojis
+ * @method static self USE_SLASH_COMMANDS() Allows members to use slash commands in text channels
+ * @method static self REQUEST_TO_SPEAK() Allows for requesting to speak in stage channels. (This permission is under active development and may be changed or removed.)
+ * @method static self MANAGE_THREADS() Allows for deleting and archiving threads, and viewing all private threads
+ * @method static self USE_PUBLIC_THREADS() Allows for creating and participating in threads
+ * @method static self USE_PRIVATE_THREADS() Allows for creating and participating in private threads
  *
  * @todo Refactor these to proper camel case functions
  *
@@ -51,16 +58,19 @@ use Illuminate\Support\Arr;
  */
 class Permissions extends Enum
 {
-
     /**
      * @return string[]
-     * @deprecated Only included for backwards compatibility
+     * @deprecated Since 0.2.0, only included for backwards compatibility. Use static::toArray() instead.
      */
     public static function allNames()
     {
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.2.0', 'Using "%s" is deprecated, use static::toArray() instead.', __METHOD__);
         return static::labels();
     }
 
+    /**
+     * @return int[]
+     */
     protected static function labels(): array
     {
         $return = static::values();
@@ -68,6 +78,9 @@ class Permissions extends Enum
         return $return;
     }
 
+    /**
+     * @return int[]
+     */
     protected static function values(): array
     {
         return [
@@ -102,6 +115,11 @@ class Permissions extends Enum
             'MANAGE_ROLES' => 0x10000000,
             'MANAGE_WEBHOOKS' => 0x20000000,
             'MANAGE_EMOJIS' => 0x40000000,
+            'USE_SLASH_COMMANDS' => 0x0080000000,
+            'REQUEST_TO_SPEAK' => 0x0100000000,
+            'MANAGE_THREADS' => 0x0400000000,
+            'USE_PUBLIC_THREADS' => 0x0800000000,
+            'USE_PRIVATE_THREADS' => 0x1000000000,
         ];
     }
 
@@ -117,9 +135,12 @@ class Permissions extends Enum
     /**
      * @param static|int $item
      * @param $key
+     *
+     * @deprecated Since 0.9.1, there is no replacement
      */
     public static function convertStaticToValue(&$item, $key)
     {
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.1', 'Using "%s" is deprecated, there is no replacement.', __METHOD__);
         if ($item instanceof static) {
             $item = $item->value;
         }
@@ -147,14 +168,19 @@ class Permissions extends Enum
 
     /**
      * @param int $flags
-     * @return string[]
+     * @param bool $asArrayOfEnums
+     * @return static[]|string[]
      */
-    public static function getPermissions(int $flags)
+    public static function getPermissions(int $flags, bool $asArrayOfEnums = false): ?array
     {
         $return = [];
-        foreach (static::labels() as $index => $value) {
-            if (static::hasFlag($flags, $index)) {
-                $return[] = $value;
+        foreach (static::values() as $index => $value) {
+            if (static::hasFlag($flags, $value)) {
+                if($asArrayOfEnums) {
+                    $return[] = static::from($index);
+                } else {
+                    $return[] = $index;
+                }
             }
         }
 
@@ -164,11 +190,11 @@ class Permissions extends Enum
     /**
      * Determines if the $permission is present in the $permissions int.
      * @param int $flags The integer representation of permissions
-     * @param static|int $permission The permission to look for.
+     * @param Permissions|string|int $permission The permission to look for.
      *
      * @return bool
      */
-    public static function hasFlag(int $flags, $permission)
+    public static function hasFlag(int $flags, Permissions|string|int $permission)
     {
         if ($permission instanceof static) {
             $permission = $permission->value;
