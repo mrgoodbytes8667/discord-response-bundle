@@ -134,9 +134,12 @@ class Permissions extends Enum
     /**
      * @param static|int $item
      * @param $key
+     *
+     * @deprecated Since 0.9.1, there is no replacement
      */
     public static function convertStaticToValue(&$item, $key)
     {
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.1', 'Using "%s" is deprecated, there is no replacement.', __METHOD__);
         if ($item instanceof static) {
             $item = $item->value;
         }
