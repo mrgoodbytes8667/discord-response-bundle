@@ -58,7 +58,6 @@ use Illuminate\Support\Arr;
  */
 class Permissions extends Enum
 {
-
     /**
      * @return string[]
      * @deprecated Only included for backwards compatibility
@@ -68,6 +67,9 @@ class Permissions extends Enum
         return static::labels();
     }
 
+    /**
+     * @return int[]
+     */
     protected static function labels(): array
     {
         $return = static::values();
@@ -184,11 +186,11 @@ class Permissions extends Enum
     /**
      * Determines if the $permission is present in the $permissions int.
      * @param int $flags The integer representation of permissions
-     * @param static|int $permission The permission to look for.
+     * @param Permissions|string|int $permission The permission to look for.
      *
      * @return bool
      */
-    public static function hasFlag(int $flags, $permission)
+    public static function hasFlag(int $flags, Permissions|string|int $permission)
     {
         if ($permission instanceof static) {
             $permission = $permission->value;
