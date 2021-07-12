@@ -7,6 +7,7 @@ namespace Bytes\DiscordResponseBundle\Tests\Enums;
 use Bytes\DiscordResponseBundle\Enums\Permissions;
 use Generator;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
 /**
  * Class PermissionsTest
@@ -14,6 +15,8 @@ use PHPUnit\Framework\TestCase;
  */
 class PermissionsTest extends TestCase
 {
+    use ExpectDeprecationTrait;
+
     /**
      * @dataProvider providePermissions
      * @param array $flags
@@ -31,6 +34,40 @@ class PermissionsTest extends TestCase
     {
         $this->assertTrue(Permissions::hasFlag(12, Permissions::ADMINISTRATOR()));
         $this->assertFalse(Permissions::hasFlag(12, Permissions::MOVE_MEMBERS()));
+
+        $this->assertTrue(Permissions::hasFlag(3221225472, Permissions::USE_SLASH_COMMANDS()));
+        $this->assertTrue(Permissions::hasFlag(3221225472, Permissions::MANAGE_EMOJIS()));
+        $this->assertFalse(Permissions::hasFlag(3221225472, Permissions::ADMINISTRATOR()));
+    }
+
+    /**
+     *
+     */
+    public function testGetPermissions()
+    {
+        $permissions = Permissions::getPermissions(3221225472, asArrayOfEnums: false);
+        $this->assertCount(2, $permissions);
+        foreach ($permissions as $permission) {
+            $this->assertIsString($permission);
+        }
+
+        $permissions = Permissions::getPermissions(3221225472, asArrayOfEnums: true);
+        $this->assertCount(2, $permissions);
+        foreach ($permissions as $permission) {
+            $this->assertInstanceOf(Permissions::class, $permission);
+        }
+
+        $permissions = Permissions::getPermissions(0, asArrayOfEnums: false);
+        $this->assertCount(0, $permissions);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testAllNames()
+    {
+        $this->expectDeprecation('Since mrgoodbytes8667/discord-response-bundle 0.2.0: Using "%s" is deprecated');
+        $this->assertCount(36, Permissions::allNames());
     }
 
     /**
