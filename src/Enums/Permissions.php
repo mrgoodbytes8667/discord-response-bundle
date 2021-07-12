@@ -60,10 +60,11 @@ class Permissions extends Enum
 {
     /**
      * @return string[]
-     * @deprecated Only included for backwards compatibility
+     * @deprecated Since 0.2.0, only included for backwards compatibility. Use static::toArray() instead.
      */
     public static function allNames()
     {
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.2.0', 'Using "%s" is deprecated, use static::toArray() instead.', __METHOD__);
         return static::labels();
     }
 
