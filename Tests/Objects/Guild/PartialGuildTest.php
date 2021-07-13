@@ -6,6 +6,7 @@ namespace Bytes\DiscordResponseBundle\Tests\Objects\Guild;
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildInterface;
 use Bytes\DiscordResponseBundle\Objects\PartialGuild;
+use Bytes\DiscordResponseBundle\Routing\DiscordImageUrlBuilder;
 
 /**
  * Class PartialGuildTest
@@ -26,6 +27,6 @@ class PartialGuildTest extends TestGuildCase
      */
     public function testBuildIconUrlEmptyGuild()
     {
-        $this->assertNull(PartialGuild::buildIconUrl('', ''));
+        $this->assertNull(DiscordImageUrlBuilder::getIconUrl('', ''));
     }
 }
