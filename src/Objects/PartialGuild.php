@@ -10,6 +10,7 @@ use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
+use Bytes\DiscordResponseBundle\Routing\DiscordImageUrlBuilder;
 use Bytes\ResponseBundle\Interfaces\IdInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use function Symfony\Component\String\u;
@@ -84,42 +85,7 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
         if (empty($this->getId()) || empty($this->getIcon())) {
             return null;
         }
-        return static::buildIconUrl($this->getId(), $this->getIcon(), $extension);
-    }
-
-
-    /**
-     * Create the fully resolvable Url for the guild's icon
-     * @param string $guildId
-     * @param string $icon
-     * @param string $extension
-     * @return string|null
-     */
-    public static function buildIconUrl(string $guildId, string $icon, string $extension = 'png'): ?string
-    {
-        if (empty($guildId) || empty($icon)) {
-            return null;
-        }
-        switch (strtolower($extension)) {
-            case 'jpg':
-            case 'webp':
-                $extension = strtolower($extension);
-                break;
-            case 'jpeg':
-                $extension = 'jpg';
-                break;
-            case 'gif':
-                $extension = u($icon)->startsWith('a_') ? 'gif' : 'png';
-                break;
-            default:
-                $extension = 'png';
-                break;
-        }
-        return implode('/', [
-            'https://cdn.discordapp.com/icons',
-            $guildId,
-            $icon . '.' . $extension
-        ]);
+        return DiscordImageUrlBuilder::getIconUrl($this->getId(), $this->getIcon(), $extension);
     }
 
     /**
