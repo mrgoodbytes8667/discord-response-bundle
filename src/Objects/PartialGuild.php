@@ -81,8 +81,23 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
      */
     public function getIconUrl(string $extension = 'png'): ?string
     {
-        $icon = $this->getIcon();
-        if (empty($this->getId()) || empty($icon)) {
+        if (empty($this->getId()) || empty($this->getIcon())) {
+            return null;
+        }
+        return static::buildIconUrl($this->getId(), $this->getIcon(), $extension);
+    }
+
+
+    /**
+     * Create the fully resolvable Url for the guild's icon
+     * @param string $guildId
+     * @param string $icon
+     * @param string $extension
+     * @return string|null
+     */
+    public static function buildIconUrl(string $guildId, string $icon, string $extension = 'png'): ?string
+    {
+        if (empty($guildId) || empty($icon)) {
             return null;
         }
         switch (strtolower($extension)) {
@@ -102,7 +117,7 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
         }
         return implode('/', [
             'https://cdn.discordapp.com/icons',
-            $this->getId(),
+            $guildId,
             $icon . '.' . $extension
         ]);
     }

@@ -20,4 +20,12 @@ class PartialGuildTest extends TestGuildCase
     {
         return new PartialGuild();
     }
+
+    /**
+     *
+     */
+    public function testBuildIconUrlEmptyGuild()
+    {
+        $this->assertNull(PartialGuild::buildIconUrl('', ''));
+    }
 }
