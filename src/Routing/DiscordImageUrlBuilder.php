@@ -6,6 +6,7 @@ namespace Bytes\DiscordResponseBundle\Routing;
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ImageBuilderInterface;
 use Bytes\DiscordResponseBundle\Objects\User;
+use Exception;
 use function Symfony\Component\String\u;
 
 /**
@@ -101,13 +102,27 @@ class DiscordImageUrlBuilder
     }
 
     /**
-     * @param User|string $user
-     * @return string
+     * @param ImageBuilderInterface|string $user
+     * @return string|null
+     * @throws Exception
      */
-    public static function getDefaultAvatarUrl(User|string $user): string
+    public static function getDefaultAvatarUrl(ImageBuilderInterface|string $user): ?string
     {
+        if($user instanceof ImageBuilderInterface)
+        {
+            $parts = $user->getImageBuilderParts();
+            if(isset($parts['userDiscriminator']))
+            {
+                $user = $parts['userDiscriminator'];
+            } elseif (isset($parts['guildId']))
+            {
+                $user = $parts['guildId'];
+            } else {
+                $user = random_int(6, 10);
+            }
+        }
         return u('https://cdn.discordapp.com/embed/avatars/')
-            ->append(($user instanceof User ? $user->getDiscriminator() : $user) % 5)
+            ->append($user % 5)
             ->append('.png');
     }
 }

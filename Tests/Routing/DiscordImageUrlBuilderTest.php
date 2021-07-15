@@ -104,7 +104,16 @@ class DiscordImageUrlBuilderTest extends TestCase
      */
     public function testGetDefaultAvatarUrl($user)
     {
-        $userId = ($user instanceof User ? $user->getDiscriminator() : $user) % 5;
+        if($user instanceof User)
+        {
+            $userId = $user->getDiscriminator();
+        } elseif ($user instanceof PartialGuild)
+        {
+            $userId = $user->getGuildId();
+        } else {
+            $userId = $user;
+        }
+        $userId = $userId % 5;
 
         $url = DiscordImageUrlBuilder::getDefaultAvatarUrl($user);
         $this->assertEquals(sprintf('https://cdn.discordapp.com/embed/avatars/%s.png', $userId), $url);
@@ -154,7 +163,14 @@ class DiscordImageUrlBuilderTest extends TestCase
         $user = new User();
         $user->setDiscriminator($this->faker->discriminator());
 
+        $guildId = $this->faker->guildId();
+        $icon = $this->faker->iconHash();
+        $guild = new PartialGuild();
+        $guild->setGuildId($guildId)
+            ->setIcon($icon);
+
         yield ['user' => $user];
         yield ['user' => $this->faker->discriminator()];
+        yield ['user' => $guild];
     }
 }
