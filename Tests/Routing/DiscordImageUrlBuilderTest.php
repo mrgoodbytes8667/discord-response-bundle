@@ -3,6 +3,7 @@
 namespace Bytes\DiscordResponseBundle\Tests\Routing;
 
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
+use Bytes\DiscordResponseBundle\Objects\PartialGuild;
 use Bytes\DiscordResponseBundle\Objects\User;
 use Bytes\DiscordResponseBundle\Routing\DiscordImageUrlBuilder;
 use Generator;
@@ -48,6 +49,21 @@ class DiscordImageUrlBuilderTest extends TestCase
         }
         $url = DiscordImageUrlBuilder::getIconUrl($userId, $hash, $extension);
         $this->assertEquals(sprintf('https://cdn.discordapp.com/icons/%s/%s.%s', $userId, $hash, $resultExtension), $url);
+    }
+
+    /**
+     *
+     */
+    public function testGetIconUrlFromParts()
+    {
+        $guildId = $this->faker->guildId();
+        $icon = $this->faker->iconHash();
+        $guild = new PartialGuild();
+        $guild->setGuildId($guildId)
+            ->setIcon($icon);
+
+        $url = DiscordImageUrlBuilder::getIconUrl($guild, extension: 'png');
+        $this->assertEquals(sprintf('https://cdn.discordapp.com/icons/%s/%s.%s', $guildId, $icon, 'png'), $url);
     }
 
     /**

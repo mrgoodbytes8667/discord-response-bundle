@@ -66,13 +66,19 @@ class DiscordImageUrlBuilder
 
     /**
      * Create the fully resolvable Url for the guild's icon
-     * @param string $guildId
-     * @param string $icon
+     * @param ImageBuilderInterface|string $guildId
+     * @param string|null $icon
      * @param string $extension
      * @return string|null
      */
-    public static function getIconUrl(string $guildId, string $icon, string $extension = 'png'): ?string
+    public static function getIconUrl(ImageBuilderInterface|string $guildId, ?string $icon = null, string $extension = 'png'): ?string
     {
+        if($guildId instanceof ImageBuilderInterface)
+        {
+            $parts = $guildId->getImageBuilderParts();
+            $guildId = $parts['guildId'];
+            $icon = $parts['guildIcon'];
+        }
         if (empty($guildId) || empty($icon)) {
             return null;
         }
