@@ -34,6 +34,21 @@ class DiscordImageUrlBuilderTest extends TestCase
     }
 
     /**
+     *
+     */
+    public function testGetAvatarUrlFromPartsMismatch()
+    {
+        $guildId = $this->faker->guildId();
+        $icon = $this->faker->iconHash();
+
+        $guild = new PartialGuild();
+        $guild->setGuildId($guildId)
+            ->setIcon($icon);
+
+        $this->assertNull(DiscordImageUrlBuilder::getAvatarUrl($guild, extension: 'png'));
+    }
+
+    /**
      * @dataProvider provideHashesAndExtensions
      * @param $hash
      * @param $gif
@@ -64,6 +79,23 @@ class DiscordImageUrlBuilderTest extends TestCase
 
         $url = DiscordImageUrlBuilder::getIconUrl($guild, extension: 'png');
         $this->assertEquals(sprintf('https://cdn.discordapp.com/icons/%s/%s.%s', $guildId, $icon, 'png'), $url);
+    }
+
+    /**
+     *
+     */
+    public function testGetIconUrlFromPartsMismatch()
+    {
+        $userId = $this->faker->userId();
+        $icon = $this->faker->iconHash();
+        $discriminator = $this->faker->discriminator();
+
+        $user = new User();
+        $user->setId($userId)
+            ->setAvatar($icon)
+            ->setDiscriminator($discriminator);
+
+        $this->assertNull(DiscordImageUrlBuilder::getIconUrl($user, extension: 'png'));
     }
 
     /**

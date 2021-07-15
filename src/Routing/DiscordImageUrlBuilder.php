@@ -26,6 +26,10 @@ class DiscordImageUrlBuilder
     public static function getAvatarUrl(ImageBuilderInterface $user, string $extension = 'png'): ?string
     {
         $parts = $user->getImageBuilderParts();
+        if(!isset($parts['userAvatar']) || !isset($parts['userAvatar']))
+        {
+            return null;
+        }
         $icon = $parts['userAvatar'];
         $url = u(implode('/', [
             'https://cdn.discordapp.com/avatars',
@@ -76,6 +80,10 @@ class DiscordImageUrlBuilder
         if($guildId instanceof ImageBuilderInterface)
         {
             $parts = $guildId->getImageBuilderParts();
+            if(!isset($parts['guildId']) || !isset($parts['guildIcon']))
+            {
+                return null;
+            }
             $guildId = $parts['guildId'];
             $icon = $parts['guildIcon'];
         }
