@@ -4,7 +4,8 @@
 namespace Bytes\DiscordResponseBundle\Routing;
 
 
-use Bytes\DiscordResponseBundle\Objects\User;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ImageBuilderInterface;
+use Exception;
 use function Symfony\Component\String\u;
 
 /**
@@ -18,38 +19,45 @@ use function Symfony\Component\String\u;
 class DiscordImageUrlBuilder
 {
     /**
-     * @param User $user
-     * @return string|null
-     */
-    public static function getAvatarUrl(User $user): ?string
-    {
-        $url = u(implode('/', [
-            'https://cdn.discordapp.com/avatars',
-            $user->getId(),
-            $user->getAvatar()
-        ]));
-
-        if(u($user->getAvatar())->startsWith('a_')) {
-            $url .= '.gif';
-        } else {
-            $url .= '.png';
-        }
-
-        return $url;
-    }
-
-    /**
-     * Create the fully resolvable Url for the guild's icon
-     * @param string $guildId
-     * @param string $icon
+     * @param ImageBuilderInterface|string $user
+     * @param string|null $avatar
      * @param string $extension
      * @return string|null
      */
-    public static function getIconUrl(string $guildId, string $icon, string $extension = 'png'): ?string
+    public static function getAvatarUrl(ImageBuilderInterface|string $user, ?string $avatar = null, string $extension = 'png'): ?string
     {
-        if (empty($guildId) || empty($icon)) {
+        if($user instanceof ImageBuilderInterface)
+        {
+            $parts = $user->getImageBuilderParts();
+            if(!isset($parts['userId']) || !isset($parts['userAvatar']))
+            {
+                return null;
+            }
+            $user = $parts['userId'];
+            $avatar = $parts['userAvatar'];
+        }
+        if (empty($user) || empty($avatar)) {
             return null;
         }
+
+        $url = u(implode('/', [
+            'https://cdn.discordapp.com/avatars',
+            $user,
+            $avatar
+        ]));
+
+        $extension = self::getExtension($extension, $avatar);
+
+        return $url->append('.')->append($extension);
+    }
+
+    /**
+     * @param string $extension
+     * @param string $icon
+     * @return string
+     */
+    private static function getExtension(string $extension, string $icon): string
+    {
         switch (strtolower($extension)) {
             case 'jpg':
             case 'webp':
@@ -65,6 +73,35 @@ class DiscordImageUrlBuilder
                 $extension = 'png';
                 break;
         }
+
+        return $extension;
+    }
+
+    /**
+     * Create the fully resolvable Url for the guild's icon
+     * @param ImageBuilderInterface|string $guildId
+     * @param string|null $icon
+     * @param string $extension
+     * @return string|null
+     */
+    public static function getIconUrl(ImageBuilderInterface|string $guildId, ?string $icon = null, string $extension = 'png'): ?string
+    {
+        if($guildId instanceof ImageBuilderInterface)
+        {
+            $parts = $guildId->getImageBuilderParts();
+            if(!isset($parts['guildId']) || !isset($parts['guildIcon']))
+            {
+                return null;
+            }
+            $guildId = $parts['guildId'];
+            $icon = $parts['guildIcon'];
+        }
+        if (empty($guildId) || empty($icon)) {
+            return null;
+        }
+
+        $extension = self::getExtension($extension, $icon);
+
         return implode('/', [
             'https://cdn.discordapp.com/icons',
             $guildId,
@@ -73,13 +110,27 @@ class DiscordImageUrlBuilder
     }
 
     /**
-     * @param User|string $user
-     * @return string
+     * @param ImageBuilderInterface|string $user
+     * @return string|null
+     * @throws Exception
      */
-    public static function getDefaultAvatarUrl(User|string $user): string
+    public static function getDefaultAvatarUrl(ImageBuilderInterface|string $user): ?string
     {
+        if($user instanceof ImageBuilderInterface)
+        {
+            $parts = $user->getImageBuilderParts();
+            if(isset($parts['userDiscriminator']))
+            {
+                $user = $parts['userDiscriminator'];
+            } elseif (isset($parts['guildId']))
+            {
+                $user = $parts['guildId'];
+            } else {
+                $user = random_int(6, 10);
+            }
+        }
         return u('https://cdn.discordapp.com/embed/avatars/')
-            ->append(($user instanceof User ? $user->getDiscriminator() : $user) % 5)
+            ->append($user % 5)
             ->append('.png');
     }
 }

@@ -5,17 +5,19 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ImageBuilderInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\ResponseBundle\Interfaces\IdInterface;
 use Bytes\ResponseBundle\Interfaces\UserIdInterface;
+use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class User
  * @package Bytes\DiscordResponseBundle\Objects
  */
-class User implements ErrorInterface, IdInterface, UserIdInterface
+class User implements ErrorInterface, IdInterface, UserIdInterface, ImageBuilderInterface
 {
     use IDTrait, ErrorTrait;
     
@@ -309,5 +311,18 @@ class User implements ErrorInterface, IdInterface, UserIdInterface
     public function getUserId(): ?string
     {
         return $this->id;
+    }
+
+    /**
+     * @return array
+     */
+    #[ArrayShape(['userId' => "null|string", 'userAvatar' => "null|string", 'userDiscriminator' => "null|string"])]
+    public function getImageBuilderParts(): array
+    {
+        return [
+            'userId' => $this->id,
+            'userAvatar' => $this->avatar,
+            'userDiscriminator' => $this->discriminator,
+        ];
     }
 }

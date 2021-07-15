@@ -30,4 +30,27 @@ class UserTest extends TestCase
         $this->assertEquals($userId, $user->getId());
         $this->assertEquals($userId, $user->getUserId());
     }
+
+    /**
+     *
+     */
+    public function testGetImageBuilderParts()
+    {
+        $userId = $this->faker->userId();
+        $icon = $this->faker->iconHash();
+        $discriminator = $this->faker->discriminator();
+
+        $user = new User();
+        $user->setId($userId)
+            ->setAvatar($icon)
+            ->setDiscriminator($discriminator);
+
+        $this->assertCount(3, $user->getImageBuilderParts());
+        $this->assertArrayHasKey('userId', $user->getImageBuilderParts());
+        $this->assertArrayHasKey('userAvatar', $user->getImageBuilderParts());
+        $this->assertArrayHasKey('userDiscriminator', $user->getImageBuilderParts());
+        $this->assertEquals($userId, $user->getImageBuilderParts()['userId']);
+        $this->assertEquals($icon, $user->getImageBuilderParts()['userAvatar']);
+        $this->assertEquals($discriminator, $user->getImageBuilderParts()['userDiscriminator']);
+    }
 }

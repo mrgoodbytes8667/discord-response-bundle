@@ -3,6 +3,8 @@
 namespace Bytes\DiscordResponseBundle\Tests\Routing;
 
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ImageBuilderInterface;
+use Bytes\DiscordResponseBundle\Objects\PartialGuild;
 use Bytes\DiscordResponseBundle\Objects\User;
 use Bytes\DiscordResponseBundle\Routing\DiscordImageUrlBuilder;
 use Generator;
@@ -28,8 +30,44 @@ class DiscordImageUrlBuilderTest extends TestCase
         $user->setId($userId)
             ->setAvatar($hash);
 
-        $url = DiscordImageUrlBuilder::getAvatarUrl($user);
+        $url = DiscordImageUrlBuilder::getAvatarUrl($user, extension: 'gif');
         $this->assertEquals(sprintf('https://cdn.discordapp.com/avatars/%s/%s.%s', $userId, $hash, $gif ? 'gif' : 'png'), $url);
+    }
+
+    /**
+     * @dataProvider provideHashes
+     * @param $hash
+     * @param $gif
+     */
+    public function testGetAvatarUrlFromStrings($hash, $gif)
+    {
+        $userId = $this->faker->userId();
+
+        $url = DiscordImageUrlBuilder::getAvatarUrl($userId, $hash, extension: 'gif');
+        $this->assertEquals(sprintf('https://cdn.discordapp.com/avatars/%s/%s.%s', $userId, $hash, $gif ? 'gif' : 'png'), $url);
+    }
+
+    /**
+     *
+     */
+    public function testGetAvatarUrlEmptyArgs()
+    {
+        $this->assertNull(DiscordImageUrlBuilder::getAvatarUrl('', ''));
+    }
+
+    /**
+     *
+     */
+    public function testGetAvatarUrlFromPartsMismatch()
+    {
+        $guildId = $this->faker->guildId();
+        $icon = $this->faker->iconHash();
+
+        $guild = new PartialGuild();
+        $guild->setGuildId($guildId)
+            ->setIcon($icon);
+
+        $this->assertNull(DiscordImageUrlBuilder::getAvatarUrl($guild, extension: 'png'));
     }
 
     /**
@@ -51,15 +89,70 @@ class DiscordImageUrlBuilderTest extends TestCase
     }
 
     /**
+     *
+     */
+    public function testGetIconUrlFromParts()
+    {
+        $guildId = $this->faker->guildId();
+        $icon = $this->faker->iconHash();
+        $guild = new PartialGuild();
+        $guild->setGuildId($guildId)
+            ->setIcon($icon);
+
+        $url = DiscordImageUrlBuilder::getIconUrl($guild, extension: 'png');
+        $this->assertEquals(sprintf('https://cdn.discordapp.com/icons/%s/%s.%s', $guildId, $icon, 'png'), $url);
+    }
+
+    /**
+     *
+     */
+    public function testGetIconUrlFromPartsMismatch()
+    {
+        $userId = $this->faker->userId();
+        $icon = $this->faker->iconHash();
+        $discriminator = $this->faker->discriminator();
+
+        $user = new User();
+        $user->setId($userId)
+            ->setAvatar($icon)
+            ->setDiscriminator($discriminator);
+
+        $this->assertNull(DiscordImageUrlBuilder::getIconUrl($user, extension: 'png'));
+    }
+
+    /**
      * @dataProvider provideDefaultUser
      * @param $user
      */
     public function testGetDefaultAvatarUrl($user)
     {
-        $userId = ($user instanceof User ? $user->getDiscriminator() : $user) % 5;
+        if($user instanceof User)
+        {
+            $userId = $user->getDiscriminator();
+        } elseif ($user instanceof PartialGuild)
+        {
+            $userId = $user->getGuildId();
+        } else {
+            $userId = $user;
+        }
+        $userId = $userId % 5;
 
         $url = DiscordImageUrlBuilder::getDefaultAvatarUrl($user);
         $this->assertEquals(sprintf('https://cdn.discordapp.com/embed/avatars/%s.png', $userId), $url);
+    }
+
+    /**
+     *
+     */
+    public function testGetDefaultAvatarUrlUnsupportedClass()
+    {
+        $arg = $this->getMockBuilder(ImageBuilderInterface::class)->getMock();
+        $arg->method('getImageBuilderParts')
+            ->willReturn(['abc' => '123']);
+
+        $url = DiscordImageUrlBuilder::getDefaultAvatarUrl($arg);
+        $this->assertStringStartsWith('https://cdn.discordapp.com/embed/avatars/', $url);
+        $this->assertStringEndsWith('.png', $url);
     }
 
     /**
@@ -106,7 +199,14 @@ class DiscordImageUrlBuilderTest extends TestCase
         $user = new User();
         $user->setDiscriminator($this->faker->discriminator());
 
+        $guildId = $this->faker->guildId();
+        $icon = $this->faker->iconHash();
+        $guild = new PartialGuild();
+        $guild->setGuildId($guildId)
+            ->setIcon($icon);
+
         yield ['user' => $user];
         yield ['user' => $this->faker->discriminator()];
+        yield ['user' => $guild];
     }
 }
