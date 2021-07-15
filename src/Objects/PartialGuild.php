@@ -52,29 +52,11 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
     protected $features;
 
     /**
-     * @return string|null
-     */
-    public function getIcon(): ?string
-    {
-        return $this->icon;
-    }
-
-    /**
      * @return string
      */
     public function __toString()
     {
         return $this->name ?? $this->id ?? '';
-    }
-
-    /**
-     * @param string|null $icon
-     * @return $this
-     */
-    public function setIcon(?string $icon): self
-    {
-        $this->icon = $icon;
-        return $this;
     }
 
     /**
@@ -88,6 +70,24 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
             return null;
         }
         return DiscordImageUrlBuilder::getIconUrl($this->getId(), $this->getIcon(), $extension);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param string|null $icon
+     * @return $this
+     */
+    public function setIcon(?string $icon): self
+    {
+        $this->icon = $icon;
+        return $this;
     }
 
     /**
