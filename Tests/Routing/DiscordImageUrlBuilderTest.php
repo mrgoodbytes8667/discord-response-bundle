@@ -28,7 +28,7 @@ class DiscordImageUrlBuilderTest extends TestCase
         $user->setId($userId)
             ->setAvatar($hash);
 
-        $url = DiscordImageUrlBuilder::getAvatarUrl($user);
+        $url = DiscordImageUrlBuilder::getAvatarUrl($user, extension: 'gif');
         $this->assertEquals(sprintf('https://cdn.discordapp.com/avatars/%s/%s.%s', $userId, $hash, $gif ? 'gif' : 'png'), $url);
     }
 

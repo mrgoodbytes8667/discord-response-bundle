@@ -4,6 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Routing;
 
 
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ImageBuilderInterface;
 use Bytes\DiscordResponseBundle\Objects\User;
 use function Symfony\Component\String\u;
 
@@ -19,37 +20,31 @@ class DiscordImageUrlBuilder
 {
     /**
      * @param User $user
-     * @return string|null
-     */
-    public static function getAvatarUrl(User $user): ?string
-    {
-        $url = u(implode('/', [
-            'https://cdn.discordapp.com/avatars',
-            $user->getId(),
-            $user->getAvatar()
-        ]));
-
-        if(u($user->getAvatar())->startsWith('a_')) {
-            $url .= '.gif';
-        } else {
-            $url .= '.png';
-        }
-
-        return $url;
-    }
-
-    /**
-     * Create the fully resolvable Url for the guild's icon
-     * @param string $guildId
-     * @param string $icon
      * @param string $extension
      * @return string|null
      */
-    public static function getIconUrl(string $guildId, string $icon, string $extension = 'png'): ?string
+    public static function getAvatarUrl(ImageBuilderInterface $user, string $extension = 'png'): ?string
     {
-        if (empty($guildId) || empty($icon)) {
-            return null;
-        }
+        $parts = $user->getImageBuilderParts();
+        $icon = $parts['userAvatar'];
+        $url = u(implode('/', [
+            'https://cdn.discordapp.com/avatars',
+            $parts['userId'],
+            $parts['userAvatar']
+        ]));
+
+        $extension = self::getExtension($extension, $icon);
+
+        return $url->append('.')->append($extension);
+    }
+
+    /**
+     * @param string $extension
+     * @param string $icon
+     * @return string
+     */
+    private static function getExtension(string $extension, string $icon): string
+    {
         switch (strtolower($extension)) {
             case 'jpg':
             case 'webp':
@@ -65,6 +60,25 @@ class DiscordImageUrlBuilder
                 $extension = 'png';
                 break;
         }
+
+        return $extension;
+    }
+
+    /**
+     * Create the fully resolvable Url for the guild's icon
+     * @param string $guildId
+     * @param string $icon
+     * @param string $extension
+     * @return string|null
+     */
+    public static function getIconUrl(string $guildId, string $icon, string $extension = 'png'): ?string
+    {
+        if (empty($guildId) || empty($icon)) {
+            return null;
+        }
+
+        $extension = self::getExtension($extension, $icon);
+
         return implode('/', [
             'https://cdn.discordapp.com/icons',
             $guildId,
