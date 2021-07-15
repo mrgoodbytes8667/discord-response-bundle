@@ -3,6 +3,7 @@
 namespace Bytes\DiscordResponseBundle\Tests\Routing;
 
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ImageBuilderInterface;
 use Bytes\DiscordResponseBundle\Objects\PartialGuild;
 use Bytes\DiscordResponseBundle\Objects\User;
 use Bytes\DiscordResponseBundle\Routing\DiscordImageUrlBuilder;
@@ -138,6 +139,20 @@ class DiscordImageUrlBuilderTest extends TestCase
 
         $url = DiscordImageUrlBuilder::getDefaultAvatarUrl($user);
         $this->assertEquals(sprintf('https://cdn.discordapp.com/embed/avatars/%s.png', $userId), $url);
+    }
+
+    /**
+     *
+     */
+    public function testGetDefaultAvatarUrlUnsupportedClass()
+    {
+        $arg = $this->getMockBuilder(ImageBuilderInterface::class)->getMock();
+        $arg->method('getImageBuilderParts')
+            ->willReturn(['abc' => '123']);
+
+        $url = DiscordImageUrlBuilder::getDefaultAvatarUrl($arg);
+        $this->assertStringStartsWith('https://cdn.discordapp.com/embed/avatars/', $url);
+        $this->assertStringEndsWith('.png', $url);
     }
 
     /**
