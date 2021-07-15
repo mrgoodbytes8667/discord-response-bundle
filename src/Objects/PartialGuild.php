@@ -7,14 +7,15 @@ namespace Bytes\DiscordResponseBundle\Objects;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ImageBuilderInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Bytes\DiscordResponseBundle\Routing\DiscordImageUrlBuilder;
 use Bytes\ResponseBundle\Interfaces\IdInterface;
+use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\Serializer\Annotation\Groups;
-use function Symfony\Component\String\u;
 
 /**
  * Class PartialGuild
@@ -22,7 +23,7 @@ use function Symfony\Component\String\u;
  *
  * @link https://discord.com/developers/docs/resources/user#get-current-user-guilds
  */
-class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildInterface, GuildIdInterface
+class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildInterface, GuildIdInterface, ImageBuilderInterface
 {
     use IDTrait, NameTrait, ErrorTrait;
 
@@ -173,5 +174,17 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
         $this->id = $guildId;
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    #[ArrayShape(['guildId' => "null|string", 'guildIcon' => "null|string"])]
+    public function getImageBuilderParts(): array
+    {
+        return [
+            'guildId' => $this->id,
+            'guildIcon' => $this->icon,
+        ];
     }
 }
