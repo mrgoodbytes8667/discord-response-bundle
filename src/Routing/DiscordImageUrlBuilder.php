@@ -5,7 +5,6 @@ namespace Bytes\DiscordResponseBundle\Routing;
 
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ImageBuilderInterface;
-use Bytes\DiscordResponseBundle\Objects\User;
 use Exception;
 use function Symfony\Component\String\u;
 
@@ -20,25 +19,34 @@ use function Symfony\Component\String\u;
 class DiscordImageUrlBuilder
 {
     /**
-     * @param User $user
+     * @param ImageBuilderInterface|string $user
+     * @param string|null $avatar
      * @param string $extension
      * @return string|null
      */
-    public static function getAvatarUrl(ImageBuilderInterface $user, string $extension = 'png'): ?string
+    public static function getAvatarUrl(ImageBuilderInterface|string $user, ?string $avatar = null, string $extension = 'png'): ?string
     {
-        $parts = $user->getImageBuilderParts();
-        if(!isset($parts['userId']) || !isset($parts['userAvatar']))
+        if($user instanceof ImageBuilderInterface)
         {
+            $parts = $user->getImageBuilderParts();
+            if(!isset($parts['userId']) || !isset($parts['userAvatar']))
+            {
+                return null;
+            }
+            $user = $parts['userId'];
+            $avatar = $parts['userAvatar'];
+        }
+        if (empty($user) || empty($avatar)) {
             return null;
         }
-        $icon = $parts['userAvatar'];
+
         $url = u(implode('/', [
             'https://cdn.discordapp.com/avatars',
-            $parts['userId'],
-            $parts['userAvatar']
+            $user,
+            $avatar
         ]));
 
-        $extension = self::getExtension($extension, $icon);
+        $extension = self::getExtension($extension, $avatar);
 
         return $url->append('.')->append($extension);
     }

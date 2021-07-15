@@ -34,6 +34,27 @@ class DiscordImageUrlBuilderTest extends TestCase
     }
 
     /**
+     * @dataProvider provideHashes
+     * @param $hash
+     * @param $gif
+     */
+    public function testGetAvatarUrlFromStrings($hash, $gif)
+    {
+        $userId = $this->faker->userId();
+
+        $url = DiscordImageUrlBuilder::getAvatarUrl($userId, $hash, extension: 'gif');
+        $this->assertEquals(sprintf('https://cdn.discordapp.com/avatars/%s/%s.%s', $userId, $hash, $gif ? 'gif' : 'png'), $url);
+    }
+
+    /**
+     *
+     */
+    public function testGetAvatarUrlEmptyArgs()
+    {
+        $this->assertNull(DiscordImageUrlBuilder::getAvatarUrl('', ''));
+    }
+
+    /**
      *
      */
     public function testGetAvatarUrlFromPartsMismatch()
