@@ -13,15 +13,13 @@ use function Symfony\Component\String\u;
  * @package Bytes\DiscordResponseBundle\Routing
  *
  * @link https://discord.com/developers/docs/reference#image-formatting
- *
- * @todo Refactor on issue #15
  */
 class DiscordImageUrlBuilder
 {
     /**
      * @param ImageBuilderInterface|string $user
      * @param string|null $avatar
-     * @param string $extension
+     * @param string $extension = ['jpg', 'webp', 'gif', 'png'][$any]
      * @return string|null
      */
     public static function getAvatarUrl(ImageBuilderInterface|string $user, ?string $avatar = null, string $extension = 'png'): ?string
@@ -75,7 +73,7 @@ class DiscordImageUrlBuilder
      * Create the fully resolvable Url for the guild's icon
      * @param ImageBuilderInterface|string $guildId
      * @param string|null $icon
-     * @param string $extension
+     * @param string $extension = ['jpg', 'webp', 'gif', 'png'][$any]
      * @return string|null
      */
     public static function getIconUrl(ImageBuilderInterface|string $guildId, ?string $icon = null, string $extension = 'png'): ?string
