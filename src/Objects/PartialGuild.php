@@ -5,6 +5,7 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
@@ -21,7 +22,7 @@ use function Symfony\Component\String\u;
  *
  * @link https://discord.com/developers/docs/resources/user#get-current-user-guilds
  */
-class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildInterface
+class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildInterface, GuildIdInterface
 {
     use IDTrait, NameTrait, ErrorTrait;
 
@@ -151,6 +152,26 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
         if (!in_array($feature, $this->features ?? [])) {
             $this->features[] = $feature;
         }
+        return $this;
+    }
+
+    /**
+     * id of the guild the message was sent in
+     * @return string|null
+     */
+    public function getGuildId(): ?string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string|null $guildId
+     * @return $this
+     */
+    public function setGuildId(?string $guildId)
+    {
+        $this->id = $guildId;
+
         return $this;
     }
 }
