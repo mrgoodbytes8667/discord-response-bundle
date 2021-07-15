@@ -8,13 +8,14 @@ use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\ResponseBundle\Interfaces\IdInterface;
+use Bytes\ResponseBundle\Interfaces\UserIdInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class User
  * @package Bytes\DiscordResponseBundle\Objects
  */
-class User implements ErrorInterface, IdInterface
+class User implements ErrorInterface, IdInterface, UserIdInterface
 {
     use IDTrait, ErrorTrait;
     
@@ -299,5 +300,14 @@ class User implements ErrorInterface, IdInterface
     {
         $this->publicFlags = $publicFlags;
         return $this;
+    }
+
+    /**
+     * id of the user
+     * @return string|null
+     */
+    public function getUserId(): ?string
+    {
+        return $this->id;
     }
 }
