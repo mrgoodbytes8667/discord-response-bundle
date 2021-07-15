@@ -40,17 +40,17 @@ class UserTest extends TestCase
         $icon = $this->faker->iconHash();
         $discriminator = $this->faker->discriminator();
 
-        $guild = new User();
-        $guild->setId($userId)
+        $user = new User();
+        $user->setId($userId)
             ->setAvatar($icon)
             ->setDiscriminator($discriminator);
 
-        $this->assertCount(3, $guild->getImageBuilderParts());
-        $this->assertArrayHasKey('userId', $guild->getImageBuilderParts());
-        $this->assertArrayHasKey('userAvatar', $guild->getImageBuilderParts());
-        $this->assertArrayHasKey('userDiscriminator', $guild->getImageBuilderParts());
-        $this->assertEquals($userId, $guild->getImageBuilderParts()['userId']);
-        $this->assertEquals($icon, $guild->getImageBuilderParts()['userAvatar']);
-        $this->assertEquals($discriminator, $guild->getImageBuilderParts()['userDiscriminator']);
+        $this->assertCount(3, $user->getImageBuilderParts());
+        $this->assertArrayHasKey('userId', $user->getImageBuilderParts());
+        $this->assertArrayHasKey('userAvatar', $user->getImageBuilderParts());
+        $this->assertArrayHasKey('userDiscriminator', $user->getImageBuilderParts());
+        $this->assertEquals($userId, $user->getImageBuilderParts()['userId']);
+        $this->assertEquals($icon, $user->getImageBuilderParts()['userAvatar']);
+        $this->assertEquals($discriminator, $user->getImageBuilderParts()['userDiscriminator']);
     }
 }
