@@ -26,7 +26,7 @@ class DiscordImageUrlBuilder
     public static function getAvatarUrl(ImageBuilderInterface $user, string $extension = 'png'): ?string
     {
         $parts = $user->getImageBuilderParts();
-        if(!isset($parts['userAvatar']) || !isset($parts['userAvatar']))
+        if(!isset($parts['userId']) || !isset($parts['userAvatar']))
         {
             return null;
         }
