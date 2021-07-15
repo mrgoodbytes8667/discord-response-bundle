@@ -40,15 +40,9 @@ class DiscordImageUrlBuilder
             return null;
         }
 
-        $url = u(implode('/', [
-            'https://cdn.discordapp.com/avatars',
-            $user,
-            $avatar
-        ]));
-
         $extension = self::getExtension($extension, $avatar);
 
-        return $url->append('.')->append($extension);
+        return static::buildUrl(['avatars', $user, $avatar . '.' . $extension]);
     }
 
     /**
@@ -102,11 +96,16 @@ class DiscordImageUrlBuilder
 
         $extension = self::getExtension($extension, $icon);
 
-        return implode('/', [
-            'https://cdn.discordapp.com/icons',
-            $guildId,
-            $icon . '.' . $extension
-        ]);
+        return static::buildUrl(['icons', $guildId,$icon . '.' . $extension]);
+    }
+
+    /**
+     * @param string[] $parts
+     * @return string
+     */
+    private static function buildUrl(array $parts): string
+    {
+        return 'https://cdn.discordapp.com/' . implode('/', $parts);
     }
 
     /**
@@ -129,8 +128,6 @@ class DiscordImageUrlBuilder
                 $user = random_int(6, 10);
             }
         }
-        return u('https://cdn.discordapp.com/embed/avatars/')
-            ->append($user % 5)
-            ->append('.png');
+        return static::buildUrl(['embed', 'avatars', ($user % 5) . '.png']);
     }
 }
