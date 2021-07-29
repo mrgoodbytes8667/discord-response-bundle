@@ -77,20 +77,22 @@ class ApplicationCommand implements IdInterface, NameInterface
      * whether the command is enabled by default when the app is added to a guild
      * @var bool|null Default true
      */
-    private $default_permission;
+    private $default_permission = true;
 
     /**
      * @param string $name
      * @param string $description
-     * @param ApplicationCommandOption[]|null $options
+     * @param array|null $options
+     * @param bool $defaultPermission
      * @return static
      */
-    public static function create(string $name, string $description, ?array $options = null)
+    public static function create(string $name, string $description, ?array $options = null, bool $defaultPermission = true)
     {
         $command = new static();
         $command->setName($name);
         $command->setDescription($description);
         $command->setOptions($options);
+        $command->setDefaultPermission($defaultPermission);
 
         return $command;
     }
