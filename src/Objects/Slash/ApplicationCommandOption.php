@@ -4,6 +4,7 @@ namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
+use Bytes\DiscordResponseBundle\Objects\Traits\DescriptionTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameDescriptionValueLengthTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,11 +19,11 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoption
  *
- * @version v0.7.0 As of 2021-03-17 Discord Documentation
+ * @version v0.9.4 As of 2021-07-29 Discord Documentation
  */
 class ApplicationCommandOption implements NameInterface
 {
-    use NameTrait, NameDescriptionValueLengthTrait;
+    use NameTrait, DescriptionTrait, NameDescriptionValueLengthTrait;
 
     /**
      * value of ApplicationCommandOptionType
@@ -62,7 +63,7 @@ class ApplicationCommandOption implements NameInterface
     private $required;
 
     /**
-     * choices for string and int types for the user to pick from
+     * choices for STRING, INTEGER, and NUMBER types for the user to pick from
      * @var ApplicationCommandOptionChoice[]|ArrayCollection|null
      * @Assert\Count(
      *      max = 25,
@@ -153,24 +154,6 @@ class ApplicationCommandOption implements NameInterface
             $type = $type->value;
         }
         $this->type = $type;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string|null $description
-     * @return $this
-     */
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
         return $this;
     }
 

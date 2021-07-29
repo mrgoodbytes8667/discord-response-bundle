@@ -7,21 +7,23 @@ namespace Bytes\DiscordResponseBundle\Enums;
 use Bytes\EnumSerializerBundle\Enums\Enum;
 
 /**
- * Class ChannelTypes
+ * Class ApplicationCommandOptionType
  * @package Bytes\DiscordResponseBundle\Enums
  *
  * @method static self subCommand()
  * @method static self subCommandGroup()
  * @method static self string()
- * @method static self integer()
+ * @method static self integer() Any integer between -2^53 and 2^53
  * @method static self boolean()
  * @method static self user()
  * @method static self channel()
  * @method static self role()
+ * @method static self mentionable() Includes users and roles
+ * @method static self number() Any double between -2^53 and 2^53
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoptiontype
  *
- * @version v0.7.0 As of 2021-03-17 Discord Documentation
+ * @version v0.9.4 As of 2021-07-29 Discord Documentation
  */
 class ApplicationCommandOptionType extends Enum
 {
@@ -40,6 +42,8 @@ class ApplicationCommandOptionType extends Enum
             "user" => 6,
             "channel" => 7,
             "role" => 8,
+            "mentionable" => 9,
+            'number' => 10,
         ];
     }
 

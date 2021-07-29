@@ -4,6 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Objects;
 
 
+use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\DeletedTrait;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -15,7 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Guild extends PartialGuild
 {
-    use DeletedTrait;
+    use ApplicationIdTrait, DeletedTrait;
 
     /**
      * @var string|null
@@ -87,11 +88,6 @@ class Guild extends PartialGuild
      * @var int|null
      */
     private $mfaLevel;
-
-    /**
-     * @var string|null
-     */
-    private $applicationId;
 
     /**
      * @var bool|null
@@ -452,24 +448,6 @@ class Guild extends PartialGuild
     public function setMfaLevel(?int $mfaLevel): self
     {
         $this->mfaLevel = $mfaLevel;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getApplicationId(): ?string
-    {
-        return $this->applicationId;
-    }
-
-    /**
-     * @param string|null $applicationId
-     * @return $this
-     */
-    public function setApplicationId(?string $applicationId): self
-    {
-        $this->applicationId = $applicationId;
         return $this;
     }
 

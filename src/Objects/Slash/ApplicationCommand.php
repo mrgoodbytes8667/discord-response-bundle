@@ -3,6 +3,9 @@
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
+use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
+use Bytes\DiscordResponseBundle\Objects\Traits\DescriptionTrait;
+use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameDescriptionValueLengthTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
@@ -21,18 +24,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @link https://discord.com/developers/docs/interactions/slash-commands#applicationcommand
  *
  * @property string|null $id unique id of the command (snowflake)
+ * @property string|null $applicationId unique id of the parent application (snowflake)
+ * @property string|null $guildId guild id of the command, if not global (snowflake)
  *
- * @version v0.7.0 As of 2021-03-17 Discord Documentation
+ * @version v0.9.4 As of 2021-07-29 Discord Documentation
  */
 class ApplicationCommand implements IdInterface, NameInterface
 {
-    use IDTrait, NameTrait, NameDescriptionValueLengthTrait;
-
-    /**
-     * unique id of the parent application (snowflake)
-     * @var string|null
-     */
-    private $applicationId;
+    use IDTrait, ApplicationIdTrait, NameTrait, DescriptionTrait, NameDescriptionValueLengthTrait, GuildIDTrait;
 
     /**
      * 1-32 character name matching ^[\w-]{1,32}$
@@ -71,55 +70,27 @@ class ApplicationCommand implements IdInterface, NameInterface
     private $options;
 
     /**
+     * whether the command is enabled by default when the app is added to a guild
+     * @var bool|null Default true
+     */
+    private $default_permission = true;
+
+    /**
      * @param string $name
      * @param string $description
-     * @param ApplicationCommandOption[]|null $options
+     * @param array|null $options
+     * @param bool $defaultPermission
      * @return static
      */
-    public static function create(string $name, string $description, ?array $options = null)
+    public static function create(string $name, string $description, ?array $options = null, bool $defaultPermission = true)
     {
         $command = new static();
         $command->setName($name);
         $command->setDescription($description);
         $command->setOptions($options);
+        $command->setDefaultPermission($defaultPermission);
 
         return $command;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getApplicationId(): ?string
-    {
-        return $this->applicationId;
-    }
-
-    /**
-     * @param string|null $applicationId
-     * @return $this
-     */
-    public function setApplicationId(?string $applicationId): self
-    {
-        $this->applicationId = $applicationId;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string|null $description
-     * @return $this
-     */
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-        return $this;
     }
 
     /**
@@ -149,6 +120,24 @@ class ApplicationCommand implements IdInterface, NameInterface
         if (!$this->options->contains($option)) {
             $this->options[] = $option;
         }
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getDefaultPermission(): ?bool
+    {
+        return $this->default_permission;
+    }
+
+    /**
+     * @param bool|null $default_permission
+     * @return $this
+     */
+    public function setDefaultPermission(?bool $default_permission): self
+    {
+        $this->default_permission = $default_permission;
         return $this;
     }
 
