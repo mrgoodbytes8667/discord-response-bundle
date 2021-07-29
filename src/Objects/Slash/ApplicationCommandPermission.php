@@ -32,6 +32,21 @@ class ApplicationCommandPermission
     private $permission;
 
     /**
+     * @param string $snowflake
+     * @param ApplicationCommandPermissionType $type
+     * @param bool $permission
+     * @return static
+     */
+    public static function create(string $snowflake, ApplicationCommandPermissionType $type, bool $permission = true): static
+    {
+        $static = new static();
+        $static->setId($snowflake)
+            ->setType($type)
+            ->setPermission($permission);
+        return $static;
+    }
+
+    /**
      * @return int|null
      */
     public function getType(): ?int

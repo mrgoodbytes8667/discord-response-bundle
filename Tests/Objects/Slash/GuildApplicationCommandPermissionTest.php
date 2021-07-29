@@ -3,6 +3,7 @@
 namespace Bytes\DiscordResponseBundle\Tests\Objects\Slash;
 
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
+use Bytes\DiscordResponseBundle\Enums\ApplicationCommandPermissionType;
 use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommandPermission;
 use Bytes\DiscordResponseBundle\Objects\Slash\GuildApplicationCommandPermission;
 use Generator;
@@ -14,16 +15,28 @@ class GuildApplicationCommandPermissionTest extends TestCase
 
     /**
      * @dataProvider providePermissions
-     * @param mixed $permissions
+     * @param ApplicationCommandPermission[] $permissions
      */
-    public function testGetSetPermissions($permissions)
+    public function testGetSetAddPermissions($permissions)
     {
-        $guildApplicationCommandPermission = new GuildApplicationCommandPermission();
-        $this->assertNull($guildApplicationCommandPermission->getPermissions());
-        $this->assertInstanceOf(GuildApplicationCommandPermission::class, $guildApplicationCommandPermission->setPermissions(null));
-        $this->assertNull($guildApplicationCommandPermission->getPermissions());
-        $this->assertInstanceOf(GuildApplicationCommandPermission::class, $guildApplicationCommandPermission->setPermissions($permissions));
-        $this->assertEquals($permissions, $guildApplicationCommandPermission->getPermissions());
+        $perm = $permissions[0];
+        $object = new GuildApplicationCommandPermission();
+        $this->assertNull($object->getPermissions());
+        $this->assertInstanceOf(GuildApplicationCommandPermission::class, $object->setPermissions(null));
+        $this->assertNull($object->getPermissions());
+        $this->assertInstanceOf(GuildApplicationCommandPermission::class, $object->setPermissions($permissions));
+        $this->assertEquals($permissions, $object->getPermissions());
+        $this->assertCount(1, $object->getPermissions());
+        $this->assertInstanceOf(GuildApplicationCommandPermission::class, $object->addPermission($perm));
+        $this->assertCount(1, $object->getPermissions());
+
+        $id = $this->faker->snowflake();
+        $type = $this->faker->randomElement([ApplicationCommandPermissionType::role(), ApplicationCommandPermissionType::user()]);
+        $permission = $this->faker->boolean();
+
+        $perm2 = ApplicationCommandPermission::create($id, $type, $permission);
+        $this->assertInstanceOf(GuildApplicationCommandPermission::class, $object->addPermission($perm2));
+        $this->assertCount(2, $object->getPermissions());
     }
 
     /**

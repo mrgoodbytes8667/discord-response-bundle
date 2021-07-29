@@ -80,4 +80,20 @@ class ApplicationCommandPermissionTest extends TestCase
         $this->setupFaker();
         yield [$this->faker->snowflake()];
     }
+
+    /**
+     *
+     */
+    public function testCreate()
+    {
+        $id = $this->faker->snowflake();
+        $type = $this->faker->randomElement([ApplicationCommandPermissionType::role(), ApplicationCommandPermissionType::user()]);
+        $permission = $this->faker->boolean();
+
+        $object = ApplicationCommandPermission::create($id, $type, $permission);
+        $this->assertInstanceOf(ApplicationCommandPermission::class, $object);
+        $this->assertEquals($id, $object->getId());
+        $this->assertEquals($type->value, $object->getType());
+        $this->assertEquals($permission, $object->getPermission());
+    }
 }

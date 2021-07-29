@@ -21,7 +21,7 @@ class GuildApplicationCommandPermission
 
     /**
      * the permissions for the command in the guild
-     * @var ApplicationCommandPermission[]|ArrayCollection|null
+     * @var ApplicationCommandPermission[]|null
      */
     private $permissions;
 
@@ -49,7 +49,8 @@ class GuildApplicationCommandPermission
      */
     public function addPermission(ApplicationCommandPermission $permission): self
     {
-        if (!$this->permissions->contains($permission)) {
+        $permissions = new ArrayCollection($this->permissions);
+        if (!$permissions->contains($permission)) {
             $this->permissions[] = $permission;
         }
         return $this;
