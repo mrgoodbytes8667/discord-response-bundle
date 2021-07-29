@@ -12,6 +12,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @package Bytes\DiscordResponseBundle\Objects\Slash
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#application-command-permissions-object-guild-application-command-permissions-structure
+ *
+ * @version v0.9.4 As of 2021-07-29 Discord Documentation
  */
 class GuildApplicationCommandPermission
 {

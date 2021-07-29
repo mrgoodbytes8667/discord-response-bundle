@@ -12,6 +12,8 @@ use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#application-command-permissions-object-application-command-permissions-structure
  *
+ * @version v0.9.4 As of 2021-07-29 Discord Documentation
+ *
  * @property string|null $id the id of the role or user
  */
 class ApplicationCommandPermission
