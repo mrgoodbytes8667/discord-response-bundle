@@ -3,6 +3,7 @@
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
+use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\DescriptionTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
@@ -23,19 +24,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @link https://discord.com/developers/docs/interactions/slash-commands#applicationcommand
  *
  * @property string|null $id unique id of the command (snowflake)
+ * @property string|null $applicationId unique id of the parent application (snowflake)
  * @property string|null $guildId guild id of the command, if not global (snowflake)
  *
  * @version v0.9.4 As of 2021-07-29 Discord Documentation
  */
 class ApplicationCommand implements IdInterface, NameInterface
 {
-    use IDTrait, NameTrait, DescriptionTrait, NameDescriptionValueLengthTrait, GuildIDTrait;
-
-    /**
-     * unique id of the parent application (snowflake)
-     * @var string|null
-     */
-    private $applicationId;
+    use IDTrait, ApplicationIdTrait, NameTrait, DescriptionTrait, NameDescriptionValueLengthTrait, GuildIDTrait;
 
     /**
      * 1-32 character name matching ^[\w-]{1,32}$
@@ -95,24 +91,6 @@ class ApplicationCommand implements IdInterface, NameInterface
         $command->setDefaultPermission($defaultPermission);
 
         return $command;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getApplicationId(): ?string
-    {
-        return $this->applicationId;
-    }
-
-    /**
-     * @param string|null $applicationId
-     * @return $this
-     */
-    public function setApplicationId(?string $applicationId): self
-    {
-        $this->applicationId = $applicationId;
-        return $this;
     }
 
     /**

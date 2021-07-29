@@ -7,6 +7,7 @@ namespace Bytes\DiscordResponseBundle\Objects;
 use Bytes\DiscordResponseBundle\Enums\ChannelTypes;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
+use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\DeletedTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
@@ -23,7 +24,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  */
 class Channel implements ErrorInterface, IdInterface, NameInterface
 {
-    use IDTrait, NameTrait, ErrorTrait, DeletedTrait;
+    use ApplicationIdTrait, IDTrait, NameTrait, ErrorTrait, DeletedTrait;
 
     /**
      * the name of the channel (2-100 characters)
@@ -414,24 +415,6 @@ class Channel implements ErrorInterface, IdInterface, NameInterface
     public function setOwnerId(?string $ownerId): self
     {
         $this->ownerId = $ownerId;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getApplicationId(): ?string
-    {
-        return $this->applicationId;
-    }
-
-    /**
-     * @param string|null $applicationId
-     * @return $this
-     */
-    public function setApplicationId(?string $applicationId): self
-    {
-        $this->applicationId = $applicationId;
         return $this;
     }
 
