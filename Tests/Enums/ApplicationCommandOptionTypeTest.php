@@ -63,5 +63,7 @@ class ApplicationCommandOptionTypeTest extends TestCase
         yield ['value' => 6, 'enum' => ApplicationCommandOptionType::user()];
         yield ['value' => 7, 'enum' => ApplicationCommandOptionType::channel()];
         yield ['value' => 8, 'enum' => ApplicationCommandOptionType::role()];
+        yield ['value' => 9, 'enum' => ApplicationCommandOptionType::mentionable()];
+        yield ['value' => 10, 'enum' => ApplicationCommandOptionType::number()];
     }
 }
