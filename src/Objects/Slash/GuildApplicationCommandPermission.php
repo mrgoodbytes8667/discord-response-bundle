@@ -4,8 +4,6 @@ namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
-use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class GuildApplicationCommandPermission
@@ -15,44 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @version v0.9.5 As of 2021-07-29 Discord Documentation
  */
-class GuildApplicationCommandPermission
+class GuildApplicationCommandPermission extends PartialGuildApplicationCommandPermission
 {
-    use IDTrait, ApplicationIdTrait, GuildIDTrait;
-
-    /**
-     * the permissions for the command in the guild
-     * @var ApplicationCommandPermission[]|null
-     */
-    private $permissions;
-
-    /**
-     * @return ApplicationCommandPermission[]|null
-     */
-    public function getPermissions(): ?array
-    {
-        return $this->permissions;
-    }
-
-    /**
-     * @param ApplicationCommandPermission[]|null $permissions
-     * @return $this
-     */
-    public function setPermissions(?array $permissions): self
-    {
-        $this->permissions = $permissions;
-        return $this;
-    }
-
-    /**
-     * @param ApplicationCommandPermission $permission
-     * @return $this
-     */
-    public function addPermission(ApplicationCommandPermission $permission): self
-    {
-        $permissions = new ArrayCollection($this->permissions);
-        if (!$permissions->contains($permission)) {
-            $this->permissions[] = $permission;
-        }
-        return $this;
-    }
+    use ApplicationIdTrait, GuildIDTrait;
 }
