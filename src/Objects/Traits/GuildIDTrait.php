@@ -5,24 +5,22 @@ namespace Bytes\DiscordResponseBundle\Objects\Traits;
 
 
 /**
- * Trait GuildIDTrait
- * @package Bytes\DiscordResponseBundle\Objects\Traits
+ *
  */
 trait GuildIDTrait
 {
-
     /**
      * id of the guild the message was sent in
      * @var string|null
      */
-    private $guildId;
+    private $guild_id;
 
     /**
      * @return string|null
      */
     public function getGuildId(): ?string
     {
-        return $this->guildId;
+        return $this->guild_id;
     }
 
     /**
@@ -31,10 +29,7 @@ trait GuildIDTrait
      */
     public function setGuildId(?string $guildId): self
     {
-        $this->guildId = $guildId;
+        $this->guild_id = $guildId;
         return $this;
     }
-
-
-
 }
