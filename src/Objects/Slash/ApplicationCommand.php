@@ -2,7 +2,7 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
-use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ApplicationCommandInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\DescriptionTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @version v0.9.6 As of 2021-07-30 Discord Documentation
  */
-class ApplicationCommand implements IdInterface, NameInterface
+class ApplicationCommand implements ApplicationCommandInterface, IdInterface
 {
     use IDTrait, ApplicationIdTrait, NameTrait, DescriptionTrait, NameDescriptionValueLengthTrait, GuildIDTrait;
 
@@ -176,4 +176,11 @@ class ApplicationCommand implements IdInterface, NameInterface
         return $length;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getCommandId(): ?string
+    {
+        return $this->id;
+    }
 }
