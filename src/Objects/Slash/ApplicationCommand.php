@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @property string|null $applicationId unique id of the parent application (snowflake)
  * @property string|null $guildId guild id of the command, if not global (snowflake)
  *
- * @version v0.9.5 As of 2021-07-29 Discord Documentation
+ * @version v0.9.6 As of 2021-07-30 Discord Documentation
  */
 class ApplicationCommand implements IdInterface, NameInterface
 {
