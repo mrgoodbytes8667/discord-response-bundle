@@ -12,9 +12,12 @@ use Bytes\DiscordResponseBundle\Objects\Overwrite;
 use Bytes\DiscordResponseBundle\Objects\PartialGuild;
 use Bytes\DiscordResponseBundle\Objects\User;
 use Bytes\DiscordResponseBundle\Services\DiscordDatetimeInterface;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
 class DeserializationTest extends TestSerializationCase
 {
+    use ExpectDeprecationTrait;
+
     public function testMeDeserialization()
     {
         $serializer = $this->createSerializer();
@@ -67,6 +70,7 @@ class DeserializationTest extends TestSerializationCase
 
     public function testRoleV6Deserialization()
     {
+        $this->expectDeprecation('Since vendor-name/package-name 5.1: This "%s" method is deprecated');
         /** @var Guild $output */
         $output = $this->deserializeGuild('guild-v6.json', Guild::class);
 
@@ -114,6 +118,7 @@ class DeserializationTest extends TestSerializationCase
 
     public function testRoleV8Deserialization()
     {
+        $this->expectDeprecation('Since vendor-name/package-name 5.1: This "%s" method is deprecated');
         /** @var Guild $output */
         $output = $this->deserializeGuild('guild-v8.json', Guild::class);
 

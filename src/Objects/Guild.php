@@ -36,6 +36,8 @@ class Guild extends PartialGuild
 
     /**
      * @var string|null
+     * @deprecated Since 0.9.6, use rtc_region in channels instead
+     * @link https://discord.com/developers/docs/resources/guild#guild-object-guild-structure
      */
     private $region;
 
@@ -255,18 +257,24 @@ class Guild extends PartialGuild
 
     /**
      * @return string|null
+     * @deprecated Since 0.9.6, use rtc_region in channels instead
+     * @link https://discord.com/developers/docs/resources/guild#guild-object-guild-structure
      */
     public function getRegion(): ?string
     {
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.6', 'Using "%s" is deprecated.', __METHOD__);
         return $this->region;
     }
 
     /**
      * @param string|null $region
      * @return $this
+     * @deprecated Since 0.9.6, use rtc_region in channels instead
+     * @link https://discord.com/developers/docs/resources/guild#guild-object-guild-structure
      */
     public function setRegion(?string $region): self
     {
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.6', 'Using "%s" is deprecated.', __METHOD__);
         $this->region = $region;
         return $this;
     }
