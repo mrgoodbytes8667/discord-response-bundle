@@ -10,7 +10,7 @@ namespace Bytes\DiscordResponseBundle\Objects\Interfaces;
  *
  * @version v0.9.6 As of 2021-07-30 Discord Documentation
  */
-interface ApplicationCommandInterface extends NameInterface
+interface ApplicationCommandInterface extends NameInterface, GuildIdInterface
 {
     /**
      * @return string|null
