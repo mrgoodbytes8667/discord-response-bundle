@@ -18,6 +18,11 @@ interface ApplicationCommandInterface extends NameInterface
     public function getCommandId(): ?string;
 
     /**
+     * @return mixed
+     */
+    public function getEntityId();
+
+    /**
      * @return bool|null
      */
     public function getDefaultPermission(): ?bool;

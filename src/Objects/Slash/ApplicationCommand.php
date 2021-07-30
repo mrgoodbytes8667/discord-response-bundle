@@ -76,6 +76,12 @@ class ApplicationCommand implements ApplicationCommandInterface, IdInterface
     private $default_permission = true;
 
     /**
+     * @var mixed
+     * @Ignore()
+     */
+    private $entityId;
+
+    /**
      * @param string $name
      * @param string $description
      * @param array|null $options
@@ -182,5 +188,24 @@ class ApplicationCommand implements ApplicationCommandInterface, IdInterface
     public function getCommandId(): ?string
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     * @Ignore()
+     */
+    public function getEntityId(): mixed
+    {
+        return $this->entityId;
+    }
+
+    /**
+     * @param mixed $entityId
+     * @return $this
+     */
+    public function setEntityId(mixed $entityId): self
+    {
+        $this->entityId = $entityId;
+        return $this;
     }
 }
