@@ -9,6 +9,7 @@ use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
+use Bytes\DiscordResponseBundle\Objects\Message\Component;
 use Bytes\DiscordResponseBundle\Objects\Slash\MessageInteraction;
 use Bytes\DiscordResponseBundle\Objects\Traits\ChannelIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
@@ -26,7 +27,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *
  * @property string|null $channelID id of the channel the message was sent in
  *
- * @version v0.7.0 As of 2021-03-17 Discord Documentation
+ * @version v0.9.8 As of 2021-08-02 Discord Documentation
  */
 class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelIdInterface
 {
@@ -163,13 +164,6 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     private $flags;
 
     /**
-     * the stickers sent with the message (bots currently can only receive messages with stickers, not send)
-     * @todo
-     * @var mixed
-     */
-    private $stickers;
-
-    /**
      * the message associated with the message_reference
      * This field is only returned for messages with a type of 19 (REPLY). If the message is a reply but the
      * referenced_message field is not present, the backend did not attempt to fetch the message that was being replied
@@ -184,6 +178,30 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
      * @var MessageInteraction|null
      */
     private $interaction;
+
+    /**
+     * @var Channel|null
+     */
+    private $thread;
+
+    /**
+     * @var Component[]|null
+     */
+    private $components;
+
+    /**
+     * sent if the message contains stickers
+     * @var array|null
+     * @todo
+     */
+    private $stickerItems;
+
+    /**
+     * the stickers sent with the message (bots currently can only receive messages with stickers, not send)
+     * @var mixed
+     * @deprecated Since 0.9.8, use sticker_items instead
+     */
+    private $stickers;
 
     /**
      * @return User|null
@@ -600,6 +618,60 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     public function setInteraction(?MessageInteraction $interaction): self
     {
         $this->interaction = $interaction;
+        return $this;
+    }
+
+    /**
+     * @return Channel|null
+     */
+    public function getThread(): ?Channel
+    {
+        return $this->thread;
+    }
+
+    /**
+     * @param Channel|null $thread
+     * @return $this
+     */
+    public function setThread(?Channel $thread): self
+    {
+        $this->thread = $thread;
+        return $this;
+    }
+
+    /**
+     * @return Component[]|null
+     */
+    public function getComponents(): ?array
+    {
+        return $this->components;
+    }
+
+    /**
+     * @param Component[]|null $components
+     * @return $this
+     */
+    public function setComponents(?array $components): self
+    {
+        $this->components = $components;
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getStickerItems(): ?array
+    {
+        return $this->stickerItems;
+    }
+
+    /**
+     * @param array|null $stickerItems
+     * @return $this
+     */
+    public function setStickerItems(?array $stickerItems): self
+    {
+        $this->stickerItems = $stickerItems;
         return $this;
     }
 }

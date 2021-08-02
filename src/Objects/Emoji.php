@@ -6,39 +6,151 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
-use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
-use Bytes\ResponseBundle\Interfaces\IdInterface;
 
 /**
- * Class Emoji
- * @package Bytes\DiscordResponseBundle\Objects
- *
  * @link https://discord.com/developers/docs/resources/emoji#emoji-object
+ *
+ * @version v0.9.8 As of 2021-08-02 Discord Documentation
  */
-class Emoji implements ErrorInterface, IdInterface
+class Emoji extends PartialEmoji implements ErrorInterface
 {
-    use IDTrait, ErrorTrait;
+    use ErrorTrait;
 
     /**
-     * @var string|null
+     * @var string[]|null
      */
-    private $name;
+    private $roles;
 
     /**
-     * @return string|null
+     * @var User|null
      */
-    public function getName(): ?string
+    private $user;
+
+    /**
+     * @var bool|null
+     */
+    private $require_colons;
+
+    /**
+     * @var bool|null
+     */
+    private $managed;
+
+    /**
+     * @var bool|null
+     */
+    private $animated;
+
+    /**
+     * @var bool|null
+     */
+    private $available;
+
+    /**
+     * @return string[]|null
+     */
+    public function getRoles(): ?array
     {
-        return $this->name;
+        return $this->roles;
     }
 
     /**
-     * @param string|null $name
+     * @param string[]|null $roles
      * @return $this
      */
-    public function setName(?string $name): self
+    public function setRoles(?array $roles): self
     {
-        $this->name = $name;
+        $this->roles = $roles;
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     * @return $this
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getRequireColons(): ?bool
+    {
+        return $this->require_colons;
+    }
+
+    /**
+     * @param bool|null $require_colons
+     * @return $this
+     */
+    public function setRequireColons(?bool $require_colons): self
+    {
+        $this->require_colons = $require_colons;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getManaged(): ?bool
+    {
+        return $this->managed;
+    }
+
+    /**
+     * @param bool|null $managed
+     * @return $this
+     */
+    public function setManaged(?bool $managed): self
+    {
+        $this->managed = $managed;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getAnimated(): ?bool
+    {
+        return $this->animated;
+    }
+
+    /**
+     * @param bool|null $animated
+     * @return $this
+     */
+    public function setAnimated(?bool $animated): self
+    {
+        $this->animated = $animated;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    /**
+     * @param bool|null $available
+     * @return $this
+     */
+    public function setAvailable(?bool $available): self
+    {
+        $this->available = $available;
         return $this;
     }
 }
