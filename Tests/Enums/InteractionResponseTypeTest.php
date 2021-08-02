@@ -3,6 +3,7 @@
 namespace Bytes\DiscordResponseBundle\Tests\Enums;
 
 use Bytes\DiscordResponseBundle\Enums\InteractionResponseType;
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Spatie\Enum\Phpunit\EnumAssertions;
 
@@ -42,18 +43,19 @@ class InteractionResponseTypeTest extends TestCase
      */
     public function testInvalidEnum()
     {
-        $this->expectException(\BadMethodCallException::class);
-        $entry = new InteractionResponseType('abc123');
+        $this->assertFalse(InteractionResponseType::isValid('abc'));
     }
 
     /**
-     * @return \Generator
+     * @return Generator
      */
     public function provideData()
     {
         yield ['entry' => InteractionResponseType::pong(), 'label' => 'pong', 'value' => 1];
         yield ['entry' => InteractionResponseType::channelMessageWithSource(), 'label' => 'channelMessageWithSource', 'value' => 4];
         yield ['entry' => InteractionResponseType::deferredChannelMessageWithSource(), 'label' => 'deferredChannelMessageWithSource', 'value' => 5];
+        yield ['entry' => InteractionResponseType::deferredUpdateMessage(), 'label' => 'deferredUpdateMessage', 'value' => 6];
+        yield ['entry' => InteractionResponseType::updateMessage(), 'label' => 'updateMessage', 'value' => 7];
     }
 
     /**

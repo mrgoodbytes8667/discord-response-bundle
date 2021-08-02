@@ -13,10 +13,12 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  * @method static self pong() ACK a Ping
  * @method static self channelMessageWithSource() respond with a message, showing the user's input
  * @method static self deferredChannelMessageWithSource() ACK an interaction and edit to a response later, the user sees a loading state
+ * @method static self deferredUpdateMessage() for components, ACK an interaction and edit the original message later; the user does not see a loading state
+ * @method static self updateMessage() for components, edit the message the component was attached to
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#interaction-response-interactionresponsetype
  *
- * @version v0.7.0 As of 2021-03-17 Discord Documentation
+ * @version v0.9.8 As of 2021-08-02 Discord Documentation
  */
 class InteractionResponseType extends Enum
 {
@@ -30,6 +32,8 @@ class InteractionResponseType extends Enum
             "pong" => 1,
             "channelMessageWithSource" => 4,
             "deferredChannelMessageWithSource" => 5,
+            "deferredUpdateMessage" => 6,
+            "updateMessage" => 7,
         ];
     }
 
