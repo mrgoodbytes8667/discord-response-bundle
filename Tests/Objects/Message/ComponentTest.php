@@ -425,7 +425,7 @@ class ComponentTest extends TestCase
             /** @var ConstraintViolationInterface $violation */
             $violation = $exception->getViolations()[0];
             $this->assertEquals('This value is too long. It should have 100 characters or less.', $violation->getMessage());
-            $this->assertEquals('custom_id', $violation->getPropertyPath());
+            $this->assertEquals('customId', $violation->getPropertyPath());
 
             $violation = $exception->getViolations()[1];
             $this->assertEquals('This value is too long. It should have 80 characters or less.', $violation->getMessage());
@@ -446,15 +446,15 @@ class ComponentTest extends TestCase
             /** @var ConstraintViolationInterface $violation */
             $violation = $exception->getViolations()[0];
             $this->assertEquals('This value is too long. It should have 100 characters or less.', $violation->getMessage());
-            $this->assertEquals('custom_id', $violation->getPropertyPath());
+            $this->assertEquals('customId', $violation->getPropertyPath());
 
             $violation = $exception->getViolations()[1];
             $this->assertEquals('This value should be greater than or equal to 0.', $violation->getMessage());
-            $this->assertEquals('min_values', $violation->getPropertyPath());
+            $this->assertEquals('minValues', $violation->getPropertyPath());
 
             $violation = $exception->getViolations()[2];
             $this->assertEquals('This value should be less than or equal to 25.', $violation->getMessage());
-            $this->assertEquals('max_values', $violation->getPropertyPath());
+            $this->assertEquals('maxValues', $violation->getPropertyPath());
         }
 
         $component = Component::createSelectMenu($customId, $disabled, $options, $placeholder, 26, 0);
@@ -467,11 +467,11 @@ class ComponentTest extends TestCase
             /** @var ConstraintViolationInterface $violation */
             $violation = $exception->getViolations()[0];
             $this->assertEquals('This value should be less than or equal to 25.', $violation->getMessage());
-            $this->assertEquals('min_values', $violation->getPropertyPath());
+            $this->assertEquals('minValues', $violation->getPropertyPath());
 
             $violation = $exception->getViolations()[1];
             $this->assertEquals('This value should be greater than or equal to 1.', $violation->getMessage());
-            $this->assertEquals('max_values', $violation->getPropertyPath());
+            $this->assertEquals('maxValues', $violation->getPropertyPath());
         }
 
         $tooManyOptions = [];

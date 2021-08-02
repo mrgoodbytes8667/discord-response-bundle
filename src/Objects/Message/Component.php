@@ -7,6 +7,7 @@ use Bytes\DiscordResponseBundle\Enums\ComponentType;
 use Bytes\DiscordResponseBundle\Objects\PartialEmoji;
 use Bytes\DiscordResponseBundle\Objects\Traits\LabelTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\PartialEmojiTrait;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -33,8 +34,9 @@ class Component
      * Types: Buttons, Select Menus
      * @var string|null
      * @Assert\Length(max=100)
+     * @SerializedName("custom_id")
      */
-    private $custom_id;
+    private $customId;
 
     /**
      * whether the component is disabled, default false
@@ -99,8 +101,9 @@ class Component
      * @var int|null
      * @Assert\GreaterThanOrEqual(0)
      * @Assert\LessThanOrEqual(25)
+     * @SerializedName("min_values")
      */
-    private $min_values;
+    private $minValues;
 
     /**
      * the maximum number of items that can be chosen; default 1, max 25
@@ -108,8 +111,9 @@ class Component
      * @var int|null
      * @Assert\GreaterThanOrEqual(1)
      * @Assert\LessThanOrEqual(25)
+     * @SerializedName("max_values")
      */
-    private $max_values;
+    private $maxValues;
 
     /**
      * a list of child components
@@ -142,10 +146,10 @@ class Component
      * @param Component[]|null $components
      * @return static
      */
-    public static function create(ComponentType $type, ?string $customId = null, bool $disabled = false,
+    public static function create(ComponentType $type, ?string $customId = null, ?bool $disabled = null,
                                   ?ButtonStyle  $style = null, ?string $label = null, ?PartialEmoji $emoji = null,
-                                  ?string       $url = null, ?array $options = [], ?string $placeholder = null, ?int $minValues = null,
-                                  ?int          $maxValues = null, ?array $components = []): static
+                                  ?string       $url = null, ?array $options = null, ?string $placeholder = null, ?int $minValues = null,
+                                  ?int          $maxValues = null, ?array $components = null): static
     {
         $static = new static();
         $static->setType($type)
@@ -222,16 +226,16 @@ class Component
      */
     public function getCustomId(): ?string
     {
-        return $this->custom_id;
+        return $this->customId;
     }
 
     /**
-     * @param string|null $custom_id
+     * @param string|null $customId
      * @return $this
      */
-    public function setCustomId(?string $custom_id): self
+    public function setCustomId(?string $customId): self
     {
-        $this->custom_id = $custom_id;
+        $this->customId = $customId;
         return $this;
     }
 
@@ -333,16 +337,16 @@ class Component
      */
     public function getMinValues(): ?int
     {
-        return $this->min_values;
+        return $this->minValues;
     }
 
     /**
-     * @param int|null $min_values
+     * @param int|null $minValues
      * @return $this
      */
-    public function setMinValues(?int $min_values): self
+    public function setMinValues(?int $minValues): self
     {
-        $this->min_values = $min_values;
+        $this->minValues = $minValues;
         return $this;
     }
 
@@ -351,16 +355,16 @@ class Component
      */
     public function getMaxValues(): ?int
     {
-        return $this->max_values;
+        return $this->maxValues;
     }
 
     /**
-     * @param int|null $max_values
+     * @param int|null $maxValues
      * @return $this
      */
-    public function setMaxValues(?int $max_values): self
+    public function setMaxValues(?int $maxValues): self
     {
-        $this->max_values = $max_values;
+        $this->maxValues = $maxValues;
         return $this;
     }
 
