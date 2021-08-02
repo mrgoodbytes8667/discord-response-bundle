@@ -4,6 +4,8 @@ namespace Bytes\DiscordResponseBundle\Tests\Objects;
 
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Objects\PartialEmoji;
+use Bytes\Tests\Common\DataProvider\BooleanProviderTrait;
+use Bytes\Tests\Common\DataProvider\NullProviderTrait;
 use Generator;
 use PHPUnit\Framework\TestCase;
 
@@ -12,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PartialEmojiTest extends TestCase
 {
-    use TestDiscordFakerTrait;
+    use TestDiscordFakerTrait, BooleanProviderTrait, NullProviderTrait;
 
     /**
      * @dataProvider provideName
@@ -29,16 +31,8 @@ class PartialEmojiTest extends TestCase
     }
 
     /**
-     * @return Generator
-     */
-    public function provideName()
-    {
-        $this->setupFaker();
-        yield [$this->faker->word()];
-    }
-
-    /**
-     * @dataProvider provideAnimated
+     * @dataProvider provideBooleans
+     * @dataProvider provideNull
      * @param mixed $animated
      */
     public function testGetSetAnimated($animated)
@@ -49,16 +43,6 @@ class PartialEmojiTest extends TestCase
         $this->assertNull($partialEmoji->getAnimated());
         $this->assertInstanceOf(PartialEmoji::class, $partialEmoji->setAnimated($animated));
         $this->assertEquals($animated, $partialEmoji->getAnimated());
-    }
-
-    /**
-     * @return Generator
-     */
-    public function provideAnimated()
-    {
-        yield [true];
-        yield [false];
-        yield [null];
     }
 
     /**
@@ -76,11 +60,48 @@ class PartialEmojiTest extends TestCase
     }
 
     /**
+     * @dataProvider provideCreateParams
+     * @param $id
+     * @param $name
+     * @param $animated
+     */
+    public function testCreate($id, $name, $animated)
+    {
+        $emoji = PartialEmoji::create($id, $name, $animated);
+        $this->assertEquals($id, $emoji->getId());
+        $this->assertEquals($name, $emoji->getName());
+        $this->assertEquals($animated, $emoji->getAnimated());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideCreateParams()
+    {
+        foreach ($this->provideId() as $id) {
+            foreach ($this->provideName() as $name) {
+                foreach ($this->provideBooleans() as $animated) {
+                    yield ['id' => $id[0], 'name' => $name[0], 'animated' => $animated[0]];
+                }
+            }
+        }
+    }
+
+    /**
      * @return Generator
      */
     public function provideId()
     {
         $this->setupFaker();
         yield [$this->faker->snowflake()];
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideName()
+    {
+        $this->setupFaker();
+        yield [$this->faker->word()];
     }
 }

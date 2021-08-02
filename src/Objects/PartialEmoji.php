@@ -25,6 +25,22 @@ class PartialEmoji implements IdInterface
     private $animated;
 
     /**
+     * @param string $id
+     * @param string $name
+     * @param bool $animated
+     * @return static
+     */
+    public static function create(string $id, string $name, bool $animated = false): static
+    {
+        $static = new static();
+        $static->setId($id)
+            ->setName($name)
+            ->setAnimated($animated);
+
+        return $static;
+    }
+
+    /**
      * @return string|null
      */
     public function getName(): ?string
