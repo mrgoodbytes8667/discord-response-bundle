@@ -12,10 +12,11 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  *
  * @method static self ping()
  * @method static self applicationCommand()
+ * @method static self messageComponent()
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#interaction-interactiontype
  *
- * @version v0.7.0 As of 2021-03-17 Discord Documentation
+ * @version v0.9.8 As of 2021-08-02 Discord Documentation
  */
 class InteractionType extends Enum
 {
@@ -28,6 +29,7 @@ class InteractionType extends Enum
         return [
             "ping" => 1,
             "applicationCommand" => 2,
+            "messageComponent" => 3,
         ];
     }
 
