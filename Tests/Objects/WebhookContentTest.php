@@ -5,6 +5,7 @@ namespace Bytes\DiscordResponseBundle\Tests\Objects;
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\Common\Faker\Providers\Discord;
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
+use Bytes\DiscordResponseBundle\Objects\Message;
 use Bytes\DiscordResponseBundle\Objects\Message\AllowedMentions;
 use Bytes\DiscordResponseBundle\Objects\Message\WebhookContent;
 use Bytes\DiscordResponseBundle\Objects\MessageReference;
@@ -506,5 +507,32 @@ class WebhookContentTest extends TestRolesSerializationCase
         $this->setupFaker();
         yield[$this->faker->jobTitle()];
         yield[null];
+    }
+
+
+
+    /**
+     * @dataProvider provideComponents
+     * @param $count
+     * @param $components
+     */
+    public function testGetSetComponents($count, $components)
+    {
+        $message = new WebhookContent();
+        $this->assertNull($message->getComponents());
+        $this->assertInstanceOf(WebhookContent::class, $message->setComponents(null));
+        $this->assertNull($message->getComponents());
+        $this->assertInstanceOf(WebhookContent::class, $message->setComponents($components));
+        $this->assertCount($count, $message->getComponents());
+        $this->assertEquals($components, $message->getComponents());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideComponents()
+    {
+        yield ['count' => 1, 'components' => [new Message\Component()]];
+        yield ['count' => 5, 'components' => [new Message\Component(), new Message\Component(), new Message\Component(), new Message\Component(), new Message\Component()]];
     }
 }
