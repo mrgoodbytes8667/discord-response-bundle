@@ -31,7 +31,7 @@ class InteractionResponseTypeTest extends TestCase
         $this->assertEquals($value, $entry->value);
 
         $this->assertTrue(InteractionResponseType::isValid($value));
-        $type = InteractionResponseType::make($value);
+        $type = InteractionResponseType::from($value);
         $this->assertSameEnum($entry, $type);
         $this->assertSameEnumLabel($entry, $type->label);
         $this->assertSameEnumValue($entry, $type->value);

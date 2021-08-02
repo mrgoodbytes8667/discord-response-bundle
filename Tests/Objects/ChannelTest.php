@@ -276,8 +276,8 @@ class ChannelTest extends TestCase
         $this->faker->addProvider(new FakerEnumProvider($this->faker));
         $enum = $this->faker->randomEnumValue(ChannelTypes::class);
         yield ['type' => $enum, 'expected' => $enum];
-        yield ['type' => 'dm', 'expected' => ChannelTypes::make(ChannelTypes::DM)->value];
-        yield ['type' => 'text', 'expected' => ChannelTypes::make(ChannelTypes::GUILD_TEXT)->value];
+        yield ['type' => 'dm', 'expected' => ChannelTypes::from(ChannelTypes::DM)->value];
+        yield ['type' => 'text', 'expected' => ChannelTypes::from(ChannelTypes::GUILD_TEXT)->value];
     }
 
     /**

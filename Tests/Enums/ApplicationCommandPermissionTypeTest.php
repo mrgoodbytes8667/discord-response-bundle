@@ -36,7 +36,7 @@ class ApplicationCommandPermissionTypeTest extends TestCase
     public function testEnums(int $value, ApplicationCommandPermissionType $enum)
     {
         $this->assertTrue(ApplicationCommandPermissionType::isValid($value));
-        $type = ApplicationCommandPermissionType::make($value);
+        $type = ApplicationCommandPermissionType::from($value);
         $this->assertSameEnum($enum, $type);
         $this->assertSameEnumLabel($enum, $type->label);
         $this->assertSameEnumValue($enum, $type->value);
