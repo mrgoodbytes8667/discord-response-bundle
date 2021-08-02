@@ -5,11 +5,10 @@ namespace Bytes\DiscordResponseBundle\Objects\Message;
 
 
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
-use Bytes\DiscordResponseBundle\Objects\Message;
 use Illuminate\Support\Arr;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Class WebhookContent
@@ -104,7 +103,7 @@ class WebhookContent
             $allowedMentions = AllowedMentions::create();
         }
         $static->setAllowedMentions($allowedMentions);
-        if(!empty($embeds)) {
+        if (!empty($embeds)) {
             $static->setEmbeds(Arr::wrap($embeds));
         }
         if (!empty($content)) {
@@ -259,7 +258,7 @@ class WebhookContent
         $this->payload_json = $payload_json;
         return $this;
     }
-    
+
     /**
      * @return AllowedMentions|null
      */
