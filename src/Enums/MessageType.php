@@ -27,10 +27,12 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  * @method static self guildDiscoveryRequalified()
  * @method static self reply()
  * @method static self applicationCommand()
+ * @method static self threadStarterMessage()
+ * @method static self guildInviteReminder()
  *
  * @link https://discord.com/developers/docs/resources/channel#message-object-message-types
  *
- * @version v0.8.0 As of 2021-03-25 Discord Documentation
+ * @version v0.9.8 As of 2021-08-02 Discord Documentation
  */
 class MessageType extends Enum
 {
@@ -57,6 +59,8 @@ class MessageType extends Enum
             'guildDiscoveryRequalified' => 15,
             'reply' => 19,
             'applicationCommand' => 20,
+            'threadStarterMessage' => 21,
+            'guildInviteReminder' => 22,
         ];
     }
 
@@ -83,6 +87,8 @@ class MessageType extends Enum
             'guildDiscoveryRequalified' => 'GUILD_DISCOVERY_REQUALIFIED',
             'reply' => 'REPLY',
             'applicationCommand' => 'APPLICATION_COMMAND',
+            'threadStarterMessage' => 'THREAD_STARTER_MESSAGE',
+            'guildInviteReminder' => 'GUILD_INVITE_REMINDER',
         ];
     }
 

@@ -26,7 +26,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *
  * @property string|null $channelID id of the channel the message was sent in
  *
- * @version v0.7.0 As of 2021-03-17 Discord Documentation
+ * @version v0.9.8 As of 2021-08-02 Discord Documentation
  */
 class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelIdInterface
 {
@@ -163,13 +163,6 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     private $flags;
 
     /**
-     * the stickers sent with the message (bots currently can only receive messages with stickers, not send)
-     * @todo
-     * @var mixed
-     */
-    private $stickers;
-
-    /**
      * the message associated with the message_reference
      * This field is only returned for messages with a type of 19 (REPLY). If the message is a reply but the
      * referenced_message field is not present, the backend did not attempt to fetch the message that was being replied
@@ -184,6 +177,24 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
      * @var MessageInteraction|null
      */
     private $interaction;
+
+    private $thread;
+
+    private $components;
+
+    /**
+     * sent if the message contains stickers
+     * @var array|null
+     * @todo
+     */
+    private $stickerItems;
+
+    /**
+     * the stickers sent with the message (bots currently can only receive messages with stickers, not send)
+     * @var mixed
+     * @deprecated Since 0.9.8, use sticker_items instead
+     */
+    private $stickers;
 
     /**
      * @return User|null

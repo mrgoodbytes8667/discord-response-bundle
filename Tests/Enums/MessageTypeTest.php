@@ -76,5 +76,7 @@ class MessageTypeTest extends TestCase
         yield ['value' => 15, 'label' => 'GUILD_DISCOVERY_REQUALIFIED', 'enum' => MessageType::guildDiscoveryRequalified()];
         yield ['value' => 19, 'label' => 'REPLY', 'enum' => MessageType::reply()];
         yield ['value' => 20, 'label' => 'APPLICATION_COMMAND', 'enum' => MessageType::applicationCommand()];
+        yield ['value' => 21, 'label' => 'THREAD_STARTER_MESSAGE', 'enum' => MessageType::threadStarterMessage()];
+        yield ['value' => 22, 'label' => 'GUILD_INVITE_REMINDER', 'enum' => MessageType::guildInviteReminder()];
     }
 }
