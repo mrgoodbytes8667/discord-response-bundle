@@ -6,15 +6,15 @@ namespace Bytes\DiscordResponseBundle\Objects\Message;
 
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Illuminate\Support\Arr;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Class WebhookContent
  * @package Bytes\DiscordResponseBundle\Objects\Message
  *
- * @version v0.8.1 As of 2021-04-07 Discord Documentation
+ * @version v0.9.8 As of 2021-08-02 Discord Documentation
  * @link https://discord.com/developers/docs/resources/webhook#execute-webhook
  */
 class WebhookContent
@@ -82,6 +82,11 @@ class WebhookContent
     private $allowedMentions;
 
     /**
+     * @var Component[]|null
+     */
+    private $components;
+
+    /**
      * @param Embed[]|Embed|null $embeds
      * @param string|null $content
      * @param AllowedMentions|null $allowedMentions
@@ -98,7 +103,7 @@ class WebhookContent
             $allowedMentions = AllowedMentions::create();
         }
         $static->setAllowedMentions($allowedMentions);
-        if(!empty($embeds)) {
+        if (!empty($embeds)) {
             $static->setEmbeds(Arr::wrap($embeds));
         }
         if (!empty($content)) {
@@ -253,7 +258,7 @@ class WebhookContent
         $this->payload_json = $payload_json;
         return $this;
     }
-    
+
     /**
      * @return AllowedMentions|null
      */
@@ -269,6 +274,24 @@ class WebhookContent
     public function setAllowedMentions(?AllowedMentions $allowedMentions): self
     {
         $this->allowedMentions = $allowedMentions;
+        return $this;
+    }
+
+    /**
+     * @return Component[]|null
+     */
+    public function getComponents(): ?array
+    {
+        return $this->components;
+    }
+
+    /**
+     * @param Component[]|null $components
+     * @return $this
+     */
+    public function setComponents(?array $components): self
+    {
+        $this->components = $components;
         return $this;
     }
 

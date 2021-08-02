@@ -3,23 +3,14 @@
 namespace Bytes\DiscordResponseBundle\Tests\Objects;
 
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
-use Bytes\Common\Faker\Providers\Discord;
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
+use Bytes\DiscordResponseBundle\Objects\Message;
 use Bytes\DiscordResponseBundle\Objects\Message\AllowedMentions;
 use Bytes\DiscordResponseBundle\Objects\Message\WebhookContent;
-use Bytes\DiscordResponseBundle\Objects\MessageReference;
 use Bytes\DiscordResponseBundle\Tests\TestRolesSerializationCase;
-use DateTime;
 use Exception;
-use Faker\Factory;
-use Faker\Generator as FakerGenerator;
-use Faker\Provider\Base;
-use Faker\Provider\Color;
-use Faker\Provider\Internet;
 use Generator;
-use Illuminate\Support\Str;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
-use Symfony\Component\Serializer\Normalizer\UnwrappingDenormalizer;
 use Symfony\Component\String\ByteString;
 
 /**
@@ -261,18 +252,6 @@ class WebhookContentTest extends TestRolesSerializationCase
     }
 
     /**
-     * @return Generator
-     */
-    public function provideUsername()
-    {
-        $this->setupFaker();
-
-        yield [$this->faker->userName()];
-        yield [''];
-        yield [null];
-    }
-
-    /**
      * @dataProvider provideAvatarUrl
      */
     public function testGetSetAvatarUrl($avatarUrl)
@@ -283,18 +262,6 @@ class WebhookContentTest extends TestRolesSerializationCase
         $this->assertNull($webhookContent->getAvatarUrl());
         $this->assertInstanceOf(WebhookContent::class, $webhookContent->setAvatarUrl($avatarUrl));
         $this->assertEquals($avatarUrl, $webhookContent->getAvatarUrl());
-    }
-
-    /**
-     * @return Generator
-     */
-    public function provideAvatarUrl()
-    {
-        $this->setupFaker();
-
-        yield [$this->faker->imageUrl()];
-        yield [''];
-        yield [null];
     }
 
     /**
@@ -311,16 +278,6 @@ class WebhookContentTest extends TestRolesSerializationCase
     }
 
     /**
-     * @return Generator
-     */
-    public function provideTts()
-    {
-        yield[true];
-        yield[false];
-        yield[null];
-    }
-
-    /**
      * @dataProvider provideEmbeds
      * @param $embeds
      */
@@ -331,7 +288,7 @@ class WebhookContentTest extends TestRolesSerializationCase
         $this->assertInstanceOf(WebhookContent::class, $webhookContent->setEmbeds(null));
         $this->assertNull($webhookContent->getEmbeds());
         $this->assertInstanceOf(WebhookContent::class, $webhookContent->setEmbeds($embeds));
-        if(is_null($embeds)) {
+        if (is_null($embeds)) {
             $this->assertNull($webhookContent->getEmbeds());
         } else {
             $this->assertCount(count($embeds), $webhookContent->getEmbeds());
@@ -349,9 +306,9 @@ class WebhookContentTest extends TestRolesSerializationCase
         foreach ($range as $index) {
             $embeds[] = $this->faker->embed();
         }
-        yield[$embeds];
-        yield[[$this->faker->embed()]];
-        yield[null];
+        yield [$embeds];
+        yield [[$this->faker->embed()]];
+        yield [null];
     }
 
     /**
@@ -384,6 +341,37 @@ class WebhookContentTest extends TestRolesSerializationCase
     /**
      * @return Generator
      */
+    public function provideCreate()
+    {
+        $this->setupFaker();
+
+        $embeds = $this->faker->embeds(10);
+
+        foreach ([$this->faker->sentence(), '', null] as $content) {
+            foreach ($this->provideAllowedMentions() as $provideAllowedMention) {
+                $allowedMention = $provideAllowedMention[0];
+                foreach ($this->provideTts() as $provideTts) {
+                    $tts = $provideTts[0];
+                    foreach ($this->provideUsername() as $username) {
+                        $username = $username[0];
+                        foreach ($this->provideAvatarUrl() as $avatarUrl) {
+                            $avatarUrl = $avatarUrl[0];
+                            yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username, $avatarUrl, $tts), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => $avatarUrl, 'tts' => $tts];
+                            yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username, $avatarUrl), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => $avatarUrl, 'tts' => null];
+                            yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => null, 'tts' => null];
+                            yield ['object' => WebhookContent::create($embeds, $content, $allowedMention), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => null, 'avatarUrl' => null, 'tts' => null];
+                            yield ['object' => WebhookContent::create($embeds, $content), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => null, 'username' => null, 'avatarUrl' => null, 'tts' => null];
+                            yield ['object' => WebhookContent::create($embeds), 'embed' => $embeds, 'content' => null, 'allowedMentions' => null, 'username' => null, 'avatarUrl' => null, 'tts' => null];
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @return Generator
+     */
     public function provideAllowedMentions()
     {
         $this->setupFaker();
@@ -400,35 +388,35 @@ class WebhookContentTest extends TestRolesSerializationCase
     /**
      * @return Generator
      */
-    public function provideCreate()
+    public function provideTts()
+    {
+        yield [true];
+        yield [false];
+        yield [null];
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideUsername()
     {
         $this->setupFaker();
 
-        $embeds = $this->faker->embeds(10);
+        yield [$this->faker->userName()];
+        yield [''];
+        yield [null];
+    }
 
-        foreach ([$this->faker->sentence(), '', null] as $content)
-        {
-            foreach($this->provideAllowedMentions() as $provideAllowedMention)
-            {
-                $allowedMention = $provideAllowedMention[0];
-                foreach($this->provideTts() as $provideTts)
-                {
-                    $tts = $provideTts[0];
-                    foreach($this->provideUsername() as $username) {
-                        $username = $username[0];
-                        foreach($this->provideAvatarUrl() as $avatarUrl) {
-                            $avatarUrl = $avatarUrl[0];
-                            yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username, $avatarUrl, $tts), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => $avatarUrl, 'tts' => $tts];
-                            yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username, $avatarUrl), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => $avatarUrl, 'tts' => null];
-                            yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => null, 'tts' => null];
-                            yield ['object' => WebhookContent::create($embeds, $content, $allowedMention), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => null, 'avatarUrl' => null, 'tts' => null];
-                            yield ['object' => WebhookContent::create($embeds, $content), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => null, 'username' => null, 'avatarUrl' => null, 'tts' => null];
-                            yield ['object' => WebhookContent::create($embeds), 'embed' => $embeds, 'content' => null, 'allowedMentions' => null, 'username' => null, 'avatarUrl' => null, 'tts' => null];
-                        }
-                    }
-                }
-            }
-        }
+    /**
+     * @return Generator
+     */
+    public function provideAvatarUrl()
+    {
+        $this->setupFaker();
+
+        yield [$this->faker->imageUrl()];
+        yield [''];
+        yield [null];
     }
 
     /**
@@ -479,10 +467,10 @@ class WebhookContentTest extends TestRolesSerializationCase
     public function provideFile()
     {
         $this->setupFaker();
-        yield[$this->faker->userName()];
-        yield[$this->faker->randomDigitNotNull()];
-        yield[''];
-        yield[null];
+        yield [$this->faker->userName()];
+        yield [$this->faker->randomDigitNotNull()];
+        yield [''];
+        yield [null];
     }
 
     /**
@@ -504,7 +492,33 @@ class WebhookContentTest extends TestRolesSerializationCase
     public function providePayloadJson()
     {
         $this->setupFaker();
-        yield[$this->faker->jobTitle()];
-        yield[null];
+        yield [$this->faker->jobTitle()];
+        yield [null];
+    }
+
+
+    /**
+     * @dataProvider provideComponents
+     * @param $count
+     * @param $components
+     */
+    public function testGetSetComponents($count, $components)
+    {
+        $message = new WebhookContent();
+        $this->assertNull($message->getComponents());
+        $this->assertInstanceOf(WebhookContent::class, $message->setComponents(null));
+        $this->assertNull($message->getComponents());
+        $this->assertInstanceOf(WebhookContent::class, $message->setComponents($components));
+        $this->assertCount($count, $message->getComponents());
+        $this->assertEquals($components, $message->getComponents());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideComponents()
+    {
+        yield ['count' => 1, 'components' => [new Message\Component()]];
+        yield ['count' => 5, 'components' => [new Message\Component(), new Message\Component(), new Message\Component(), new Message\Component(), new Message\Component()]];
     }
 }
