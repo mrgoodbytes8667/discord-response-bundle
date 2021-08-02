@@ -26,7 +26,7 @@ class OAuthPromptsTest extends TestCase
     public function testEnums(string $value, OAuthPrompts $enum)
     {
         $this->assertTrue(OAuthPrompts::isValid($value));
-        $type = OAuthPrompts::make($value);
+        $type = OAuthPrompts::from($value);
         $this->assertSameEnum($enum, $type);
         $this->assertSameEnumLabel($enum, $type->label);
         $this->assertSameEnumValue($enum, $type->value);

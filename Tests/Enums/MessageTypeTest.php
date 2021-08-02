@@ -25,7 +25,7 @@ class MessageTypeTest extends TestCase
     public function testEnums($value, $label, MessageType $enum)
     {
         $this->assertTrue(MessageType::isValid($value));
-        $type = MessageType::make($value);
+        $type = MessageType::from($value);
         $this->assertSameEnum($enum, $type);
         $this->assertSameEnumLabel($enum, $label);
         $this->assertSameEnumValue($enum, $value);

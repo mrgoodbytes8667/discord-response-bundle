@@ -36,7 +36,7 @@ class ApplicationCommandOptionTypeTest extends TestCase
     public function testEnums(int $value, ApplicationCommandOptionType $enum)
     {
         $this->assertTrue(ApplicationCommandOptionType::isValid($value));
-        $type = ApplicationCommandOptionType::make($value);
+        $type = ApplicationCommandOptionType::from($value);
         $this->assertSameEnum($enum, $type);
         $this->assertSameEnumLabel($enum, $type->label);
         $this->assertSameEnumValue($enum, $type->value);

@@ -106,7 +106,7 @@ class OAuthScopesTest extends TestCase
     public function testEnums(string $value, OAuthScopes $enum)
     {
         $this->assertTrue(OAuthScopes::isValid($value));
-        $type = OAuthScopes::make($value);
+        $type = OAuthScopes::from($value);
         $this->assertSameEnum($enum, $type);
         $this->assertSameEnumLabel($enum, $type->label);
         $this->assertSameEnumValue($enum, $type->value);
