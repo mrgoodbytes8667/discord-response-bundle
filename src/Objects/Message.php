@@ -9,6 +9,7 @@ use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
+use Bytes\DiscordResponseBundle\Objects\Message\Component;
 use Bytes\DiscordResponseBundle\Objects\Slash\MessageInteraction;
 use Bytes\DiscordResponseBundle\Objects\Traits\ChannelIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
@@ -178,8 +179,14 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
      */
     private $interaction;
 
+    /**
+     * @var Channel|null
+     */
     private $thread;
 
+    /**
+     * @var Component[]|null
+     */
     private $components;
 
     /**
@@ -611,6 +618,60 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     public function setInteraction(?MessageInteraction $interaction): self
     {
         $this->interaction = $interaction;
+        return $this;
+    }
+
+    /**
+     * @return Channel|null
+     */
+    public function getThread(): ?Channel
+    {
+        return $this->thread;
+    }
+
+    /**
+     * @param Channel|null $thread
+     * @return $this
+     */
+    public function setThread(?Channel $thread): self
+    {
+        $this->thread = $thread;
+        return $this;
+    }
+
+    /**
+     * @return Component[]|null
+     */
+    public function getComponents(): ?array
+    {
+        return $this->components;
+    }
+
+    /**
+     * @param Component[]|null $components
+     * @return $this
+     */
+    public function setComponents(?array $components): self
+    {
+        $this->components = $components;
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getStickerItems(): ?array
+    {
+        return $this->stickerItems;
+    }
+
+    /**
+     * @param array|null $stickerItems
+     * @return $this
+     */
+    public function setStickerItems(?array $stickerItems): self
+    {
+        $this->stickerItems = $stickerItems;
         return $this;
     }
 }
