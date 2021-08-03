@@ -6,6 +6,8 @@ use Bytes\DiscordResponseBundle\Enums\InteractionType;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Member;
+use Bytes\DiscordResponseBundle\Objects\Message;
+use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\ChannelIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
@@ -18,17 +20,17 @@ use Bytes\ResponseBundle\Interfaces\IdInterface;
  *
  * @package Bytes\DiscordResponseBundle\Objects\Slash
  *
- * @link https://discord.com/developers/docs/interactions/slash-commands#interaction
+ * @link https://discord.com/developers/docs/interactions/slash-commands#interaction-object
  *
  * @property string|null $id id of the interaction (snowflake)
- * @property string|null $guildId the guild it was sent from (snowflake)
+ * @property string|null $guild_id the guild it was sent from (snowflake)
  * @property string|null $channelID the channel it was sent from
  *
- * @version v0.7.0 As of 2021-03-17 Discord Documentation
+ * @version v0.9.10 As of 2021-08-03 Discord Documentation
  */
 class Interaction implements IdInterface, GuildIdInterface, ChannelIdInterface
 {
-    use IDTrait, GuildIDTrait, ChannelIdTrait;
+    use IDTrait, ApplicationIdTrait, GuildIDTrait, ChannelIdTrait;
 
     /**
      * the type of interaction
@@ -70,7 +72,13 @@ class Interaction implements IdInterface, GuildIdInterface, ChannelIdInterface
     private $version;
 
     /**
-     * @return $thisType|null
+     * for components, the message they were attached to
+     * @var Message|null
+     */
+    private $message;
+
+    /**
+     * @return InteractionType|null
      */
     public function getType(): ?InteractionType
     {
@@ -177,5 +185,21 @@ class Interaction implements IdInterface, GuildIdInterface, ChannelIdInterface
         return $this;
     }
 
+    /**
+     * @return Message|null
+     */
+    public function getMessage(): ?Message
+    {
+        return $this->message;
+    }
 
+    /**
+     * @param Message|null $message
+     * @return $this
+     */
+    public function setMessage(?Message $message): self
+    {
+        $this->message = $message;
+        return $this;
+    }
 }
