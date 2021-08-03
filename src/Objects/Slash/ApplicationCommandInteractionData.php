@@ -18,7 +18,7 @@ use UnexpectedValueException;
  * @property string|null $id the ID of the invoked command (snowflake)
  * @property string|null $name the name of the invoked command
  *
- * @version v0.9.8 As of 2021-08-02 Discord Documentation
+ * @version v0.9.10 As of 2021-08-03 Discord Documentation
  */
 class ApplicationCommandInteractionData implements IdInterface, NameInterface
 {
