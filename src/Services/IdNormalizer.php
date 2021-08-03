@@ -4,6 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Services;
 
 
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ApplicationCommandInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Message;
@@ -17,6 +18,7 @@ use function Symfony\Component\String\u;
  *
  * @method static string normalizeGuildIdArgument($object, string $message, bool $allowNull = false, bool $recursivelyNormalize = true) Return getGuildId() on an object that implements GuildIdInterface, getId() on object that implements IdInterface, or the string value if $object is a string.
  * @method static string normalizeChannelIdArgument($object, string $message, bool $allowNull = false, bool $recursivelyNormalize = true) Return getChannelId() on an object that implements ChannelIdInterface, getId() on object that implements IdInterface, or the string value if $object is a string.
+ * @method static string normalizeCommandIdArgument($object, string $message, bool $allowNull = false, bool $recursivelyNormalize = true) Return getCommandId() on an object that implements ApplicationCommandInterface, getId() on object that implements IdInterface, or the string value if $object is a string.
  */
 class IdNormalizer extends BaseIdNormalizer
 {
@@ -33,7 +35,7 @@ class IdNormalizer extends BaseIdNormalizer
         $name = u($name);
         if ($name->startsWith('normalize') && $name->endsWith('IdArgument') && $name != 'normalizeIdArgument'
             && (count($arguments) === 2 || count($arguments) === 3 || count($arguments) === 4) &&
-            in_array($name->afterLast('normalize')->beforeLast('Argument')->camel()->toString(), ['guildId', 'channelId'])) {
+            in_array($name->afterLast('normalize')->beforeLast('Argument')->camel()->toString(), ['guildId', 'channelId', 'commandId'])) {
             $object = array_shift($arguments);
             $message = array_shift($arguments);
             if (count($arguments) >= 1) {
@@ -56,6 +58,10 @@ class IdNormalizer extends BaseIdNormalizer
                     $class = ChannelIdInterface::class;
                     $method = 'getChannelId';
                     break;
+                case 'commandId':
+                    $class = ApplicationCommandInterface::class;
+                    $method = 'getCommandId';
+                    break;
             }
 
             if (is_null($object)) {
@@ -63,6 +69,10 @@ class IdNormalizer extends BaseIdNormalizer
                     return null;
                 }
                 throw new InvalidArgumentException($message);
+            }
+            if (is_int($object))
+            {
+                return (string)$object;
             }
             if (is_string($object)) {
                 if (empty($object)) {
@@ -91,7 +101,7 @@ class IdNormalizer extends BaseIdNormalizer
             if ($recursivelyNormalize) {
                 return self::normalizeIdArgument($object, $message, $allowNull);
             } else {
-                throw new InvalidArgumentException($message);
+                return null;
             }
         }
     }
