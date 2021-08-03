@@ -18,7 +18,7 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#interaction-response-interactionresponsetype
  *
- * @version v0.9.8 As of 2021-08-02 Discord Documentation
+ * @version v0.9.12 As of 2021-08-03 Discord Documentation
  */
 class InteractionResponseType extends Enum
 {

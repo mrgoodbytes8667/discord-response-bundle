@@ -15,7 +15,7 @@ use UnexpectedValueException;
 /**
  * @link https://discord.com/developers/docs/interactions/message-components#component-object-component-structure
  *
- * @version v0.9.10 As of 2021-08-03 Discord Documentation
+ * @version v0.9.12 As of 2021-08-03 Discord Documentation
  */
 class Component
 {

@@ -23,7 +23,7 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoptiontype
  *
- * @version v0.9.6 As of 2021-07-30 Discord Documentation
+ * @version v0.9.12 As of 2021-08-03 Discord Documentation
  */
 class ApplicationCommandOptionType extends Enum
 {

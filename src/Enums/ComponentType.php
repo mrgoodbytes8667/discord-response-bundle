@@ -13,7 +13,7 @@ use JetBrains\PhpStorm\ArrayShape;
  * @method static self button() A button object
  * @method static self selectMenu() A select menu for picking from choices
  *
- * @version v0.9.8 As of 2021-08-02 Discord Documentation
+ * @version v0.9.12 As of 2021-08-03 Discord Documentation
  */
 class ComponentType extends Enum
 {

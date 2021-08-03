@@ -10,7 +10,7 @@ use Bytes\DiscordResponseBundle\Objects\User;
 /**
  * @link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-application-command-interaction-data-resolved-structure
  *
- * @version v0.9.10 As of 2021-08-03 Discord Documentation
+ * @version v0.9.12 As of 2021-08-03 Discord Documentation
  */
 class ApplicationCommandInteractionDataResolved
 {

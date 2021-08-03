@@ -14,7 +14,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * Class WebhookContent
  * @package Bytes\DiscordResponseBundle\Objects\Message
  *
- * @version v0.9.8 As of 2021-08-02 Discord Documentation
+ * @version v0.9.12 As of 2021-08-03 Discord Documentation
+ * 
  * @link https://discord.com/developers/docs/resources/webhook#execute-webhook
  */
 class WebhookContent

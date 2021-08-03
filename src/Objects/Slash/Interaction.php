@@ -26,7 +26,7 @@ use Bytes\ResponseBundle\Interfaces\IdInterface;
  * @property string|null $guild_id the guild it was sent from (snowflake)
  * @property string|null $channelID the channel it was sent from
  *
- * @version v0.9.10 As of 2021-08-03 Discord Documentation
+ * @version v0.9.12 As of 2021-08-03 Discord Documentation
  */
 class Interaction implements IdInterface, GuildIdInterface, ChannelIdInterface
 {

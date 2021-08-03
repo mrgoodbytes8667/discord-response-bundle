@@ -15,7 +15,7 @@ use JetBrains\PhpStorm\ArrayShape;
  * @method static self danger() red [requires custom_id]
  * @method static self link() grey, navigates to a URL [requires url]
  *
- * @version v0.9.8 As of 2021-08-02 Discord Documentation
+ * @version v0.9.12 As of 2021-08-03 Discord Documentation
  */
 class ButtonStyle extends Enum
 {

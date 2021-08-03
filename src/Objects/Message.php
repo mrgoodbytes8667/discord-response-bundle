@@ -27,7 +27,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *
  * @property string|null $channelID id of the channel the message was sent in
  *
- * @version v0.9.8 As of 2021-08-02 Discord Documentation
+ * @version v0.9.12 As of 2021-08-03 Discord Documentation
  */
 class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelIdInterface
 {
