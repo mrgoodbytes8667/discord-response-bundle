@@ -6,6 +6,7 @@ namespace Bytes\DiscordResponseBundle\Enums;
 
 use Bytes\EnumSerializerBundle\Enums\Enum;
 use Illuminate\Support\Arr;
+use JetBrains\PhpStorm\Deprecated;
 
 /**
  * Class OAuthScopes
@@ -48,6 +49,10 @@ class OAuthScopes extends Enum
      *
      * @deprecated Since 0.9.0, use \Bytes\ResponseBundle\HttpClient\Token\AbstractTokenClient::buildOAuthString() instead from mrgoodbytes8667/response-bundle
      */
+    #[Deprecated(
+        reason: 'Since 0.9.0, use \Bytes\ResponseBundle\HttpClient\Token\AbstractTokenClient::buildOAuthString() instead from mrgoodbytes8667/response-bundle',
+        replacement: '\Bytes\ResponseBundle\HttpClient\Token\AbstractTokenClient::%name%(%parametersList%)'
+    )]
     public static function buildOAuthString(...$scopes)
     {
         trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.0', 'Using "%s" is deprecated, use "%s" in "mrgoodbytes8667/response-bundle" instead.', __METHOD__, '\Bytes\ResponseBundle\HttpClient\Token\AbstractTokenClient::buildOAuthString()');
