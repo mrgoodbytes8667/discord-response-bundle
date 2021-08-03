@@ -3,6 +3,7 @@
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
+use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 
 /**
@@ -15,5 +16,5 @@ use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
  */
 class GuildApplicationCommandPermission extends PartialGuildApplicationCommandPermission
 {
-    use ApplicationIdTrait, GuildIDTrait;
+    use ApplicationIdTrait, GuildIDTrait, ErrorTrait;
 }
