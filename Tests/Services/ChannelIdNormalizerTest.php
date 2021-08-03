@@ -94,5 +94,7 @@ class ChannelIdNormalizerTest extends IdNormalizerTestCase
             ->willReturn($channelId);
 
         yield ['object' => $object, 'channelId' => $channelId, 'messageId' => null];
+
+        yield ['object' => 0, 'channelId' => 0, 'messageId' => null];
     }
 }

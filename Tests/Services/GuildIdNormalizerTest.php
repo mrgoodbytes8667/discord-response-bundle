@@ -4,6 +4,7 @@ namespace Bytes\DiscordResponseBundle\Tests\Services;
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Message;
+use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommand;
 use Bytes\DiscordResponseBundle\Services\IdNormalizer;
 use Generator;
 use InvalidArgumentException;
@@ -88,5 +89,12 @@ class GuildIdNormalizerTest extends IdNormalizerTestCase
             ->willReturn('230858112993375816');
 
         yield ['object' => $object, 'id' => '230858112993375816'];
+
+        $object = new ApplicationCommand();
+        $object->setGuildId('230858112993375816');
+
+        yield ['object' => $object, 'id' => '230858112993375816'];
+
+        yield ['object' => 0, 'id' => 0];
     }
 }

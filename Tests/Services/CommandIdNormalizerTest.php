@@ -114,6 +114,8 @@ class CommandIdNormalizerTest extends IdNormalizerTestCase
         $object->setId($commandId);
 
         yield ['object' => $object, 'commandId' => $commandId];
+
+        yield ['object' => 0, 'commandId' => 0];
     }
 
     /**
