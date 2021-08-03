@@ -9,6 +9,8 @@ use Bytes\DiscordResponseBundle\Objects\Traits\LabelTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\PartialEmojiTrait;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use UnexpectedValueException;
 
 /**
  * @link https://discord.com/developers/docs/interactions/message-components#component-object-component-structure
@@ -21,11 +23,7 @@ class Component
 
     /**
      * Types: All
-     * @var int|null
-     * @see ComponentType
-     * @Assert\Expression(
-     *     "value in [1, 2, 3]"
-     * )
+     * @var ComponentType|null
      */
     private $type;
 
@@ -48,8 +46,7 @@ class Component
     /**
      * one of button styles
      * Types: Buttons
-     * @var int|null
-     * @see ButtonStyle
+     * @var ButtonStyle|null
      */
     private $style;
 
@@ -169,19 +166,51 @@ class Component
     }
 
     /**
+     * @param ButtonStyle $style
      * @param string|null $customId
-     * @param bool $disabled
-     * @param ButtonStyle|null $style
+     * @param string|null $url
      * @param string|null $label
      * @param PartialEmoji|null $emoji
-     * @param string|null $url
+     * @param bool $disabled
      * @return static
      */
-    public static function createButton(?string $customId = null, bool $disabled = false, ?ButtonStyle $style = null,
-                                        ?string $label = null, ?PartialEmoji $emoji = null, ?string $url = null): static
+    public static function createButton(ButtonStyle $style, ?string $customId = null, ?string $url = null,
+                                        ?string     $label = null, ?PartialEmoji $emoji = null, bool $disabled = false): static
     {
+        return static::create(ComponentType::button(), customId: !$style->equals(ButtonStyle::link()) ? $customId : null,
+            disabled: $disabled, style: $style, label: $label, emoji: $emoji,
+            url: $style->equals(ButtonStyle::link()) ? $url : null);
+    }
+
+    /**
+     * @param ButtonStyle $style
+     * @param string $customId
+     * @param string|null $label
+     * @param PartialEmoji|null $emoji
+     * @param bool $disabled
+     * @return static
+     */
+    public static function createInteractiveButton(ButtonStyle   $style, string $customId, ?string $label = null,
+                                                   ?PartialEmoji $emoji = null, bool $disabled = false): static
+    {
+        if ($style->equals(ButtonStyle::link())) {
+            throw new UnexpectedValueException('Interactive buttons cannot use the link style');
+        }
         return static::create(ComponentType::button(), customId: $customId, disabled: $disabled, style: $style,
-            label: $label, emoji: $emoji, url: $url);
+            label: $label, emoji: $emoji);
+    }
+
+    /**
+     * @param string $url
+     * @param string|null $label
+     * @param PartialEmoji|null $emoji
+     * @param bool $disabled
+     * @return static
+     */
+    public static function createLinkButton(string $url, ?string $label = null, ?PartialEmoji $emoji = null, bool $disabled = false): static
+    {
+        return static::create(ComponentType::button(), disabled: $disabled, style: ButtonStyle::link(), label: $label,
+            emoji: $emoji, url: $url);
     }
 
     /**
@@ -201,45 +230,6 @@ class Component
     }
 
     /**
-     * @return int|null
-     */
-    public function getType(): ?int
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param ComponentType|int|null $type
-     * @return $this
-     */
-    public function setType(ComponentType|int|null $type): self
-    {
-        if ($type instanceof ComponentType) {
-            $type = $type->value;
-        }
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCustomId(): ?string
-    {
-        return $this->customId;
-    }
-
-    /**
-     * @param string|null $customId
-     * @return $this
-     */
-    public function setCustomId(?string $customId): self
-    {
-        $this->customId = $customId;
-        return $this;
-    }
-
-    /**
      * @return bool|null
      */
     public function getDisabled(): ?bool
@@ -254,45 +244,6 @@ class Component
     public function setDisabled(?bool $disabled): self
     {
         $this->disabled = $disabled;
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getStyle(): ?int
-    {
-        return $this->style;
-    }
-
-    /**
-     * @param ButtonStyle|int|null $style
-     * @return $this
-     */
-    public function setStyle(ButtonStyle|int|null $style): self
-    {
-        if ($style instanceof ButtonStyle) {
-            $style = $style->value;
-        }
-        $this->style = $style;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param string|null $url
-     * @return $this
-     */
-    public function setUrl(?string $url): self
-    {
-        $this->url = $url;
         return $this;
     }
 
@@ -383,6 +334,133 @@ class Component
     public function setComponents(?array $components): self
     {
         $this->components = $components;
+        return $this;
+    }
+
+    /**
+     * @Assert\Callback
+     * @param ExecutionContextInterface $context
+     * @param $payload
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        switch ($this->getType()) {
+            // If this is a button
+            case ComponentType::button():
+                // If this is a link button
+                if ($this->getStyle()->equals(ButtonStyle::link())) {
+                    // Custom ID must be null
+                    if (!is_null($this->getCustomId())) {
+                        $context->buildViolation('The field "customId" cannot be populated for link buttons.')
+                            ->atPath('customId')
+                            ->addViolation();
+                        // URL cannot be empty
+                    } elseif (empty($this->getUrl())) {
+                        $context->buildViolation('The field "url" is required for link buttons.')
+                            ->atPath('url')
+                            ->addViolation();
+                    }
+                    // For non-link buttons
+                    // URL must be null
+                } elseif (!is_null($this->getUrl())) {
+                    $context->buildViolation('The field "url" can only be populated for link buttons.')
+                        ->atPath('url')
+                        ->addViolation();
+                    // Custom ID cannot be empty
+                } elseif (empty($this->getCustomId())) {
+                    $context->buildViolation('The field "customId" is required for non-link buttons.')
+                        ->atPath('customId')
+                        ->addViolation();
+                }
+                break;
+        }
+    }
+
+    /**
+     * @return ComponentType|null
+     */
+    public function getType(): ?ComponentType
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param ComponentType|int|null $type
+     * @return $this
+     */
+    public function setType(ComponentType|int|null $type): self
+    {
+        if (!is_null($type)) {
+            if (is_int($type)) {
+                if (!ComponentType::isValid($type)) {
+                    throw new UnexpectedValueException(sprintf('The value "%d" is not a member of the "%s" class.', $type, ComponentType::class));
+                }
+                $type = ComponentType::tryFrom($type);
+            }
+        }
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @return ButtonStyle|null
+     */
+    public function getStyle(): ?ButtonStyle
+    {
+        return $this->style;
+    }
+
+    /**
+     * @param ButtonStyle|int|null $style
+     * @return $this
+     */
+    public function setStyle(ButtonStyle|int|null $style): self
+    {
+        if (!is_null($style)) {
+            if (is_int($style)) {
+                if (!ButtonStyle::isValid($style)) {
+                    throw new UnexpectedValueException(sprintf('The value "%d" is not a member of the "%s" class.', $style, ButtonStyle::class));
+                }
+                $style = ButtonStyle::tryFrom($style);
+            }
+        }
+        $this->style = $style;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCustomId(): ?string
+    {
+        return $this->customId;
+    }
+
+    /**
+     * @param string|null $customId
+     * @return $this
+     */
+    public function setCustomId(?string $customId): self
+    {
+        $this->customId = $customId;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string|null $url
+     * @return $this
+     */
+    public function setUrl(?string $url): self
+    {
+        $this->url = $url;
         return $this;
     }
 }

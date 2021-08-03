@@ -9,6 +9,7 @@ use Bytes\DiscordResponseBundle\Objects\Emoji;
 use Bytes\DiscordResponseBundle\Objects\Message\Component;
 use Bytes\DiscordResponseBundle\Objects\Message\SelectOption;
 use Bytes\DiscordResponseBundle\Objects\PartialEmoji;
+use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommandInteractionData;
 use Bytes\Tests\Common\DataProvider\BooleanProviderTrait;
 use Bytes\Tests\Common\DataProvider\NullProviderTrait;
 use Bytes\Tests\Common\TestValidatorTrait;
@@ -34,24 +35,10 @@ class ComponentTest extends TestCase
     const CHARACTERS_100 = 'abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde';
 
     /**
-     * @dataProvider provideTypeEnum
+     * @dataProvider provideType
      * @param mixed $type
      */
-    public function testGetSetTypeEnum($type)
-    {
-        $component = new Component();
-        $this->assertNull($component->getType());
-        $this->assertInstanceOf(Component::class, $component->setType(null));
-        $this->assertNull($component->getType());
-        $this->assertInstanceOf(Component::class, $component->setType($type));
-        $this->assertEquals($type->value, $component->getType());
-    }
-
-    /**
-     * @dataProvider provideTypeValue
-     * @param mixed $type
-     */
-    public function testGetSetTypeValue($type)
+    public function testGetSetType($type)
     {
         $component = new Component();
         $this->assertNull($component->getType());
@@ -59,26 +46,28 @@ class ComponentTest extends TestCase
         $this->assertNull($component->getType());
         $this->assertInstanceOf(Component::class, $component->setType($type));
         $this->assertEquals($type, $component->getType());
+        $this->assertInstanceOf(Component::class, $component->setType($type->value));
+        $this->assertEquals($type, $component->getType());
     }
 
     /**
      * @return Generator
      */
-    public function provideTypeValue()
-    {
-        foreach ($this->provideTypeEnum() as $value) {
-            yield [$value[0]->value];
-        }
-    }
-
-    /**
-     * @return Generator
-     */
-    public function provideTypeEnum()
+    public function provideType()
     {
         yield [ComponentType::actionRow()];
         yield [ComponentType::button()];
         yield [ComponentType::selectMenu()];
+    }
+
+    /**
+     *
+     */
+    public function testSetTypeInvalid()
+    {
+        $this->expectException(\UnexpectedValueException::class);
+        $applicationCommandInteractionData = new Component();
+        $applicationCommandInteractionData->setType(-5);
     }
 
     /**
@@ -122,24 +111,10 @@ class ComponentTest extends TestCase
     }
 
     /**
-     * @dataProvider provideStyleEnum
+     * @dataProvider provideStyle
      * @param mixed $style
      */
-    public function testGetSetStyleEnum($style)
-    {
-        $component = new Component();
-        $this->assertNull($component->getStyle());
-        $this->assertInstanceOf(Component::class, $component->setStyle(null));
-        $this->assertNull($component->getStyle());
-        $this->assertInstanceOf(Component::class, $component->setStyle($style));
-        $this->assertEquals($style->value, $component->getStyle());
-    }
-
-    /**
-     * @dataProvider provideStyleValue
-     * @param mixed $style
-     */
-    public function testGetSetStyleValue($style)
+    public function testGetSetStyle($style)
     {
         $component = new Component();
         $this->assertNull($component->getStyle());
@@ -147,28 +122,30 @@ class ComponentTest extends TestCase
         $this->assertNull($component->getStyle());
         $this->assertInstanceOf(Component::class, $component->setStyle($style));
         $this->assertEquals($style, $component->getStyle());
+        $this->assertInstanceOf(Component::class, $component->setStyle($style->value));
+        $this->assertEquals($style, $component->getStyle());
     }
 
     /**
      * @return Generator
      */
-    public function provideStyleValue()
-    {
-        foreach ($this->provideStyleEnum() as $value) {
-            yield [$value[0]->value];
-        }
-    }
-
-    /**
-     * @return Generator
-     */
-    public function provideStyleEnum()
+    public function provideStyle()
     {
         yield [ButtonStyle::primary()];
         yield [ButtonStyle::secondary()];
         yield [ButtonStyle::success()];
         yield [ButtonStyle::danger()];
         yield [ButtonStyle::link()];
+    }
+
+    /**
+     *
+     */
+    public function testSetStyleInvalid()
+    {
+        $this->expectException(\UnexpectedValueException::class);
+        $applicationCommandInteractionData = new Component();
+        $applicationCommandInteractionData->setStyle(-5);
     }
 
     /**
@@ -392,10 +369,16 @@ class ComponentTest extends TestCase
         $component = Component::createActionRow($components);
         $this->assertEquals(1, $this->validate($component));
 
-        $component = Component::createButton($customId, $disabled, $style, $label, $emoji, $url);
+        $component = Component::createButton(style: $style, customId: $customId, url: $url, label: $label, emoji: $emoji, disabled: $disabled);
         $this->assertEquals(1, $this->validate($component));
 
-        $component = Component::createSelectMenu($customId, $disabled, $options, $placeholder, $minValues, $maxValues);
+        $component = Component::createLinkButton(url: $url, label: $label, emoji: $emoji, disabled: $disabled);
+        $this->assertEquals(1, $this->validate($component));
+
+        $component = Component::createInteractiveButton(style: $style, customId: $customId, label: $label, emoji: $emoji, disabled: $disabled);
+        $this->assertEquals(1, $this->validate($component));
+
+        $component = Component::createSelectMenu(customId: $customId, disabled: $disabled, options: $options, placeholder: $placeholder, minValues: $minValues, maxValues: $maxValues);
         $this->assertEquals(1, $this->validate($component));
     }
 
@@ -413,14 +396,13 @@ class ComponentTest extends TestCase
      * @param $maxValues
      * @param $components
      */
-    public function testValidationFailure($customId, $disabled, $style, $label, $emoji, $url, $options, $placeholder, $minValues, $maxValues, $components)
+    public function testButtonValidationFailure($customId, $disabled, $style, $label, $emoji, $url, $options, $placeholder, $minValues, $maxValues, $components)
     {
-        $component = Component::createButton(self::CHARACTERS_100 . 'xyz', $disabled, $style, self::CHARACTERS_80 . 'xyz', $emoji, $this->faker->word());
-
         try {
+            $component = Component::createButton(style: $style, customId: self::CHARACTERS_100 . 'xyz', url: $this->faker->url(), label: self::CHARACTERS_80 . 'xyz', emoji: $emoji, disabled: $disabled);
             $this->validate($component);
         } catch (ValidationFailedException $exception) {
-            $this->assertEquals(3, count($exception->getViolations()));
+            $this->assertEquals(2, count($exception->getViolations()));
 
             /** @var ConstraintViolationInterface $violation */
             $violation = $exception->getViolations()[0];
@@ -430,12 +412,98 @@ class ComponentTest extends TestCase
             $violation = $exception->getViolations()[1];
             $this->assertEquals('This value is too long. It should have 80 characters or less.', $violation->getMessage());
             $this->assertEquals('label', $violation->getPropertyPath());
+        }
 
-            $violation = $exception->getViolations()[2];
+        try {
+            $component = Component::createButton(style: ButtonStyle::link(), customId: self::CHARACTERS_100 . 'xyz', url: $this->faker->word(), label: self::CHARACTERS_80 . 'xyz', emoji: $emoji, disabled: $disabled);
+            $this->validate($component);
+        } catch (ValidationFailedException $exception) {
+            $this->assertEquals(2, count($exception->getViolations()));
+
+            /** @var ConstraintViolationInterface $violation */
+            $violation = $exception->getViolations()[0];
+            $this->assertEquals('This value is too long. It should have 80 characters or less.', $violation->getMessage());
+            $this->assertEquals('label', $violation->getPropertyPath());
+
+            $violation = $exception->getViolations()[1];
             $this->assertEquals('This value is not a valid URL.', $violation->getMessage());
             $this->assertEquals('url', $violation->getPropertyPath());
         }
 
+        try {
+            $component = Component::create(type: ComponentType::button(), customId: $customId, style: ButtonStyle::link(), url: $url);
+            $this->validate($component);
+        } catch (ValidationFailedException $exception) {
+            $this->assertEquals(1, count($exception->getViolations()));
+
+            /** @var ConstraintViolationInterface $violation */
+            $violation = $exception->getViolations()[0];
+            $this->assertEquals('The field "customId" cannot be populated for link buttons.', $violation->getMessage());
+            $this->assertEquals('customId', $violation->getPropertyPath());
+        }
+
+        try {
+            $component = Component::create(type: ComponentType::button(), customId: $customId, style: ButtonStyle::primary(), url: $url);
+            $this->validate($component);
+        } catch (ValidationFailedException $exception) {
+            $this->assertEquals(1, count($exception->getViolations()));
+
+            /** @var ConstraintViolationInterface $violation */
+            $violation = $exception->getViolations()[0];
+            $this->assertEquals('The field "url" can only be populated for link buttons.', $violation->getMessage());
+            $this->assertEquals('url', $violation->getPropertyPath());
+        }
+
+        try {
+            $component = Component::create(type: ComponentType::button(), style: ButtonStyle::link());
+            $this->validate($component);
+        } catch (ValidationFailedException $exception) {
+            $this->assertEquals(1, count($exception->getViolations()));
+
+            /** @var ConstraintViolationInterface $violation */
+            $violation = $exception->getViolations()[0];
+            $this->assertEquals('The field "url" is required for link buttons.', $violation->getMessage());
+            $this->assertEquals('url', $violation->getPropertyPath());
+        }
+
+        try {
+            $component = Component::create(type: ComponentType::button(), style: ButtonStyle::primary());
+            $this->validate($component);
+        } catch (ValidationFailedException $exception) {
+            $this->assertEquals(1, count($exception->getViolations()));
+
+            /** @var ConstraintViolationInterface $violation */
+            $violation = $exception->getViolations()[0];
+            $this->assertEquals('The field "customId" is required for non-link buttons.', $violation->getMessage());
+            $this->assertEquals('customId', $violation->getPropertyPath());
+        }
+    }
+
+    /**
+     *
+     */
+    public function testCreateInteractiveButtonUsingLinkFailure()
+    {
+        $this->expectException(\UnexpectedValueException::class);
+        Component::createInteractiveButton(ButtonStyle::link(), $this->faker->text(25));
+    }
+
+    /**
+     * @dataProvider provideValidCreateParams
+     * @param $customId
+     * @param $disabled
+     * @param $style
+     * @param $label
+     * @param $emoji
+     * @param $url
+     * @param $options
+     * @param $placeholder
+     * @param $minValues
+     * @param $maxValues
+     * @param $components
+     */
+    public function testSelectMenuValidationFailure($customId, $disabled, $style, $label, $emoji, $url, $options, $placeholder, $minValues, $maxValues, $components)
+    {
         $component = Component::createSelectMenu(self::CHARACTERS_100 . 'xyz', $disabled, $options, $placeholder, -1, 26);
 
         try {
@@ -499,20 +567,11 @@ class ComponentTest extends TestCase
     public function provideValidCreateParams()
     {
         $this->setupFaker();
-        yield ['customId' => $this->faker->text(100), 'disabled' => $this->faker->boolean(), 'style' => $this->getRandomStyle(), 'label' => $this->faker->text(80), 'emoji' => new PartialEmoji(), 'url' => $this->faker->url(), 'options' => [], 'placeholder' => null, 'minValues' => 1, 'maxValues' => 1, 'components' => []];
-    }
-
-    /**
-     * @return ButtonStyle
-     */
-    public function getRandomStyle()
-    {
-        return $this->faker->randomElement([
+        yield ['customId' => $this->faker->text(100), 'disabled' => $this->faker->boolean(), 'style' => $this->faker->randomElement([
             ButtonStyle::primary(),
             ButtonStyle::secondary(),
             ButtonStyle::success(),
-            ButtonStyle::danger(),
-            ButtonStyle::link()
-        ]);
+            ButtonStyle::danger()
+        ]), 'label' => $this->faker->text(80), 'emoji' => new PartialEmoji(), 'url' => $this->faker->url(), 'options' => [], 'placeholder' => null, 'minValues' => 1, 'maxValues' => 1, 'components' => []];
     }
 }
