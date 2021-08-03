@@ -2,9 +2,12 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ApplicationCommandInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
+use Bytes\DiscordResponseBundle\Services\IdNormalizer;
+use Bytes\ResponseBundle\Interfaces\IdInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -28,11 +31,12 @@ class PartialGuildApplicationCommandPermission
     private $permissions;
 
     /**
-     * @param string $id the id of the command
+     * @param ApplicationCommandInterface|IdInterface|string $id the id of the command
      * @param ApplicationCommandPermission[] $permissions
      * @return static
      */
-    public static function create(string $id, array $permissions = []): static {
+    public static function create(ApplicationCommandInterface|IdInterface|string $id, array $permissions = []): static {
+        $id = IdNormalizer::normalizeCommandIdArgument($id, 'The "id" argument is required and cannot be blank.');
         $static = new static();
         return $static->setId($id)
             ->setPermissions($permissions);

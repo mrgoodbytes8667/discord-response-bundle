@@ -4,11 +4,19 @@ namespace Bytes\DiscordResponseBundle\Tests\Objects\Slash;
 
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandPermissionType;
+use Bytes\DiscordResponseBundle\Objects\Channel;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ApplicationCommandInterface;
+use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommand;
 use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommandPermission;
 use Bytes\DiscordResponseBundle\Objects\Slash\PartialGuildApplicationCommandPermission;
+use Bytes\ResponseBundle\Interfaces\IdInterface;
 use Generator;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
+/**
+ *
+ */
 class PartialGuildApplicationCommandPermissionTest extends TestCase
 {
     use TestDiscordFakerTrait;
@@ -72,9 +80,11 @@ class PartialGuildApplicationCommandPermissionTest extends TestCase
     }
 
     /**
-     * 
+     * @dataProvider provideCommand
+     * @dataProvider provideId
+     * @param $commandId
      */
-    public function testCreate()
+    public function testCreate($commandId)
     {
         $commandId = $this->faker->snowflake();
 
@@ -90,5 +100,66 @@ class PartialGuildApplicationCommandPermissionTest extends TestCase
         $this->assertEquals($id, $object->getPermissions()[0]->getId());
         $this->assertEquals($type->value, $object->getPermissions()[0]->getType());
         $this->assertEquals($permission, $object->getPermissions()[0]->getPermission());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideCommand()
+    {
+        $this->setupFaker();
+
+        $command = new ApplicationCommand();
+        $command->setId($this->faker->snowflake());
+        yield [$command];
+
+        $command = $this
+            ->getMockBuilder(ApplicationCommandInterface::class)
+            ->getMock();
+        $command->method('getCommandId')
+            ->willReturn($this->faker->snowflake());
+        yield [$command];
+
+        $command = $this
+            ->getMockBuilder(IdInterface::class)
+            ->getMock();
+        $command->method('getId')
+            ->willReturn($this->faker->snowflake());
+        yield [$command];
+    }
+
+    /**
+     * @dataProvider provideInvalidCommands
+     * @param $commandId
+     */
+    public function testCreateInvalidCommand($commandId)
+    {
+        $this->expectException(InvalidArgumentException::class);
+        PartialGuildApplicationCommandPermission::create($commandId, [
+            ApplicationCommandPermission::create(
+                $this->faker->snowflake(),
+                $this->faker->randomElement([ApplicationCommandPermissionType::role(), ApplicationCommandPermissionType::user()]),
+                $this->faker->boolean())
+        ]);
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideInvalidCommands()
+    {
+        $this->setupFaker();
+
+        yield [new ApplicationCommand()];
+        yield [new Channel()];
+
+        $command = new ApplicationCommand();
+        $command->setGuildId($this->faker->snowflake());
+        yield [$command];
+
+        $command = $this
+            ->getMockBuilder(ApplicationCommandInterface::class)
+            ->getMock();
+        yield [$command];
     }
 }
