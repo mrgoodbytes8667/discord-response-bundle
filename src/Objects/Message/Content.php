@@ -4,6 +4,8 @@
 namespace Bytes\DiscordResponseBundle\Objects\Message;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+use JetBrains\PhpStorm\Deprecated;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\MessageReference;
@@ -13,6 +15,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Content
  * @package Bytes\DiscordResponseBundle\Objects\Message
+ *
+ * @link https://discord.com/developers/docs/resources/channel#create-message-jsonform-params
+ *
+ * @version v0.9.12 As of 2021-08-05 Discord Documentation
  */
 class Content
 {
@@ -33,11 +39,11 @@ class Content
      * @var boolean|null
      */
     private $tts;
-    
+
     /**
-     * @var Embed|null
+     * @var Embed[]|null
      */
-    private $embed;
+    private $embeds;
 
     /**
      * @var AllowedMentions|null
@@ -49,6 +55,31 @@ class Content
      * @var MessageReference|null
      */
     private $messageReference;
+
+    /**
+     * @var Component[]|null
+     */
+    private $components;
+
+    /**
+     * @var string[]|null
+     * @Assert\Count(
+     *      max = 3,
+     *      maxMessage = "You cannot specify more than {{ limit }} stickers per message"
+     * )
+     */
+    private $sticker_ids;
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->embeds = new ArrayCollection();
+        $this->components = new ArrayCollection();
+        $this->sticker_ids = new ArrayCollection();
+    }
+
 
     /**
      * @return string|null
@@ -107,18 +138,51 @@ class Content
     /**
      * @return Embed|null
      */
+    #[Deprecated(reason: 'since 0.9.12, use getEmbeds() instead (deprecated in Discord API v9)', replacement: '%class%->getEmbeds()')]
     public function getEmbed(): ?Embed
     {
-        return $this->embed;
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.12', 'Use getEmbeds() instead.');
+        return $this->embeds->first() ?: null;
     }
 
     /**
      * @param Embed|null $embed
      * @return $this
      */
+    #[Deprecated(reason: 'since 0.9.12, use setEmbeds() instead (deprecated in Discord API v9)', replacement: '%class%->setEmbeds(%parametersList%)')]
     public function setEmbed(?Embed $embed): self
     {
-        $this->embed = $embed;
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.12', 'Use setEmbeds() instead.');
+        return $this->setEmbeds([$embed]);
+    }
+
+    /**
+     * @return Embed[]|null
+     */
+    public function getEmbeds(): ?array
+    {
+        return $this->embeds->toArray();
+    }
+
+    /**
+     * @param Embed[]|null $embeds
+     * @return Content
+     */
+    public function setEmbeds(?array $embeds): self
+    {
+        $this->embeds = new ArrayCollection($embeds);
+        return $this;
+    }
+
+    /**
+     * @param Embed $embed
+     * @return $this
+     */
+    public function addEmbed(Embed $embed): self
+    {
+        if(!$this->embeds->contains($embed)) {
+            $this->embeds->add($embed);
+        }
         return $this;
     }
 
@@ -159,6 +223,66 @@ class Content
     }
 
     /**
+     * @return Component[]|null
+     */
+    public function getComponents(): ?array
+    {
+        return $this->components->toArray();
+    }
+
+    /**
+     * @param Component[]|null $components
+     * @return $this
+     */
+    public function setComponents(?array $components): self
+    {
+        $this->components = new ArrayCollection($components);
+        return $this;
+    }
+
+    /**
+     * @param Component $component
+     * @return $this
+     */
+    public function addComponent(Component $component): self
+    {
+        if(!$this->components->contains($component)) {
+            $this->components->add($component);
+        }
+        return $this;
+    }
+
+    /**
+     * @return string[]|null
+     */
+    public function getStickerIds(): ?array
+    {
+        return $this->sticker_ids->toArray();
+    }
+
+    /**
+     * @param string[]|null $stickerIds
+     * @return $this
+     */
+    public function setStickerIds(?array $stickerIds): self
+    {
+        $this->sticker_ids = new ArrayCollection($stickerIds);
+        return $this;
+    }
+
+    /**
+     * @param string $stickerId
+     * @return $this
+     */
+    public function addStickerId(string $stickerId): self
+    {
+        if(!$this->sticker_ids->contains($stickerId)) {
+            $this->sticker_ids->add($stickerId);
+        }
+        return $this;
+    }
+
+    /**
      * @param Embed $embed
      * @param string|null $content
      * @param AllowedMentions|null $allowedMentions
@@ -172,7 +296,7 @@ class Content
             $allowedMentions = AllowedMentions::create();
         }
         $static = new static();
-        $static->setEmbed($embed);
+        $static->addEmbed($embed);
         $static->setAllowedMentions($allowedMentions);
         if(!empty($content))
         {
@@ -192,8 +316,8 @@ class Content
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
-        if (empty($this->content) && empty($this->embed)) {
-            $context->buildViolation('Either content or embed must be populated.')
+        if (empty($this->content) && $this->embeds->isEmpty() && $this->sticker_ids->isEmpty()) {
+            $context->buildViolation('Either content, embeds, or stickers must be populated.')
                 ->atPath('content')
                 ->addViolation();
         }
