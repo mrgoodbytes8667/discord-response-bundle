@@ -9,6 +9,7 @@ use Bytes\DiscordResponseBundle\Objects\MessageReference;
 use Doctrine\Common\Collections\ArrayCollection;
 use Illuminate\Support\Arr;
 use JetBrains\PhpStorm\Deprecated;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -76,6 +77,7 @@ class Content
 
     /**
      * @var string[]|null
+     * @SerializedName("sticker_ids")
      * @Assert\Count(
      *      max = 3,
      *      maxMessage = "You cannot specify more than {{ limit }} stickers per message."
@@ -154,6 +156,7 @@ class Content
 
     /**
      * @return Embed|null
+     * @Ignore
      */
     #[Deprecated(reason: 'since 0.10.0, use getEmbeds() instead (deprecated in Discord API v9)', replacement: '%class%->getEmbeds()')]
     public function getEmbed(): ?Embed
@@ -271,6 +274,7 @@ class Content
 
     /**
      * @return string[]|null
+     * @SerializedName("sticker_ids")
      */
     public function getStickerIds(): ?array
     {
