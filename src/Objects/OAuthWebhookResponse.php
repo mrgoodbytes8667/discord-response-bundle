@@ -6,7 +6,7 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
-use Bytes\DiscordResponseBundle\Objects\Traits\TokenTrait;
+use Bytes\ResponseBundle\Token\AccessTokenTrait;
 
 /**
  * Class OAuthWebhookResponse
@@ -14,9 +14,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\TokenTrait;
  */
 class OAuthWebhookResponse implements ErrorInterface
 {
-    use TokenTrait, ErrorTrait;
-
-
+    use AccessTokenTrait, ErrorTrait;
 
     /**
      * @var Webhook|null
@@ -40,6 +38,4 @@ class OAuthWebhookResponse implements ErrorInterface
         $this->webhook = $webhook;
         return $this;
     }
-
-
 }
