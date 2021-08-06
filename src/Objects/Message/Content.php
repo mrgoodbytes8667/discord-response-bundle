@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @link https://discord.com/developers/docs/resources/channel#create-message-jsonform-params
  *
- * @version v0.9.12 As of 2021-08-05 Discord Documentation
+ * @version v0.10.0 As of 2021-08-05 Discord Documentation
  */
 class Content
 {
@@ -155,10 +155,10 @@ class Content
     /**
      * @return Embed|null
      */
-    #[Deprecated(reason: 'since 0.9.12, use getEmbeds() instead (deprecated in Discord API v9)', replacement: '%class%->getEmbeds()')]
+    #[Deprecated(reason: 'since 0.10.0, use getEmbeds() instead (deprecated in Discord API v9)', replacement: '%class%->getEmbeds()')]
     public function getEmbed(): ?Embed
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.12', 'Use getEmbeds() instead.');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.0', 'Use getEmbeds() instead.');
         return $this->embeds->first() ?: null;
     }
 
@@ -166,10 +166,10 @@ class Content
      * @param Embed|null $embed
      * @return $this
      */
-    #[Deprecated(reason: 'since 0.9.12, use setEmbeds() instead (deprecated in Discord API v9)', replacement: '%class%->setEmbeds(%parametersList%)')]
+    #[Deprecated(reason: 'since 0.10.0, use setEmbeds() instead (deprecated in Discord API v9)', replacement: '%class%->setEmbeds(%parametersList%)')]
     public function setEmbed(?Embed $embed): self
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.12', 'Use setEmbeds() instead.');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.0', 'Use setEmbeds() instead.');
         return $this->setEmbeds([$embed]);
     }
 
@@ -306,10 +306,10 @@ class Content
      * @param bool|null $tts
      * @return static
      */
-    #[Deprecated(reason: 'since 0.9.12, use "new()" instead ("create()" will change to use the same arguments as "new()" in v0.10).', replacement: '%class%::new([%parameter0%], %parameter1%, %parameter2%, tts: %parameter3%)')]
+    #[Deprecated(reason: 'since 0.10.0, use "new()" instead ("create()" will change to use the same arguments as "new()" in v0.10).', replacement: '%class%::new([%parameter0%], %parameter1%, %parameter2%, tts: %parameter3%)')]
     public static function create(Embed $embed, ?string $content = null, ?AllowedMentions $allowedMentions = null, ?bool $tts = null)
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.12', 'Use "new()" instead ("create()" will change to use the same arguments as "new()" in v0.10).');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.0', 'Use "new()" instead ("create()" will change to use the same arguments as "new()" in v0.10).');
         if (empty($allowedMentions)) {
             $allowedMentions = AllowedMentions::create();
         }
