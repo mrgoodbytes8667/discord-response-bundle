@@ -4,13 +4,14 @@
 namespace Bytes\DiscordResponseBundle\Objects\Message;
 
 
-use Doctrine\Common\Collections\ArrayCollection;
-use JetBrains\PhpStorm\Deprecated;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\MessageReference;
+use Doctrine\Common\Collections\ArrayCollection;
+use Illuminate\Support\Arr;
+use JetBrains\PhpStorm\Deprecated;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Class Content
@@ -42,22 +43,34 @@ class Content
 
     /**
      * @var Embed[]|null
+     * @Assert\Valid()
+     * @Assert\All({
+     *     @Assert\Type(type="\Bytes\DiscordResponseBundle\Objects\Embed\Embed"),
+     *     @Assert\NotNull()
+     * })
      */
     private $embeds;
 
     /**
      * @var AllowedMentions|null
      * @SerializedName("allowed_mentions")
+     * @Assert\Valid()
      */
     private $allowedMentions;
 
     /**
      * @var MessageReference|null
+     * @Assert\Valid()
      */
     private $messageReference;
 
     /**
      * @var Component[]|null
+     * @Assert\Valid()
+     * @Assert\All({
+     *     @Assert\Type(type="\Bytes\DiscordResponseBundle\Objects\Message\Component"),
+     *     @Assert\NotNull()
+     * })
      */
     private $components;
 
@@ -65,8 +78,12 @@ class Content
      * @var string[]|null
      * @Assert\Count(
      *      max = 3,
-     *      maxMessage = "You cannot specify more than {{ limit }} stickers per message"
+     *      maxMessage = "You cannot specify more than {{ limit }} stickers per message."
      * )
+     * @Assert\All({
+     *     @Assert\Type(type="string"),
+     *     @Assert\NotNull()
+     * })
      */
     private $sticker_ids;
 
@@ -180,7 +197,7 @@ class Content
      */
     public function addEmbed(Embed $embed): self
     {
-        if(!$this->embeds->contains($embed)) {
+        if (!$this->embeds->contains($embed)) {
             $this->embeds->add($embed);
         }
         return $this;
@@ -246,7 +263,7 @@ class Content
      */
     public function addComponent(Component $component): self
     {
-        if(!$this->components->contains($component)) {
+        if (!$this->components->contains($component)) {
             $this->components->add($component);
         }
         return $this;
@@ -276,7 +293,7 @@ class Content
      */
     public function addStickerId(string $stickerId): self
     {
-        if(!$this->sticker_ids->contains($stickerId)) {
+        if (!$this->sticker_ids->contains($stickerId)) {
             $this->sticker_ids->add($stickerId);
         }
         return $this;
@@ -289,21 +306,54 @@ class Content
      * @param bool|null $tts
      * @return static
      */
+    #[Deprecated(reason: 'since 0.9.12, use "new()" instead ("create()" will change to use the same arguments as "new()" in v0.10).', replacement: '%class%::new([%parameter0%], %parameter1%, %parameter2%, tts: %parameter3%)')]
     public static function create(Embed $embed, ?string $content = null, ?AllowedMentions $allowedMentions = null, ?bool $tts = null)
     {
-        if(empty($allowedMentions))
-        {
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.12', 'Use "new()" instead ("create()" will change to use the same arguments as "new()" in v0.10).');
+        if (empty($allowedMentions)) {
             $allowedMentions = AllowedMentions::create();
         }
         $static = new static();
         $static->addEmbed($embed);
         $static->setAllowedMentions($allowedMentions);
-        if(!empty($content))
-        {
+        if (!empty($content)) {
             $static->setContent($content);
         }
-        if(!is_null($tts))
-        {
+        if (!is_null($tts)) {
+            $static->setTts($tts);
+        }
+        return $static;
+    }
+
+    /**
+     * @param Embed|array|null $embeds
+     * @param string|null $content
+     * @param AllowedMentions|null $allowedMentions
+     * @param Component|array|null $components
+     * @param string[]|null $stickers
+     * @param bool|null $tts
+     * @return static
+     */
+    public static function new(Embed|array|null $embeds = null, ?string $content = null, ?AllowedMentions $allowedMentions = null, Component|array|null $components = null, ?array $stickers = null, ?bool $tts = null): static
+    {
+        if (empty($allowedMentions)) {
+            $allowedMentions = AllowedMentions::create();
+        }
+        $static = new static();
+        if (!empty($embeds)) {
+            $static->setEmbeds(Arr::wrap($embeds));
+        }
+        if (!empty($components)) {
+            $static->setComponents(Arr::wrap($components));
+        }
+        $static->setAllowedMentions($allowedMentions);
+        if (!empty($content)) {
+            $static->setContent($content);
+        }
+        if (!is_null($stickers)) {
+            $static->setStickerIds($stickers);
+        }
+        if (!is_null($tts)) {
             $static->setTts($tts);
         }
         return $static;

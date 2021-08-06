@@ -4,29 +4,36 @@ namespace Bytes\DiscordResponseBundle\Tests\Objects\Message;
 
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\Common\Faker\Providers\Discord;
+use Bytes\DiscordResponseBundle\Enums\ComponentType;
+use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\Message\AllowedMentions;
 use Bytes\DiscordResponseBundle\Objects\Message\Component;
 use Bytes\DiscordResponseBundle\Objects\Message\Content;
 use Bytes\DiscordResponseBundle\Objects\MessageReference;
 use Bytes\DiscordResponseBundle\Tests\TestRolesSerializationCase;
+use Bytes\Tests\Common\DataProvider\BooleanProviderTrait;
+use Bytes\Tests\Common\DataProvider\NullProviderTrait;
 use Faker\Factory;
 use Faker\Generator as FakerGenerator;
 use Faker\Provider\Base;
 use Generator;
+use Illuminate\Support\Arr;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 use Symfony\Component\String\ByteString;
+use Symfony\Component\Validator\ConstraintViolationInterface;
+use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 /**
  *
  */
 class ContentTest extends TestRolesSerializationCase
 {
-    use TestDiscordFakerTrait, ExpectDeprecationTrait;
+    use TestDiscordFakerTrait, ExpectDeprecationTrait, BooleanProviderTrait, NullProviderTrait;
 
     /**
-     *
+     * @group legacy
      */
-    public function testValidationPass()
+    public function testLegacyValidationPass()
     {
         $this->validationPass([
             Content::create($this->faker->embed(), ByteString::fromRandom(2000))
@@ -36,11 +43,79 @@ class ContentTest extends TestRolesSerializationCase
     /**
      *
      */
-    public function testValidationFail()
+    public function testValidationPass()
     {
-        $this->validationFail([
-            Content::create($this->faker->embed(), ByteString::fromRandom(2001))
+        $this->validationPass([
+            Content::new($this->faker->embed(), ByteString::fromRandom(2000))
         ]);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testLegacyValidationFail()
+    {
+        $content = new Content();
+        $this->validationFail([
+            Content::create($this->faker->embed(), ByteString::fromRandom(2001)),
+            $content
+        ]);
+    }
+
+    /**
+     * @dataProvider provideExcessStickerIds
+     * @param $stickers
+     */
+    public function testValidationFail($stickers)
+    {
+        $content = new Content();
+        $content->setStickerIds($stickers);
+        $this->validationFail([
+            Content::new($this->faker->embed(), ByteString::fromRandom(2001)), // Content cannot be more than 2000 characters
+            new Content(), // Either content, embeds, components, or stickers must be provided
+            $content // cannot have more than 3 sticker ids
+        ]);
+    }
+
+    /**
+     * @dataProvider provideExcessStickerIds
+     * @param $stickers
+     */
+    public function testTooManyStickers($stickers)
+    {
+        $content = Content::new(stickers: $stickers);
+        try {
+            $this->validate($content);
+        } catch (ValidationFailedException $exception) {
+            $this->assertEquals(1, count($exception->getViolations()));
+
+            /** @var ConstraintViolationInterface $violation */
+            $violation = $exception->getViolations()[0];
+            $this->assertEquals('You cannot specify more than 3 stickers per message.', $violation->getMessage());
+            $this->assertEquals('sticker_ids', $violation->getPropertyPath());
+        }
+    }
+
+    /**
+     *
+     */
+    public function testInvalidComponents()
+    {
+        $content = Content::new(components: [new Embed()]);
+        try {
+            $this->validate($content);
+        } catch (ValidationFailedException $exception) {
+            $this->assertEquals(2, count($exception->getViolations()));
+
+            /** @var ConstraintViolationInterface $violation */
+            $violation = $exception->getViolations()[0];
+            $this->assertEquals('Either content, embeds, or stickers must be populated.', $violation->getMessage());
+            $this->assertEquals('content', $violation->getPropertyPath());
+
+            $violation = $exception->getViolations()[1];
+            $this->assertEquals('This value should be of type \Bytes\DiscordResponseBundle\Objects\Message\Component.', $violation->getMessage());
+            $this->assertStringStartsWith('components', $violation->getPropertyPath());
+        }
     }
 
     /**
@@ -96,7 +171,8 @@ class ContentTest extends TestRolesSerializationCase
     }
 
     /**
-     * @dataProvider provideTts
+     * @dataProvider provideBooleans
+     * @dataProvider provideNull
      */
     public function testGetSetTts($tts)
     {
@@ -234,6 +310,19 @@ class ContentTest extends TestRolesSerializationCase
     /**
      * @return Generator
      */
+    public function provideExcessStickerIds()
+    {
+        $this->setupFaker();
+        $stickers = [];
+        foreach (range(1, 5) as $i) {
+            $stickers[] = $this->faker->snowflake();
+        }
+        yield [$stickers];
+    }
+
+    /**
+     * @return Generator
+     */
     public function provideCreate()
     {
         $this->setupFaker();
@@ -242,12 +331,11 @@ class ContentTest extends TestRolesSerializationCase
         foreach ([$this->faker->sentence(), '', null] as $content) {
             foreach ($this->provideAllowedMentions() as $provideAllowedMention) {
                 $allowedMention = $provideAllowedMention[0];
-                foreach ($this->provideTts() as $provideTts) {
-                    $tts = $provideTts[0];
-                    yield ['object' => Content::create($embed, $content, $allowedMention, $tts), 'embed' => $embed, 'content' => $content, 'allowedMentions' => $allowedMention, 'tts' => $tts];
-                    yield ['object' => Content::create($embed, $content, $allowedMention), 'embed' => $embed, 'content' => $content, 'allowedMentions' => $allowedMention, 'tts' => null];
-                    yield ['object' => Content::create($embed, $content), 'embed' => $embed, 'content' => $content, 'allowedMentions' => null, 'tts' => null];
-                    yield ['object' => Content::create($embed), 'embed' => $embed, 'content' => null, 'allowedMentions' => null, 'tts' => null];
+                foreach (array_merge(Arr::flatten($this->provideBooleans()), Arr::flatten($this->provideNull())) as $tts) {
+                    yield ['object' => Content::new($embed, $content, $allowedMention, tts: $tts), 'embed' => $embed, 'content' => $content, 'allowedMentions' => $allowedMention, 'tts' => $tts];
+                    yield ['object' => Content::new($embed, $content, $allowedMention), 'embed' => $embed, 'content' => $content, 'allowedMentions' => $allowedMention, 'tts' => null];
+                    yield ['object' => Content::new($embed, $content), 'embed' => $embed, 'content' => $content, 'allowedMentions' => null, 'tts' => null];
+                    yield ['object' => Content::new($embed), 'embed' => $embed, 'content' => null, 'allowedMentions' => null, 'tts' => null];
                 }
             }
         }
@@ -320,6 +408,36 @@ class ContentTest extends TestRolesSerializationCase
      */
     public function testCreate(Content $object, $embed, $content, $allowedMentions, $tts)
     {
-        $this->assertEquals($embed, $object->getEmbed());
+        $resultEmbeds = $object->getEmbeds();
+        $this->assertCount(1, $resultEmbeds);
+
+        $resultEmbed = array_shift($resultEmbeds);
+        $this->assertEquals($embed, $resultEmbed);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testLegacyCreateManual()
+    {
+        $embed = $this->faker->embed();
+        $content = Content::create(embed: $embed, tts: true);
+
+        $this->assertCount(1, $content->getEmbeds());
+        $this->assertTrue($content->getTts());
+    }
+
+    /**
+     *
+     */
+    public function testCreateManual()
+    {
+        $embed = $this->faker->embed();
+        $component = Component::create(ComponentType::actionRow());
+        $content = Content::new(embeds: $embed, components: $component, tts: true);
+
+        $this->assertCount(1, $content->getEmbeds());
+        $this->assertCount(1, $content->getComponents());
+        $this->assertTrue($content->getTts());
     }
 }
