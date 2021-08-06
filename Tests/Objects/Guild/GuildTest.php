@@ -30,16 +30,6 @@ class GuildTest extends TestGuildCase
         $this->assertEquals($ownerId, $guild->getOwnerId());
     }
 
-    public function testGetSetRegion()
-    {
-        $region = $this->faker->locale();
-
-        $guild = new Guild();
-        $this->assertNull($guild->getRegion());
-        $this->assertInstanceOf(Guild::class, $guild->setRegion($region));
-        $this->assertEquals($region, $guild->getRegion());
-    }
-
     public function testGetSetPreferredLocale()
     {
         $preferredLocale = $this->faker->locale();
