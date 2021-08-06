@@ -11,6 +11,7 @@ A Symfony bundle for Discord API response objects and enums
 
 ## Discord API Support
 Starting with release 0.7, there will be mixed support for the Discord API version 6 along with Discord API version 8. **Not all models are currently fully compatible with v8.**
+Starting with release 0.10, there will also be mixed support for Discord API version 9. **Not all models are currently fully compatible with v9.**
 
 ## Installation
 
