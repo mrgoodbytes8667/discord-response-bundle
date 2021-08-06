@@ -62,15 +62,6 @@ class PermissionsTest extends TestCase
     }
 
     /**
-     * @group legacy
-     */
-    public function testAllNames()
-    {
-        $this->expectDeprecation('Since mrgoodbytes8667/discord-response-bundle 0.2.0: Using "%s" is deprecated');
-        $this->assertCount(36, Permissions::allNames());
-    }
-
-    /**
      * @return Generator
      */
     public function providePermissions()

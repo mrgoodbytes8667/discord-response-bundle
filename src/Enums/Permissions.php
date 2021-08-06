@@ -59,16 +59,6 @@ use Illuminate\Support\Arr;
 class Permissions extends Enum
 {
     /**
-     * @return string[]
-     * @deprecated Since 0.2.0, only included for backwards compatibility. Use static::toArray() instead.
-     */
-    public static function allNames()
-    {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.2.0', 'Using "%s" is deprecated, use static::toArray() instead.', __METHOD__);
-        return static::labels();
-    }
-
-    /**
      * @return int[]
      */
     protected static function labels(): array
@@ -130,20 +120,6 @@ class Permissions extends Enum
     public static function setValueToKey(&$item, $key)
     {
         $item = $key;
-    }
-
-    /**
-     * @param static|int $item
-     * @param $key
-     *
-     * @deprecated Since 0.9.1, there is no replacement
-     */
-    public static function convertStaticToValue(&$item, $key)
-    {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.9.1', 'Using "%s" is deprecated, there is no replacement.', __METHOD__);
-        if ($item instanceof static) {
-            $item = $item->value;
-        }
     }
 
     /**
