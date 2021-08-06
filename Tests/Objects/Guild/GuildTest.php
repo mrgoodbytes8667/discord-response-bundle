@@ -13,13 +13,8 @@ use Generator;
 class GuildTest extends TestGuildCase
 {
     /**
-     * @return GuildInterface
+     *
      */
-    protected function createGuildClass(): GuildInterface
-    {
-        return new Guild();
-    }
-
     public function testGetSetOwnerId()
     {
         $ownerId = $this->faker->userId();
@@ -30,6 +25,9 @@ class GuildTest extends TestGuildCase
         $this->assertEquals($ownerId, $guild->getOwnerId());
     }
 
+    /**
+     *
+     */
     public function testGetSetPreferredLocale()
     {
         $preferredLocale = $this->faker->locale();
@@ -40,6 +38,9 @@ class GuildTest extends TestGuildCase
         $this->assertEquals($preferredLocale, $guild->getPreferredLocale());
     }
 
+    /**
+     * @return Generator
+     */
     public function provideNullableSnowflakes()
     {
         $this->setupFaker();
@@ -151,5 +152,13 @@ class GuildTest extends TestGuildCase
         $this->assertNull($guild->getWidgetEnabled());
         $this->assertInstanceOf(Guild::class, $guild->setWidgetEnabled($bool));
         $this->assertEquals($bool, $guild->getWidgetEnabled());
+    }
+
+    /**
+     * @return GuildInterface
+     */
+    protected function createGuildClass(): GuildInterface
+    {
+        return new Guild();
     }
 }

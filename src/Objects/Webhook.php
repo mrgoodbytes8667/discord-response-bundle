@@ -4,12 +4,12 @@
 namespace Bytes\DiscordResponseBundle\Objects;
 
 
-use App\Entity\Discord as DiscordEntity;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ChannelIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 
 /**
  * Class Webhook
@@ -62,6 +62,99 @@ class Webhook implements ErrorInterface, ChannelIdInterface
     private $token;
 
     /**
+     * @param string $url
+     * @return static
+     */
+    public static function createFromURL(string $url): self
+    {
+        $return = new static();
+        $return->setId(static::getIDFromURL($url));
+        $return->setToken(static::getTokenFromURL($url));
+        return $return;
+    }
+
+    /**
+     * @param string $url
+     * @return string
+     */
+    public static function getIDFromURL(string $url)
+    {
+        static::isValidURL($url);
+        return Str::of($url)->substr(strlen(static::DISCORD_WEBHOOK_EXECUTE_URL) + 1)->explode('/')[0];
+
+    }
+
+    /**
+     * @param string $url
+     * @return bool
+     */
+    public static function isValidURL(string $url)
+    {
+        if (!Str::startsWith($url, static::DISCORD_WEBHOOK_EXECUTE_URL)) {
+            throw new InvalidArgumentException('Supplied URL is not a valid Discord Webhook URL');
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $url
+     * @return string
+     */
+    public static function getTokenFromURL(string $url)
+    {
+        static::isValidURL($url);
+        return Str::of($url)->substr(strlen(static::DISCORD_WEBHOOK_EXECUTE_URL) + 1)->explode('/')[1];
+
+    }
+
+    /**
+     * @param string $id
+     * @param string $token
+     * @param string|null $base
+     *
+     * @return string
+     */
+    public static function getDiscordWebhookURLFromIDAndToken(string $id, string $token, string $base = null)
+    {
+        return implode('/', [$base ?? static::DISCORD_WEBHOOK_EXECUTE_URL, $id, $token]);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string|null $avatar
+     * @return Webhook
+     */
+    public function setAvatar(?string $avatar): Webhook
+    {
+        $this->avatar = $avatar;
+        return $this;
+    }
+
+    /**
+     * @param DiscordEntity $entity
+     *
+     * @return DiscordEntity
+     */
+    public function updateEntity(DiscordEntity $entity)
+    {
+        $entity->setWebhookType($this->getType());
+        $entity->setWebhookIDAndToken($this->getId(), $this->getToken());
+        $entity->setWebhookUsername($this->getName());
+        $entity->setWebhookChannelID($this->getChannelID());
+        $entity->setWebhookGuildID($this->getGuildID());
+
+        return $entity;
+    }
+
+    /**
      * @return int|null
      */
     public function getType(): ?int
@@ -100,6 +193,24 @@ class Webhook implements ErrorInterface, ChannelIdInterface
     /**
      * @return string|null
      */
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string|null $token
+     * @return Webhook
+     */
+    public function setToken(?string $token): Webhook
+    {
+        $this->token = $token;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
@@ -112,24 +223,6 @@ class Webhook implements ErrorInterface, ChannelIdInterface
     public function setName(?string $name): Webhook
     {
         $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getAvatar(): ?string
-    {
-        return $this->avatar;
-    }
-
-    /**
-     * @param string|null $avatar
-     * @return Webhook
-     */
-    public function setAvatar(?string $avatar): Webhook
-    {
-        $this->avatar = $avatar;
         return $this;
     }
 
@@ -149,99 +242,5 @@ class Webhook implements ErrorInterface, ChannelIdInterface
     {
         $this->guildID = $guildID;
         return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getToken(): ?string
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param string|null $token
-     * @return Webhook
-     */
-    public function setToken(?string $token): Webhook
-    {
-        $this->token = $token;
-        return $this;
-    }
-
-    /**
-     * @param DiscordEntity $entity
-     *
-     * @return DiscordEntity
-     */
-    public function updateEntity(DiscordEntity $entity)
-    {
-        $entity->setWebhookType($this->getType());
-        $entity->setWebhookIDAndToken($this->getId(), $this->getToken());
-        $entity->setWebhookUsername($this->getName());
-        $entity->setWebhookChannelID($this->getChannelID());
-        $entity->setWebhookGuildID($this->getGuildID());
-
-        return $entity;
-    }
-
-    /**
-     * @param string $url
-     * @return static
-     */
-    public static function createFromURL(string $url): self
-    {
-        $return = new static();
-        $return->setId(static::getIDFromURL($url));
-        $return->setToken(static::getTokenFromURL($url));
-        return $return;
-    }
-
-    /**
-     * @param string $url
-     * @return string
-     */
-    public static function getIDFromURL(string $url)
-    {
-        static::isValidURL($url);
-        return Str::of($url)->substr(strlen(static::DISCORD_WEBHOOK_EXECUTE_URL) + 1)->explode('/')[0];
-
-    }
-
-    /**
-     * @param string $url
-     * @return string
-     */
-    public static function getTokenFromURL(string $url)
-    {
-        static::isValidURL($url);
-        return Str::of($url)->substr(strlen(static::DISCORD_WEBHOOK_EXECUTE_URL) + 1)->explode('/')[1];
-
-    }
-
-    /**
-     * @param string $url
-     * @return bool
-     */
-    public static function isValidURL(string $url)
-    {
-        if(!Str::startsWith($url, static::DISCORD_WEBHOOK_EXECUTE_URL))
-        {
-            throw new \InvalidArgumentException('Supplied URL is not a valid Discord Webhook URL');
-        }
-
-        return true;
-    }
-
-    /**
-     * @param string $id
-     * @param string $token
-     * @param string|null $base
-     *
-     * @return string
-     */
-    public static function getDiscordWebhookURLFromIDAndToken(string $id, string $token, string $base = null)
-    {
-        return implode('/', [$base ?? static::DISCORD_WEBHOOK_EXECUTE_URL, $id, $token]);
     }
 }
