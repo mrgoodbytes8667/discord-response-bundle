@@ -4,6 +4,7 @@ namespace Bytes\DiscordResponseBundle\Tests\Enums;
 
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType;
 use Bytes\DiscordResponseBundle\Enums\JsonErrorCodes;
+use Bytes\Tests\Common\DataProvider\NullProviderTrait;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Spatie\Enum\Phpunit\EnumAssertions;
@@ -16,7 +17,7 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  */
 class JsonErrorCodesTest extends TestCase
 {
-    use EnumAssertions;
+    use EnumAssertions, NullProviderTrait;
 
     /**
      * @dataProvider provideEnums
@@ -69,9 +70,10 @@ class JsonErrorCodesTest extends TestCase
 
     /**
      * @dataProvider provideEnums
-     * @param JsonErrorCodes $enum
+     * @dataProvider provideNull
+     * @param JsonErrorCodes|null $enum
      */
-    public function testIsUnknownFalse(JsonErrorCodes $enum)
+    public function testIsUnknownFalse(?JsonErrorCodes $enum)
     {
         $this->assertFalse(JsonErrorCodes::isUnknownCodeType($enum));
     }

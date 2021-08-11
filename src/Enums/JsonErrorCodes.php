@@ -157,11 +157,15 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
 class JsonErrorCodes extends Enum
 {
     /**
-     * @param JsonErrorCodes $code
+     * @param JsonErrorCodes|null $code
      * @return bool
      */
-    public static function isUnknownCodeType(JsonErrorCodes $code): bool
+    public static function isUnknownCodeType(?JsonErrorCodes $code): bool
     {
+        if(is_null($code))
+        {
+            return false;
+        }
         return $code->equals(
             static::unknownAccount(), static::unknownApplication(), static::unknownChannel(), static::unknownGuild(),
             static::unknownIntegration(), static::unknownInvite(), static::unknownMember(), static::unknownMessage(),
