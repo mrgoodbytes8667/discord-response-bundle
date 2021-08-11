@@ -5,6 +5,7 @@ namespace Bytes\DiscordResponseBundle\Objects\OAuth\Validate;
 
 
 use Bytes\DiscordResponseBundle\Objects\Application;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\User as UserClass;
 use Bytes\ResponseBundle\Token\Interfaces\TokenValidationResponseInterface;
@@ -20,7 +21,7 @@ use InvalidArgumentException;
  *
  * @version v0.9.0 As of 2021-05-05 Discord Documentation
  */
-class User implements TokenValidationResponseInterface
+class User implements TokenValidationResponseInterface, ErrorInterface
 {
     use ErrorTrait;
 

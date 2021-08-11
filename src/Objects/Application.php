@@ -4,6 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Objects;
 
 
+use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
@@ -16,7 +17,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
  *
  * @version v0.9.0 As of 2021-05-05 Discord Documentation
  */
-class Application
+class Application implements ErrorInterface
 {
     use IDTrait, NameTrait, ErrorTrait;
 
