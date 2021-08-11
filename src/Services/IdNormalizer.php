@@ -7,6 +7,7 @@ namespace Bytes\DiscordResponseBundle\Services;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ApplicationCommandInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\MessageInterface;
 use Bytes\DiscordResponseBundle\Objects\Message;
 use Bytes\ResponseBundle\Objects\IdNormalizer as BaseIdNormalizer;
 use InvalidArgumentException;
@@ -107,18 +108,18 @@ class IdNormalizer extends BaseIdNormalizer
     }
 
     /**
-     * @param Message $message
+     * @param MessageInterface $message
      * @param string $channelIdMessage
      * @param string $messageIdMessage
-     * @return array = ['channelId' => '', 'messageId' => '']
+     * @return array{channelId: string, messageId: string}
      */
-    public static function normalizeMessageIntoIds(Message $message, string $channelIdMessage, string $messageIdMessage)
+    public static function normalizeMessageIntoIds(MessageInterface $message, string $channelIdMessage, string $messageIdMessage)
     {
         $channelId = $message->getChannelID();
         if (empty($channelId)) {
             throw new InvalidArgumentException($channelIdMessage);
         }
-        $messageId = $message->getId();
+        $messageId = $message->getMessageId();
         if (empty($messageId)) {
             throw new InvalidArgumentException($messageIdMessage);
         }
