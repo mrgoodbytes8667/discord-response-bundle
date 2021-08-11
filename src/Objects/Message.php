@@ -9,6 +9,7 @@ use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
+use Bytes\DiscordResponseBundle\Objects\Interfaces\MessageInterface;
 use Bytes\DiscordResponseBundle\Objects\Message\Component;
 use Bytes\DiscordResponseBundle\Objects\Slash\MessageInteraction;
 use Bytes\DiscordResponseBundle\Objects\Traits\ChannelIdTrait;
@@ -29,7 +30,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *
  * @version v0.9.12 As of 2021-08-03 Discord Documentation
  */
-class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelIdInterface
+class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelIdInterface, MessageInterface
 {
     use IDTrait, GuildIDTrait, ErrorTrait, ChannelIdTrait;
 
@@ -202,6 +203,14 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
      * @deprecated Since 0.9.8, use sticker_items instead
      */
     private $stickers;
+
+    /**
+     * @return string|null
+     */
+    public function getMessageId(): ?string
+    {
+        return $this->id;
+    }
 
     /**
      * @return User|null
