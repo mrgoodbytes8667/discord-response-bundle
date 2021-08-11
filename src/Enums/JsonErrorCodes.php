@@ -157,6 +157,28 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
 class JsonErrorCodes extends Enum
 {
     /**
+     * @param JsonErrorCodes $code
+     * @return bool
+     */
+    public static function isUnknownCodeType(JsonErrorCodes $code): bool
+    {
+        return $code->equals(
+            static::unknownAccount(), static::unknownApplication(), static::unknownChannel(), static::unknownGuild(),
+            static::unknownIntegration(), static::unknownInvite(), static::unknownMember(), static::unknownMessage(),
+            static::unknownPermissionOverwrite(), static::unknownProvider(), static::unknownRole(), static::unknownToken(),
+            static::unknownUser(), static::unknownEmoji(), static::unknownWebhook(), static::unknownWebhookService(),
+            static::unknownSession(), static::unknownBan(), static::unknownSku(), static::unknownStoreListing(),
+            static::unknownEntitlement(), static::unknownBuild(), static::unknownLobby(), static::unknownBranch(),
+            static::unknownStoreDirectoryLayout(), static::unknownRedistributable(), static::unknownGiftCode(),
+            static::unknownStream(), static::unknownPremiumServerSubscribeCooldown(), static::unknownGuildTemplate(),
+            static::unknownDiscoverableServerCategory(), static::unknownSticker(), static::unknownInteraction(),
+            static::unknownApplicationCommand(), static::unknownApplicationCommandPermissions(),
+            static::unknownStageInstance(), static::unknownGuildMemberVerificationForm(), static::unknownGuildWelcomeScreen(),
+            static::unknownGuildScheduledEvent(), static::unknownGuildScheduledEventUser()
+        );
+    }
+
+    /**
      * @return int[]
      */
     protected static function values(): array
