@@ -16,6 +16,7 @@
             <directory>./bin</directory>
             <directory>./Resources</directory>
             <directory>./Tests</directory>
+            <directory>./Util</directory>
             <directory>./vendor</directory>
         </exclude>
     </coverage>
