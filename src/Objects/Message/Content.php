@@ -247,6 +247,10 @@ class Content
      */
     public function getComponents(): ?array
     {
+        if($this->components->isEmpty())
+        {
+            return null;
+        }
         return $this->components->toArray();
     }
 
@@ -256,7 +260,7 @@ class Content
      */
     public function setComponents(?array $components): self
     {
-        $this->components = new ArrayCollection($components);
+        $this->components = new ArrayCollection($components ?? []);
         return $this;
     }
 
@@ -278,6 +282,10 @@ class Content
      */
     public function getStickerIds(): ?array
     {
+        if($this->sticker_ids->isEmpty())
+        {
+            return null;
+        }
         return $this->sticker_ids->toArray();
     }
 
@@ -287,7 +295,7 @@ class Content
      */
     public function setStickerIds(?array $stickerIds): self
     {
-        $this->sticker_ids = new ArrayCollection($stickerIds);
+        $this->sticker_ids = new ArrayCollection($stickerIds ?? []);
         return $this;
     }
 

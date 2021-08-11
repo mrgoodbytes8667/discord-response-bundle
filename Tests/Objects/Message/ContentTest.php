@@ -287,7 +287,9 @@ class ContentTest extends TestRolesSerializationCase
     public function testGetSetStickerIds($stickers, $count)
     {
         $content = new Content();
-        $this->assertCount(0, $content->getStickerIds());
+        $this->assertNull($content->getStickerIds());
+        $this->assertInstanceOf(Content::class, $content->setStickerIds(null));
+        $this->assertNull($content->getStickerIds());
         $this->assertInstanceOf(Content::class, $content->setStickerIds($stickers));
         $this->assertCount($count, $content->getStickerIds());
         $this->assertEquals($stickers, $content->getStickerIds());
@@ -377,7 +379,11 @@ class ContentTest extends TestRolesSerializationCase
         $component = new Component();
         $component->setUrl($this->faker->url());
         $content = new Content();
-        $this->assertCount(0, $content->getComponents());
+        $this->assertNull($content->getComponents());
+        $this->assertInstanceOf(Content::class, $content->setComponents(null));
+        $this->assertNull($content->getComponents());
+        $this->assertInstanceOf(Content::class, $content->setComponents([]));
+        $this->assertNull($content->getComponents());
         $this->assertInstanceOf(Content::class, $content->setComponents($components));
         $this->assertEquals($components, $content->getComponents());
         $this->assertCount(1, $content->getComponents());
