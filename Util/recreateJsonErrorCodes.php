@@ -1,6 +1,6 @@
 <?php
 
-require_once 'vendor\autoload.php';
+require_once '..\vendor\autoload.php';
 
 
 $str = <<<'EOD'
@@ -209,5 +209,13 @@ $str .= <<<'EOD'
     }
 }
 EOD;
+
+echo($str);
+
+$str = '';
+foreach ($codes as $code)
+{
+    $str .= sprintf("yield ['label' => '%s', 'value' => %d];", $code['code'], $code['data']) . PHP_EOL;
+}
 
 echo($str);
