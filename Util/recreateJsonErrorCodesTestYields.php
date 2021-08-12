@@ -164,82 +164,10 @@ $codes[50016]['code'] = 'providedTooFewOrTooManyMessagesToDelete';
 $codes[50035]['code'] = 'invalidFormBody';
 $codes[130000]['code'] = 'apiResourceIsCurrentlyOverloaded';
 
-$str = <<<'EOD'
-<?php
-
-
-namespace Bytes\DiscordResponseBundle\Enums;
-
-
-use Bytes\EnumSerializerBundle\Enums\Enum;
-
-/**
- * Along with the HTTP error code, our API can also return more detailed error codes through a code key in the JSON
- * error response. The response will also contain a message key containing a more friendly error string.
- *
- * @version v0.10.3 As of 2021-08-11 Discord Documentation
- *
- * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#json
- * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes
- * @link https://github.com/spatie/enum
- *
-EOD;
-
-foreach ($codes as $temp)
-{
-    $str .= sprintf(' * @method static self %s() [%d] %s', $temp['code'], $temp['data'], $temp['description']) . PHP_EOL;
-}
-
-$str .= <<<'EOD'
- *
- */
-class JsonErrorCodes extends Enum
-{
-    /**
-     * @return int[]
-     */
-    protected static function values(): array
-    {
-        return [
-EOD;
-
-foreach ($codes as $temp)
-{
-    $str .= sprintf("'%s' => %d,", $temp['code'], $temp['data']) . PHP_EOL;
-}
-
-$str .= <<<'EOD'
-        ];
-    }
-
-    /**
-     * @param JsonErrorCodes|null $code
-     * @return bool
-     */
-    public static function isUnknownCodeType(?JsonErrorCodes $code): bool
-    {
-        if (is_null($code)) {
-            return false;
-        }
-        return $code->equals(
-EOD;
-$unknowns = [];
+$str = '';
 foreach ($codes as $code)
 {
-    if(\Symfony\Component\String\u($code['code'])->startsWith('unknown')) {
-        $unknowns[] = sprintf("static::%s()", $code['code']);
-    }
+    $str .= sprintf("yield ['label' => '%s', 'value' => %d];", $code['code'], $code['data']) . PHP_EOL;
 }
-
-$str .= implode(', ', $unknowns) . PHP_EOL;
-$str .= <<<'EOD'
-        );
-    }
-EOD;
-
-
-
-
-$str .= '}';
 
 echo($str);
