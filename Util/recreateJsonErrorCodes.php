@@ -148,16 +148,21 @@ foreach ($lines as $line)
 {
     $temp = explode("\t", $line);
     $code = (int)$temp[0];
+    $method = preg_replace('/\(([0-9]+)\)$/', '', $temp[1]);
     $codes[$code] = [
         'data' => $code,
-        'code' => \Symfony\Component\String\u($temp[1])->snake()->camel()->toString(),
-        'description' => $temp[1],
+        'code' => \Symfony\Component\String\u($method)->snake()->camel()->toString(),
+        'description' => \Symfony\Component\String\u($temp[1])->trim()->toString(),
     ];
 }
 
 // Manual changes
 $codes[0]['code'] = 'generalError';
 $codes[20009]['code'] = 'explicitContentCannotBeSentToTheDesiredRecipients';
+$codes[40005]['code'] = 'requestEntityTooLarge';
+$codes[50016]['code'] = 'providedTooFewOrTooManyMessagesToDelete';
+$codes[50035]['code'] = 'invalidFormBody';
+$codes[130000]['code'] = 'apiResourceIsCurrentlyOverloaded';
 
 $str = <<<'EOD'
 <?php
@@ -169,10 +174,10 @@ namespace Bytes\DiscordResponseBundle\Enums;
 use Bytes\EnumSerializerBundle\Enums\Enum;
 
 /**
- * Class JsonErrorCodes
- * JSON
- * Along with the HTTP error code, our API can also return more detailed error codes through a code key in the JSON error response. The response will also contain a message key containing a more friendly error string.
- * @package Bytes\DiscordResponseBundle\Enums
+ * Along with the HTTP error code, our API can also return more detailed error codes through a code key in the JSON
+ * error response. The response will also contain a message key containing a more friendly error string.
+ *
+ * @version v0.11.0 As of 2021-08-11 Discord Documentation
  *
  * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#json
  * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes
@@ -187,7 +192,6 @@ foreach ($codes as $temp)
 
 $str .= <<<'EOD'
  *
- * @version v0.11.0 As of 2021-08-11 Discord Documentation
  */
 class JsonErrorCodes extends Enum
 {
