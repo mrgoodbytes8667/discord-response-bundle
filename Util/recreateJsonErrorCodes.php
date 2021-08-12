@@ -177,7 +177,7 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  * Along with the HTTP error code, our API can also return more detailed error codes through a code key in the JSON
  * error response. The response will also contain a message key containing a more friendly error string.
  *
- * @version v0.11.0 As of 2021-08-11 Discord Documentation
+ * @version v0.10.3 As of 2021-08-11 Discord Documentation
  *
  * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#json
  * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes

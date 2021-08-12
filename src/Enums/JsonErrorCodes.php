@@ -11,7 +11,7 @@ use JetBrains\PhpStorm\Deprecated;
  * Along with the HTTP error code, our API can also return more detailed error codes through a code key in the JSON
  * error response. The response will also contain a message key containing a more friendly error string.
  *
- * @version v0.11.0 As of 2021-08-11 Discord Documentation
+ * @version v0.10.3 As of 2021-08-11 Discord Documentation
  *
  * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#json
  * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes
@@ -186,12 +186,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use generalError() instead',
+        reason: 'since 0.10.3, use generalError() instead',
         replacement: '%class%::generalError()'
     )]
     public static function GENERAL_ERROR(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'generalError()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'generalError()');
         return static::generalError();
     }
 
@@ -200,12 +200,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownAccount() instead',
+        reason: 'since 0.10.3, use unknownAccount() instead',
         replacement: '%class%::unknownAccount()'
     )]
     public static function UNKNOWN_ACCOUNT(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownAccount()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownAccount()');
         return static::unknownAccount();
     }
 
@@ -214,12 +214,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownApplication() instead',
+        reason: 'since 0.10.3, use unknownApplication() instead',
         replacement: '%class%::unknownApplication()'
     )]
     public static function UNKNOWN_APPLICATION(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownApplication()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownApplication()');
         return static::unknownApplication();
     }
 
@@ -228,12 +228,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownChannel() instead',
+        reason: 'since 0.10.3, use unknownChannel() instead',
         replacement: '%class%::unknownChannel()'
     )]
     public static function UNKNOWN_CHANNEL(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownChannel()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownChannel()');
         return static::unknownChannel();
     }
 
@@ -242,12 +242,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownGuild() instead',
+        reason: 'since 0.10.3, use unknownGuild() instead',
         replacement: '%class%::unknownGuild()'
     )]
     public static function UNKNOWN_GUILD(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownGuild()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownGuild()');
         return static::unknownGuild();
     }
 
@@ -256,12 +256,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownIntegration() instead',
+        reason: 'since 0.10.3, use unknownIntegration() instead',
         replacement: '%class%::unknownIntegration()'
     )]
     public static function UNKNOWN_INTEGRATION(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownIntegration()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownIntegration()');
         return static::unknownIntegration();
     }
 
@@ -270,12 +270,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownInvite() instead',
+        reason: 'since 0.10.3, use unknownInvite() instead',
         replacement: '%class%::unknownInvite()'
     )]
     public static function UNKNOWN_INVITE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownInvite()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownInvite()');
         return static::unknownInvite();
     }
 
@@ -284,12 +284,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownMember() instead',
+        reason: 'since 0.10.3, use unknownMember() instead',
         replacement: '%class%::unknownMember()'
     )]
     public static function UNKNOWN_MEMBER(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownMember()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownMember()');
         return static::unknownMember();
     }
 
@@ -298,12 +298,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownMessage() instead',
+        reason: 'since 0.10.3, use unknownMessage() instead',
         replacement: '%class%::unknownMessage()'
     )]
     public static function UNKNOWN_MESSAGE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownMessage()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownMessage()');
         return static::unknownMessage();
     }
 
@@ -312,12 +312,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownPermissionOverwrite() instead',
+        reason: 'since 0.10.3, use unknownPermissionOverwrite() instead',
         replacement: '%class%::unknownPermissionOverwrite()'
     )]
     public static function UNKNOWN_PERMISSION_OVERWRITE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownPermissionOverwrite()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownPermissionOverwrite()');
         return static::unknownPermissionOverwrite();
     }
 
@@ -326,12 +326,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownProvider() instead',
+        reason: 'since 0.10.3, use unknownProvider() instead',
         replacement: '%class%::unknownProvider()'
     )]
     public static function UNKNOWN_PROVIDER(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownProvider()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownProvider()');
         return static::unknownProvider();
     }
 
@@ -340,12 +340,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownRole() instead',
+        reason: 'since 0.10.3, use unknownRole() instead',
         replacement: '%class%::unknownRole()'
     )]
     public static function UNKNOWN_ROLE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownRole()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownRole()');
         return static::unknownRole();
     }
 
@@ -354,12 +354,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownToken() instead',
+        reason: 'since 0.10.3, use unknownToken() instead',
         replacement: '%class%::unknownToken()'
     )]
     public static function UNKNOWN_TOKEN(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownToken()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownToken()');
         return static::unknownToken();
     }
 
@@ -368,12 +368,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownUser() instead',
+        reason: 'since 0.10.3, use unknownUser() instead',
         replacement: '%class%::unknownUser()'
     )]
     public static function UNKNOWN_USER(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownUser()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownUser()');
         return static::unknownUser();
     }
 
@@ -382,12 +382,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownEmoji() instead',
+        reason: 'since 0.10.3, use unknownEmoji() instead',
         replacement: '%class%::unknownEmoji()'
     )]
     public static function UNKNOWN_EMOJI(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownEmoji()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownEmoji()');
         return static::unknownEmoji();
     }
 
@@ -396,12 +396,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownWebhook() instead',
+        reason: 'since 0.10.3, use unknownWebhook() instead',
         replacement: '%class%::unknownWebhook()'
     )]
     public static function UNKNOWN_WEBHOOK(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownWebhook()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownWebhook()');
         return static::unknownWebhook();
     }
 
@@ -410,12 +410,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownBan() instead',
+        reason: 'since 0.10.3, use unknownBan() instead',
         replacement: '%class%::unknownBan()'
     )]
     public static function UNKNOWN_BAN(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownBan()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownBan()');
         return static::unknownBan();
     }
 
@@ -424,12 +424,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownSku() instead',
+        reason: 'since 0.10.3, use unknownSku() instead',
         replacement: '%class%::unknownSku()'
     )]
     public static function UNKNOWN_SKU(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownSku()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownSku()');
         return static::unknownSku();
     }
 
@@ -438,12 +438,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownStoreListing() instead',
+        reason: 'since 0.10.3, use unknownStoreListing() instead',
         replacement: '%class%::unknownStoreListing()'
     )]
     public static function UNKNOWN_STORE_LISTING(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownStoreListing()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownStoreListing()');
         return static::unknownStoreListing();
     }
 
@@ -452,12 +452,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownEntitlement() instead',
+        reason: 'since 0.10.3, use unknownEntitlement() instead',
         replacement: '%class%::unknownEntitlement()'
     )]
     public static function UNKNOWN_ENTITLEMENT(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownEntitlement()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownEntitlement()');
         return static::unknownEntitlement();
     }
 
@@ -466,12 +466,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownBuild() instead',
+        reason: 'since 0.10.3, use unknownBuild() instead',
         replacement: '%class%::unknownBuild()'
     )]
     public static function UNKNOWN_BUILD(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownBuild()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownBuild()');
         return static::unknownBuild();
     }
 
@@ -480,12 +480,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownLobby() instead',
+        reason: 'since 0.10.3, use unknownLobby() instead',
         replacement: '%class%::unknownLobby()'
     )]
     public static function UNKNOWN_LOBBY(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownLobby()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownLobby()');
         return static::unknownLobby();
     }
 
@@ -494,12 +494,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownBranch() instead',
+        reason: 'since 0.10.3, use unknownBranch() instead',
         replacement: '%class%::unknownBranch()'
     )]
     public static function UNKNOWN_BRANCH(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownBranch()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownBranch()');
         return static::unknownBranch();
     }
 
@@ -508,12 +508,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use unknownRedistributable() instead',
+        reason: 'since 0.10.3, use unknownRedistributable() instead',
         replacement: '%class%::unknownRedistributable()'
     )]
     public static function UNKNOWN_REDISTRIBUTABLE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownRedistributable()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'unknownRedistributable()');
         return static::unknownRedistributable();
     }
 
@@ -522,12 +522,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use botsCannotUseThisEndpoint() instead',
+        reason: 'since 0.10.3, use botsCannotUseThisEndpoint() instead',
         replacement: '%class%::botsCannotUseThisEndpoint()'
     )]
     public static function BOTS_CANNOT_USE_THIS_ENDPOINT(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'botsCannotUseThisEndpoint()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'botsCannotUseThisEndpoint()');
         return static::botsCannotUseThisEndpoint();
     }
 
@@ -536,12 +536,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use onlyBotsCanUseThisEndpoint() instead',
+        reason: 'since 0.10.3, use onlyBotsCanUseThisEndpoint() instead',
         replacement: '%class%::onlyBotsCanUseThisEndpoint()'
     )]
     public static function ONLY_BOTS_CAN_USE_THIS_ENDPOINT(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'onlyBotsCanUseThisEndpoint()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'onlyBotsCanUseThisEndpoint()');
         return static::onlyBotsCanUseThisEndpoint();
     }
 
@@ -550,12 +550,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use maximumNumberOfGuildsReached() instead',
+        reason: 'since 0.10.3, use maximumNumberOfGuildsReached() instead',
         replacement: '%class%::maximumNumberOfGuildsReached()'
     )]
     public static function MAXIMUM_NUMBER_OF_GUILDS_REACHED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfGuildsReached()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfGuildsReached()');
         return static::maximumNumberOfGuildsReached();
     }
 
@@ -564,12 +564,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use maximumNumberOfFriendsReached() instead',
+        reason: 'since 0.10.3, use maximumNumberOfFriendsReached() instead',
         replacement: '%class%::maximumNumberOfFriendsReached()'
     )]
     public static function MAXIMUM_NUMBER_OF_FRIENDS_REACHED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfFriendsReached()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfFriendsReached()');
         return static::maximumNumberOfFriendsReached();
     }
 
@@ -578,12 +578,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use maximumNumberOfPinsReachedForTheChannel() instead',
+        reason: 'since 0.10.3, use maximumNumberOfPinsReachedForTheChannel() instead',
         replacement: '%class%::maximumNumberOfPinsReachedForTheChannel()'
     )]
     public static function MAXIMUM_NUMBER_OF_PINS_REACHED_FOR_THE_CHANNEL(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfPinsReachedForTheChannel()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfPinsReachedForTheChannel()');
         return static::maximumNumberOfPinsReachedForTheChannel();
     }
 
@@ -592,12 +592,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use maximumNumberOfGuildRolesReached() instead',
+        reason: 'since 0.10.3, use maximumNumberOfGuildRolesReached() instead',
         replacement: '%class%::maximumNumberOfGuildRolesReached()'
     )]
     public static function MAXIMUM_NUMBER_OF_GUILD_ROLES_REACHED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfGuildRolesReached()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfGuildRolesReached()');
         return static::maximumNumberOfGuildRolesReached();
     }
 
@@ -606,12 +606,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use maximumNumberOfWebhooksReached() instead',
+        reason: 'since 0.10.3, use maximumNumberOfWebhooksReached() instead',
         replacement: '%class%::maximumNumberOfWebhooksReached()'
     )]
     public static function MAXIMUM_NUMBER_OF_WEBHOOKS_REACHED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfWebhooksReached()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfWebhooksReached()');
         return static::maximumNumberOfWebhooksReached();
     }
 
@@ -620,12 +620,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use maximumNumberOfReactionsReached() instead',
+        reason: 'since 0.10.3, use maximumNumberOfReactionsReached() instead',
         replacement: '%class%::maximumNumberOfReactionsReached()'
     )]
     public static function MAXIMUM_NUMBER_OF_REACTIONS_REACHED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfReactionsReached()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfReactionsReached()');
         return static::maximumNumberOfReactionsReached();
     }
 
@@ -634,12 +634,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use maximumNumberOfGuildChannelsReached() instead',
+        reason: 'since 0.10.3, use maximumNumberOfGuildChannelsReached() instead',
         replacement: '%class%::maximumNumberOfGuildChannelsReached()'
     )]
     public static function MAXIMUM_NUMBER_OF_GUILD_CHANNELS_REACHED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfGuildChannelsReached()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfGuildChannelsReached()');
         return static::maximumNumberOfGuildChannelsReached();
     }
 
@@ -648,12 +648,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use maximumNumberOfAttachmentsInAMessageReached() instead',
+        reason: 'since 0.10.3, use maximumNumberOfAttachmentsInAMessageReached() instead',
         replacement: '%class%::maximumNumberOfAttachmentsInAMessageReached()'
     )]
     public static function MAXIMUM_NUMBER_OF_ATTACHMENTS_IN_A_MESSAGE_REACHED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfAttachmentsInAMessageReached()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfAttachmentsInAMessageReached()');
         return static::maximumNumberOfAttachmentsInAMessageReached();
     }
 
@@ -662,12 +662,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use maximumNumberOfInvitesReached() instead',
+        reason: 'since 0.10.3, use maximumNumberOfInvitesReached() instead',
         replacement: '%class%::maximumNumberOfInvitesReached()'
     )]
     public static function MAXIMUM_NUMBER_OF_INVITES_REACHED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfInvitesReached()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'maximumNumberOfInvitesReached()');
         return static::maximumNumberOfInvitesReached();
     }
 
@@ -676,12 +676,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use youNeedToVerifyYourAccountInOrderToPerformThisAction() instead',
+        reason: 'since 0.10.3, use youNeedToVerifyYourAccountInOrderToPerformThisAction() instead',
         replacement: '%class%::youNeedToVerifyYourAccountInOrderToPerformThisAction()'
     )]
     public static function YOU_NEED_TO_VERIFY_YOUR_ACCOUNT_IN_ORDER_TO_PERFORM_THIS_ACTION(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'youNeedToVerifyYourAccountInOrderToPerformThisAction()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'youNeedToVerifyYourAccountInOrderToPerformThisAction()');
         return static::youNeedToVerifyYourAccountInOrderToPerformThisAction();
     }
 
@@ -690,12 +690,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use requestEntityTooLarge() instead',
+        reason: 'since 0.10.3, use requestEntityTooLarge() instead',
         replacement: '%class%::requestEntityTooLarge()'
     )]
     public static function REQUEST_ENTITY_TOO_LARGE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'requestEntityTooLarge()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'requestEntityTooLarge()');
         return static::requestEntityTooLarge();
     }
 
@@ -704,12 +704,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use thisFeatureHasBeenTemporarilyDisabledServerSide() instead',
+        reason: 'since 0.10.3, use thisFeatureHasBeenTemporarilyDisabledServerSide() instead',
         replacement: '%class%::thisFeatureHasBeenTemporarilyDisabledServerSide()'
     )]
     public static function THIS_FEATURE_HAS_BEEN_TEMPORARILY_DISABLED_SERVER_SIDE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'thisFeatureHasBeenTemporarilyDisabledServerSide()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'thisFeatureHasBeenTemporarilyDisabledServerSide()');
         return static::thisFeatureHasBeenTemporarilyDisabledServerSide();
     }
 
@@ -718,12 +718,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use theUserIsBannedFromThisGuild() instead',
+        reason: 'since 0.10.3, use theUserIsBannedFromThisGuild() instead',
         replacement: '%class%::theUserIsBannedFromThisGuild()'
     )]
     public static function THE_USER_IS_BANNED_FROM_THIS_GUILD(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'theUserIsBannedFromThisGuild()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'theUserIsBannedFromThisGuild()');
         return static::theUserIsBannedFromThisGuild();
     }
 
@@ -732,12 +732,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use missingAccess() instead',
+        reason: 'since 0.10.3, use missingAccess() instead',
         replacement: '%class%::missingAccess()'
     )]
     public static function MISSING_ACCESS(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'missingAccess()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'missingAccess()');
         return static::missingAccess();
     }
 
@@ -746,12 +746,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use invalidAccountType() instead',
+        reason: 'since 0.10.3, use invalidAccountType() instead',
         replacement: '%class%::invalidAccountType()'
     )]
     public static function INVALID_ACCOUNT_TYPE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'invalidAccountType()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'invalidAccountType()');
         return static::invalidAccountType();
     }
 
@@ -760,12 +760,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use cannotExecuteActionOnADmChannel() instead',
+        reason: 'since 0.10.3, use cannotExecuteActionOnADmChannel() instead',
         replacement: '%class%::cannotExecuteActionOnADmChannel()'
     )]
     public static function CANNOT_EXECUTE_ACTION_ON_A_DM_CHANNEL(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'cannotExecuteActionOnADmChannel()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'cannotExecuteActionOnADmChannel()');
         return static::cannotExecuteActionOnADmChannel();
     }
 
@@ -774,12 +774,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use guildWidgetDisabled() instead',
+        reason: 'since 0.10.3, use guildWidgetDisabled() instead',
         replacement: '%class%::guildWidgetDisabled()'
     )]
     public static function GUILD_WIDGET_DISABLED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'guildWidgetDisabled()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'guildWidgetDisabled()');
         return static::guildWidgetDisabled();
     }
 
@@ -788,12 +788,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use cannotEditAMessageAuthoredByAnotherUser() instead',
+        reason: 'since 0.10.3, use cannotEditAMessageAuthoredByAnotherUser() instead',
         replacement: '%class%::cannotEditAMessageAuthoredByAnotherUser()'
     )]
     public static function CANNOT_EDIT_A_MESSAGE_AUTHORED_BY_ANOTHER_USER(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'cannotEditAMessageAuthoredByAnotherUser()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'cannotEditAMessageAuthoredByAnotherUser()');
         return static::cannotEditAMessageAuthoredByAnotherUser();
     }
 
@@ -802,12 +802,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use cannotSendAnEmptyMessage() instead',
+        reason: 'since 0.10.3, use cannotSendAnEmptyMessage() instead',
         replacement: '%class%::cannotSendAnEmptyMessage()'
     )]
     public static function CANNOT_SEND_AN_EMPTY_MESSAGE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'cannotSendAnEmptyMessage()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'cannotSendAnEmptyMessage()');
         return static::cannotSendAnEmptyMessage();
     }
 
@@ -816,12 +816,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use cannotSendMessagesToThisUser() instead',
+        reason: 'since 0.10.3, use cannotSendMessagesToThisUser() instead',
         replacement: '%class%::cannotSendMessagesToThisUser()'
     )]
     public static function CANNOT_SEND_MESSAGES_TO_THIS_USER(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'cannotSendMessagesToThisUser()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'cannotSendMessagesToThisUser()');
         return static::cannotSendMessagesToThisUser();
     }
 
@@ -830,12 +830,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use cannotSendMessagesInAVoiceChannel() instead',
+        reason: 'since 0.10.3, use cannotSendMessagesInAVoiceChannel() instead',
         replacement: '%class%::cannotSendMessagesInAVoiceChannel()'
     )]
     public static function CANNOT_SEND_MESSAGES_IN_A_VOICE_CHANNEL(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'cannotSendMessagesInAVoiceChannel()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'cannotSendMessagesInAVoiceChannel()');
         return static::cannotSendMessagesInAVoiceChannel();
     }
 
@@ -844,12 +844,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use channelVerificationLevelIsTooHighForYouToGainAccess() instead',
+        reason: 'since 0.10.3, use channelVerificationLevelIsTooHighForYouToGainAccess() instead',
         replacement: '%class%::channelVerificationLevelIsTooHighForYouToGainAccess()'
     )]
     public static function CHANNEL_VERIFICATION_LEVEL_IS_TOO_HIGH_FOR_YOU_TO_GAIN_ACCESS(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'channelVerificationLevelIsTooHighForYouToGainAccess()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'channelVerificationLevelIsTooHighForYouToGainAccess()');
         return static::channelVerificationLevelIsTooHighForYouToGainAccess();
     }
 
@@ -858,12 +858,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use oauth2ApplicationDoesNotHaveABot() instead',
+        reason: 'since 0.10.3, use oauth2ApplicationDoesNotHaveABot() instead',
         replacement: '%class%::oauth2ApplicationDoesNotHaveABot()'
     )]
     public static function OAUTH2_APPLICATION_DOES_NOT_HAVE_A_BOT(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'oauth2ApplicationDoesNotHaveABot()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'oauth2ApplicationDoesNotHaveABot()');
         return static::oauth2ApplicationDoesNotHaveABot();
     }
 
@@ -872,12 +872,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use oauth2ApplicationLimitReached() instead',
+        reason: 'since 0.10.3, use oauth2ApplicationLimitReached() instead',
         replacement: '%class%::oauth2ApplicationLimitReached()'
     )]
     public static function OAUTH2_APPLICATION_LIMIT_REACHED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'oauth2ApplicationLimitReached()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'oauth2ApplicationLimitReached()');
         return static::oauth2ApplicationLimitReached();
     }
 
@@ -886,12 +886,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use invalidOauth2State() instead',
+        reason: 'since 0.10.3, use invalidOauth2State() instead',
         replacement: '%class%::invalidOauth2State()'
     )]
     public static function INVALID_OAUTH2_STATE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'invalidOauth2State()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'invalidOauth2State()');
         return static::invalidOauth2State();
     }
 
@@ -900,12 +900,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use youLackPermissionsToPerformThatAction() instead',
+        reason: 'since 0.10.3, use youLackPermissionsToPerformThatAction() instead',
         replacement: '%class%::youLackPermissionsToPerformThatAction()'
     )]
     public static function YOU_LACK_PERMISSIONS_TO_PERFORM_THAT_ACTION(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'youLackPermissionsToPerformThatAction()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'youLackPermissionsToPerformThatAction()');
         return static::youLackPermissionsToPerformThatAction();
     }
 
@@ -914,12 +914,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use invalidAuthenticationTokenProvided() instead',
+        reason: 'since 0.10.3, use invalidAuthenticationTokenProvided() instead',
         replacement: '%class%::invalidAuthenticationTokenProvided()'
     )]
     public static function INVALID_AUTHENTICATION_TOKEN_PROVIDED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'invalidAuthenticationTokenProvided()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'invalidAuthenticationTokenProvided()');
         return static::invalidAuthenticationTokenProvided();
     }
 
@@ -928,12 +928,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use noteWasTooLong() instead',
+        reason: 'since 0.10.3, use noteWasTooLong() instead',
         replacement: '%class%::noteWasTooLong()'
     )]
     public static function NOTE_WAS_TOO_LONG(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'noteWasTooLong()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'noteWasTooLong()');
         return static::noteWasTooLong();
     }
 
@@ -942,12 +942,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use providedTooFewOrTooManyMessagesToDelete() instead',
+        reason: 'since 0.10.3, use providedTooFewOrTooManyMessagesToDelete() instead',
         replacement: '%class%::providedTooFewOrTooManyMessagesToDelete()'
     )]
     public static function PROVIDED_TOO_FEW_OR_TOO_MANY_MESSAGES_TO_DELETE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'providedTooFewOrTooManyMessagesToDelete()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'providedTooFewOrTooManyMessagesToDelete()');
         return static::providedTooFewOrTooManyMessagesToDelete();
     }
 
@@ -956,12 +956,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use aMessageCanOnlyBePinnedToTheChannelItWasSentIn() instead',
+        reason: 'since 0.10.3, use aMessageCanOnlyBePinnedToTheChannelItWasSentIn() instead',
         replacement: '%class%::aMessageCanOnlyBePinnedToTheChannelItWasSentIn()'
     )]
     public static function A_MESSAGE_CAN_ONLY_BE_PINNED_TO_THE_CHANNEL_IT_WAS_SENT_IN(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'aMessageCanOnlyBePinnedToTheChannelItWasSentIn()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'aMessageCanOnlyBePinnedToTheChannelItWasSentIn()');
         return static::aMessageCanOnlyBePinnedToTheChannelItWasSentIn();
     }
 
@@ -970,12 +970,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use inviteCodeWasEitherInvalidOrTaken() instead',
+        reason: 'since 0.10.3, use inviteCodeWasEitherInvalidOrTaken() instead',
         replacement: '%class%::inviteCodeWasEitherInvalidOrTaken()'
     )]
     public static function INVITE_CODE_WAS_EITHER_INVALID_OR_TAKEN(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'inviteCodeWasEitherInvalidOrTaken()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'inviteCodeWasEitherInvalidOrTaken()');
         return static::inviteCodeWasEitherInvalidOrTaken();
     }
 
@@ -984,12 +984,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use cannotExecuteActionOnASystemMessage() instead',
+        reason: 'since 0.10.3, use cannotExecuteActionOnASystemMessage() instead',
         replacement: '%class%::cannotExecuteActionOnASystemMessage()'
     )]
     public static function CANNOT_EXECUTE_ACTION_ON_A_SYSTEM_MESSAGE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'cannotExecuteActionOnASystemMessage()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'cannotExecuteActionOnASystemMessage()');
         return static::cannotExecuteActionOnASystemMessage();
     }
 
@@ -998,12 +998,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use invalidOauth2AccessTokenProvided() instead',
+        reason: 'since 0.10.3, use invalidOauth2AccessTokenProvided() instead',
         replacement: '%class%::invalidOauth2AccessTokenProvided()'
     )]
     public static function INVALID_OAUTH2_ACCESS_TOKEN_PROVIDED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'invalidOauth2AccessTokenProvided()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'invalidOauth2AccessTokenProvided()');
         return static::invalidOauth2AccessTokenProvided();
     }
 
@@ -1012,12 +1012,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use aMessageProvidedWasTooOldToBulkDelete() instead',
+        reason: 'since 0.10.3, use aMessageProvidedWasTooOldToBulkDelete() instead',
         replacement: '%class%::aMessageProvidedWasTooOldToBulkDelete()'
     )]
     public static function A_MESSAGE_PROVIDED_WAS_TOO_OLD_TO_BULK_DELETE(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'aMessageProvidedWasTooOldToBulkDelete()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'aMessageProvidedWasTooOldToBulkDelete()');
         return static::aMessageProvidedWasTooOldToBulkDelete();
     }
 
@@ -1026,12 +1026,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use invalidFormBody() instead',
+        reason: 'since 0.10.3, use invalidFormBody() instead',
         replacement: '%class%::invalidFormBody()'
     )]
     public static function INVALID_FORM_BODY(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'invalidFormBody()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'invalidFormBody()');
         return static::invalidFormBody();
     }
 
@@ -1040,12 +1040,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use anInviteWasAcceptedToAGuildTheApplicationsBotIsNotIn() instead',
+        reason: 'since 0.10.3, use anInviteWasAcceptedToAGuildTheApplicationsBotIsNotIn() instead',
         replacement: '%class%::anInviteWasAcceptedToAGuildTheApplicationsBotIsNotIn()'
     )]
     public static function AN_INVITE_WAS_ACCEPTED_TO_A_GUILD_THE_APPLICATIONS_BOT_IS_NOT_IN(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'anInviteWasAcceptedToAGuildTheApplicationsBotIsNotIn()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'anInviteWasAcceptedToAGuildTheApplicationsBotIsNotIn()');
         return static::anInviteWasAcceptedToAGuildTheApplicationsBotIsNotIn();
     }
 
@@ -1054,12 +1054,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use invalidApiVersionProvided() instead',
+        reason: 'since 0.10.3, use invalidApiVersionProvided() instead',
         replacement: '%class%::invalidApiVersionProvided()'
     )]
     public static function INVALID_API_VERSION_PROVIDED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'invalidApiVersionProvided()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'invalidApiVersionProvided()');
         return static::invalidApiVersionProvided();
     }
 
@@ -1068,12 +1068,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use reactionWasBlocked() instead',
+        reason: 'since 0.10.3, use reactionWasBlocked() instead',
         replacement: '%class%::reactionWasBlocked()'
     )]
     public static function REACTION_WAS_BLOCKED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'reactionWasBlocked()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'reactionWasBlocked()');
         return static::reactionWasBlocked();
     }
 
@@ -1082,12 +1082,12 @@ class JsonErrorCodes extends Enum
      * @return JsonErrorCodes
      */
     #[Deprecated(
-        reason: 'since 0.11.0, use apiResourceIsCurrentlyOverloaded() instead',
+        reason: 'since 0.10.3, use apiResourceIsCurrentlyOverloaded() instead',
         replacement: '%class%::apiResourceIsCurrentlyOverloaded()'
     )]
     public static function API_RESOURCE_IS_CURRENTLY_OVERLOADED(): JsonErrorCodes
     {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.11.0', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'apiResourceIsCurrentlyOverloaded()');
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.3', 'Using "%s" is deprecated, use "%s" instead.', __METHOD__, 'apiResourceIsCurrentlyOverloaded()');
         return static::apiResourceIsCurrentlyOverloaded();
     }
 
