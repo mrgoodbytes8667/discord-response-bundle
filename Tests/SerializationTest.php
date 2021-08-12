@@ -26,7 +26,7 @@ class SerializationTest extends TestSerializationCase
                      'guildNews' => 5,
                      'guildStore' => 6,
                  ] as $label => $value) {
-            $output = $serializer->serialize(new ChannelTypes($label), 'json');
+            $output = $serializer->serialize(ChannelTypes::from($label), 'json');
 
             $this->assertEquals($this->buildFixtureResponseIntValue($value, $label), $output);
         }
@@ -38,7 +38,7 @@ class SerializationTest extends TestSerializationCase
     public function testChannelTypesSerializationBadKey()
     {
         $this->expectException(\BadMethodCallException::class);
-        new ChannelTypes('abc123');
+        ChannelTypes::from('abc123');
     }
 
     public function testEmojisSerialization()
@@ -442,7 +442,7 @@ class SerializationTest extends TestSerializationCase
     public function testEmojisSerializationBadKey()
     {
         $this->expectException(\BadMethodCallException::class);
-        new Emojis('abc123');
+        Emojis::from('abc123');
     }
 
     /**
@@ -649,7 +649,7 @@ class SerializationTest extends TestSerializationCase
                      'ACTIVITIES_READ' => 'activities.read',
                      'ACTIVITIES_WRITE' => 'activities.write',
                  ] as $label => $value) {
-            $output = $serializer->serialize(new OAuthScopes($label), 'json');
+            $output = $serializer->serialize(OAuthScopes::from($label), 'json');
 
             $this->assertEquals($this->buildFixtureResponse($value, $label), $output);
         }
@@ -661,7 +661,7 @@ class SerializationTest extends TestSerializationCase
     public function testOAuthScopesSerializationBadKey()
     {
         $this->expectException(\BadMethodCallException::class);
-        new OAuthScopes('abc123');
+        OAuthScopes::from('abc123');
     }
 
     public function testPermissionsSerialization()
@@ -701,7 +701,7 @@ class SerializationTest extends TestSerializationCase
                      'MANAGE_WEBHOOKS' => 0x20000000,
                      'MANAGE_EMOJIS' => 0x40000000,
                  ] as $label => $value) {
-            $output = $serializer->serialize(new Permissions($label), 'json');
+            $output = $serializer->serialize(Permissions::from($label), 'json');
 
             $this->assertEquals($this->buildFixtureResponseIntValue($value, $label), $output);
         }
@@ -713,6 +713,6 @@ class SerializationTest extends TestSerializationCase
     public function testPermissionsSerializationBadKey()
     {
         $this->expectException(\BadMethodCallException::class);
-        new Permissions('abc123');
+        Permissions::from('abc123');
     }
 }
