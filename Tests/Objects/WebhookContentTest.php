@@ -356,12 +356,15 @@ class WebhookContentTest extends TestRolesSerializationCase
                         $username = $username[0];
                         foreach ($this->provideAvatarUrl() as $avatarUrl) {
                             $avatarUrl = $avatarUrl[0];
-                            yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username, $avatarUrl, $tts), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => $avatarUrl, 'tts' => $tts];
-                            yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username, $avatarUrl), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => $avatarUrl, 'tts' => null];
-                            yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => null, 'tts' => null];
-                            yield ['object' => WebhookContent::create($embeds, $content, $allowedMention), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => null, 'avatarUrl' => null, 'tts' => null];
-                            yield ['object' => WebhookContent::create($embeds, $content), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => null, 'username' => null, 'avatarUrl' => null, 'tts' => null];
-                            yield ['object' => WebhookContent::create($embeds), 'embed' => $embeds, 'content' => null, 'allowedMentions' => null, 'username' => null, 'avatarUrl' => null, 'tts' => null];
+                            foreach ([[new Message\Component()], []] as $component) {
+                                yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username, $avatarUrl, $tts, $component), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => $avatarUrl, 'tts' => $tts, 'components' => $component];
+                                yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username, $avatarUrl, $tts), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => $avatarUrl, 'tts' => $tts, 'components' => null];
+                                yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username, $avatarUrl), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => $avatarUrl, 'tts' => null, 'components' => null];
+                                yield ['object' => WebhookContent::create($embeds, $content, $allowedMention, $username), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => $username, 'avatarUrl' => null, 'tts' => null, 'components' => null];
+                                yield ['object' => WebhookContent::create($embeds, $content, $allowedMention), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => $allowedMention, 'username' => null, 'avatarUrl' => null, 'tts' => null, 'components' => null];
+                                yield ['object' => WebhookContent::create($embeds, $content), 'embed' => $embeds, 'content' => $content, 'allowedMentions' => null, 'username' => null, 'avatarUrl' => null, 'tts' => null, 'components' => null];
+                                yield ['object' => WebhookContent::create($embeds), 'embed' => $embeds, 'content' => null, 'allowedMentions' => null, 'username' => null, 'avatarUrl' => null, 'tts' => null, 'components' => null];
+                            }
                         }
                     }
                 }
@@ -429,7 +432,7 @@ class WebhookContentTest extends TestRolesSerializationCase
      * @param $avatarUrl
      * @param $tts
      */
-    public function testCreate(WebhookContent $object, $embed, $content, $allowedMentions, $username, $avatarUrl, $tts)
+    public function testCreate(WebhookContent $object, $embed, $content, $allowedMentions, $username, $avatarUrl, $tts, $components)
     {
         $this->assertEquals($embed, $object->getEmbeds());
         $this->assertEquals($content, $object->getContent());
@@ -437,6 +440,7 @@ class WebhookContentTest extends TestRolesSerializationCase
         $this->assertEquals($username, $object->getUsername());
         $this->assertEquals($avatarUrl, $object->getAvatarUrl());
         $this->assertEquals($tts, $object->getTts());
+        $this->assertEquals($components, $object->getComponents());
     }
 
     /**
@@ -511,6 +515,11 @@ class WebhookContentTest extends TestRolesSerializationCase
         $this->assertInstanceOf(WebhookContent::class, $message->setComponents($components));
         $this->assertCount($count, $message->getComponents());
         $this->assertEquals($components, $message->getComponents());
+
+        $message = WebhookContent::create(components: $components);
+        $this->assertCount($count, $message->getComponents());
+        $this->assertEquals($components, $message->getComponents());
+
     }
 
     /**
