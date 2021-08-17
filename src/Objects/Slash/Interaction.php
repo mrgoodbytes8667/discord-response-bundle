@@ -3,16 +3,14 @@
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Enums\InteractionType;
-use Bytes\DiscordResponseBundle\Objects\Interfaces\ChannelIdInterface;
-use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Member;
 use Bytes\DiscordResponseBundle\Objects\Message;
+use Bytes\DiscordResponseBundle\Objects\Slash\Interfaces\InteractionInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\ChannelIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\User;
-use Bytes\ResponseBundle\Interfaces\IdInterface;
 
 /**
  * Class Interaction
@@ -28,7 +26,7 @@ use Bytes\ResponseBundle\Interfaces\IdInterface;
  *
  * @version v0.9.12 As of 2021-08-03 Discord Documentation
  */
-class Interaction implements IdInterface, GuildIdInterface, ChannelIdInterface
+class Interaction implements InteractionInterface
 {
     use IDTrait, ApplicationIdTrait, GuildIDTrait, ChannelIdTrait;
 
