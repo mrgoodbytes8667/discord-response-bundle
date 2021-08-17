@@ -88,15 +88,16 @@ class WebhookContent
     private $components;
 
     /**
-     * @param Embed[]|Embed|null $embeds
+     * @param null $embeds
      * @param string|null $content
      * @param AllowedMentions|null $allowedMentions
      * @param string|null $username
      * @param string|null $avatarUrl
      * @param bool|null $tts
+     * @param Component[]|Component|null $components
      * @return static
      */
-    public static function create($embeds = null, ?string $content = null, ?AllowedMentions $allowedMentions = null, ?string $username = null, ?string $avatarUrl = null, ?bool $tts = null)
+    public static function create($embeds = null, ?string $content = null, ?AllowedMentions $allowedMentions = null, ?string $username = null, ?string $avatarUrl = null, ?bool $tts = null, Component|array|null $components = null)
     {
         $static = new static();
 
@@ -118,6 +119,10 @@ class WebhookContent
         }
         if (!is_null($avatarUrl)) {
             $static->setAvatarUrl($avatarUrl);
+        }
+        if(!is_null($components))
+        {
+            $static->setComponents(Arr::wrap($components));
         }
         return $static;
     }
