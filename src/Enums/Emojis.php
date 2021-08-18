@@ -3,6 +3,7 @@
 
 namespace Bytes\DiscordResponseBundle\Enums;
 
+use Bytes\DiscordResponseBundle\Objects\PartialEmoji;
 use Bytes\EnumSerializerBundle\Enums\Enum;
 use Illuminate\Support\Arr;
 
@@ -794,7 +795,7 @@ class Emojis extends Enum
      */
     public static function random()
     {
-        return new static(Arr::random(static::toValues()));
+        return self::from(Arr::random(static::toValues()));
     }
 
     /**
@@ -803,5 +804,15 @@ class Emojis extends Enum
     public static function customEmoji(string $name, string $id)
     {
         return sprintf(':%s:%s', $name, $id);
+    }
+
+    /**
+     * @return PartialEmoji
+     */
+    public function toPartialEmoji()
+    {
+        $static = new PartialEmoji();
+        $static->setName($this->value);
+        return $static;
     }
 }

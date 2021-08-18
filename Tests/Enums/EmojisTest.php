@@ -4,6 +4,7 @@ namespace Bytes\DiscordResponseBundle\Tests\Enums;
 
 use Bytes\Common\Faker\Providers\MiscProvider;
 use Bytes\DiscordResponseBundle\Enums\Emojis;
+use Bytes\DiscordResponseBundle\Objects\PartialEmoji;
 use Faker\Factory;
 use Faker\Generator;
 use PHPUnit\Framework\TestCase;
@@ -48,6 +49,13 @@ class EmojisTest extends TestCase
         $emoji = Emojis::customEmoji($name, $id);
 
         $this->assertEquals(':loremipsum:999999999999999999', $emoji);
+    }
+
+    public function testToPartialEmoji()
+    {
+        $e = Emojis::weatherTimeGlobeWithMeridians()->toPartialEmoji();
+        $this->assertInstanceOf(PartialEmoji::class, $e);
+        $this->assertEquals('🌐', $e->getName());
     }
 
     /**
