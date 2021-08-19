@@ -2,7 +2,9 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
+use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
+use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationCommandOptionTypeTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 
 /**
@@ -12,15 +14,15 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
  *
  * @package Bytes\DiscordResponseBundle\Objects\Slash
  *
- * @link https://discord.com/developers/docs/interactions/slash-commands#interaction-applicationcommandinteractiondataoption
+ * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-interaction-data-option-structure
  *
  * @property string|null $name the name of the parameter
  *
- * @version v0.7.0 As of 2021-03-17 Discord Documentation
+ * @version v0.10.6 As of 2021-08-19 Discord Documentation
  */
 class ApplicationCommandInteractionDataOption implements NameInterface
 {
-    use NameTrait;
+    use NameTrait, ApplicationCommandOptionTypeTrait;
 
     /**
      * the value of the pair
@@ -37,14 +39,16 @@ class ApplicationCommandInteractionDataOption implements NameInterface
 
     /**
      * @param string $name
+     * @param ApplicationCommandOptionType|int|null $type
      * @param mixed|null $value
      * @param ApplicationCommandInteractionDataOption[]|null $options
      * @return static
      */
-    public static function create(string $name, $value = null, ?array $options = null): static
+    public static function create(string $name, ApplicationCommandOptionType|int|null $type = null, $value = null, ?array $options = null): static
     {
         $static = new static();
         return $static->setName($name)
+            ->setType($type)
             ->setValue($value)
             ->setOptions($options);
     }
