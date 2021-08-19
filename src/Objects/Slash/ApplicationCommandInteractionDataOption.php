@@ -18,7 +18,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
  *
  * @property string|null $name the name of the parameter
  *
- * @version v0.10.6 As of 2021-08-19 Discord Documentation
+ * @version v0.10.7 As of 2021-08-19 Discord Documentation
  */
 class ApplicationCommandInteractionDataOption implements NameInterface
 {
