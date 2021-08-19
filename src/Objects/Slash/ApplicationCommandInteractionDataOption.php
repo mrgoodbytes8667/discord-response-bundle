@@ -36,6 +36,20 @@ class ApplicationCommandInteractionDataOption implements NameInterface
     private $options;
 
     /**
+     * @param string $name
+     * @param mixed|null $value
+     * @param ApplicationCommandInteractionDataOption[]|null $options
+     * @return static
+     */
+    public static function create(string $name, $value = null, ?array $options = null): static
+    {
+        $static = new static();
+        return $static->setName($name)
+            ->setValue($value)
+            ->setOptions($options);
+    }
+
+    /**
      * @return mixed|null
      */
     public function getValue()
@@ -70,7 +84,4 @@ class ApplicationCommandInteractionDataOption implements NameInterface
         $this->options = $options;
         return $this;
     }
-
-
-
 }
