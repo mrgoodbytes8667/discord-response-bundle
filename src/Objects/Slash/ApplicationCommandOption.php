@@ -4,6 +4,7 @@ namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\NameInterface;
+use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationCommandOptionTypeTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\DescriptionTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameDescriptionValueLengthTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
@@ -23,13 +24,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ApplicationCommandOption implements NameInterface
 {
-    use NameTrait, DescriptionTrait, NameDescriptionValueLengthTrait;
-
-    /**
-     * value of ApplicationCommandOptionType
-     * @var int|null
-     */
-    private $type;
+    use NameTrait, DescriptionTrait, NameDescriptionValueLengthTrait, ApplicationCommandOptionTypeTrait;
 
     /**
      * 1-32 character name matching ^[\w-]{1,32}$
@@ -134,27 +129,6 @@ class ApplicationCommandOption implements NameInterface
         $option->setOptions($options);
 
         return $option;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getType(): ?int
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param ApplicationCommandOptionType|int|null $type
-     * @return $this
-     */
-    public function setType($type): self
-    {
-        if ($type instanceof ApplicationCommandOptionType) {
-            $type = $type->value;
-        }
-        $this->type = $type;
-        return $this;
     }
 
     /**
