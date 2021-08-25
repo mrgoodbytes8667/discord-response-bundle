@@ -27,7 +27,7 @@ trait ApplicationCommandOptionTypeTrait
      * @param ApplicationCommandOptionType|int|null $type
      * @return $this
      */
-    public function setType(ApplicationCommandOptionType|int|null $type): self
+    public function setType($type): self
     {
         if ($type instanceof ApplicationCommandOptionType) {
             $type = $type->value;
