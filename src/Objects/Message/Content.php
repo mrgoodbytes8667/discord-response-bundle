@@ -9,7 +9,6 @@ use Bytes\DiscordResponseBundle\Objects\MessageReference;
 use Doctrine\Common\Collections\ArrayCollection;
 use Illuminate\Support\Arr;
 use JetBrains\PhpStorm\Deprecated;
-use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -155,28 +154,6 @@ class Content
     }
 
     /**
-     * @return Embed|null
-     * @Ignore
-     */
-    #[Deprecated(reason: 'since 0.10.0, use getEmbeds() instead (deprecated in Discord API v9)', replacement: '%class%->getEmbeds()')]
-    public function getEmbed(): ?Embed
-    {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.0', 'Use getEmbeds() instead.');
-        return $this->embeds->first() ?: null;
-    }
-
-    /**
-     * @param Embed|null $embed
-     * @return $this
-     */
-    #[Deprecated(reason: 'since 0.10.0, use setEmbeds() instead (deprecated in Discord API v9)', replacement: '%class%->setEmbeds(%parametersList%)')]
-    public function setEmbed(?Embed $embed): self
-    {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.0', 'Use setEmbeds() instead.');
-        return $this->setEmbeds([$embed]);
-    }
-
-    /**
      * @return Embed[]|null
      */
     public function getEmbeds(): ?array
@@ -312,32 +289,6 @@ class Content
     }
 
     /**
-     * @param Embed $embed
-     * @param string|null $content
-     * @param AllowedMentions|null $allowedMentions
-     * @param bool|null $tts
-     * @return static
-     */
-    #[Deprecated(reason: 'since 0.10.0, use "new()" instead ("create()" will change to use the same arguments as "new()" in v0.10).', replacement: '%class%::new([%parameter0%], %parameter1%, %parameter2%, tts: %parameter3%)')]
-    public static function create(Embed $embed, ?string $content = null, ?AllowedMentions $allowedMentions = null, ?bool $tts = null)
-    {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.0', 'Use "new()" instead ("create()" will change to use the same arguments as "new()" in v0.10).');
-        if (empty($allowedMentions)) {
-            $allowedMentions = AllowedMentions::create();
-        }
-        $static = new static();
-        $static->addEmbed($embed);
-        $static->setAllowedMentions($allowedMentions);
-        if (!empty($content)) {
-            $static->setContent($content);
-        }
-        if (!is_null($tts)) {
-            $static->setTts($tts);
-        }
-        return $static;
-    }
-
-    /**
      * @param Embed|array|null $embeds
      * @param string|null $content
      * @param AllowedMentions|null $allowedMentions
@@ -346,7 +297,7 @@ class Content
      * @param bool|null $tts
      * @return static
      */
-    public static function new(Embed|array|null $embeds = null, ?string $content = null, ?AllowedMentions $allowedMentions = null, Component|array|null $components = null, ?array $stickers = null, ?bool $tts = null): static
+    public static function create(Embed|array|null $embeds = null, ?string $content = null, ?AllowedMentions $allowedMentions = null, Component|array|null $components = null, ?array $stickers = null, ?bool $tts = null): static
     {
         if (empty($allowedMentions)) {
             $allowedMentions = AllowedMentions::create();
@@ -369,6 +320,21 @@ class Content
             $static->setTts($tts);
         }
         return $static;
+    }
+
+    /**
+     * @param Embed|array|null $embeds
+     * @param string|null $content
+     * @param AllowedMentions|null $allowedMentions
+     * @param Component|array|null $components
+     * @param string[]|null $stickers
+     * @param bool|null $tts
+     * @return static
+     */
+    #[Deprecated(reason: 'since 0.11.0, use "create()" instead.', replacement: '%class%::create(%parametersList%)')]
+    public static function new(Embed|array|null $embeds = null, ?string $content = null, ?AllowedMentions $allowedMentions = null, Component|array|null $components = null, ?array $stickers = null, ?bool $tts = null): static
+    {
+        return static::create($embeds, $content, $allowedMentions, $components, $stickers, $tts);
     }
 
     /**
