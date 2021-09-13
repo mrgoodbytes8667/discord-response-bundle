@@ -2,6 +2,7 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
+use Bytes\DiscordResponseBundle\Enums\ApplicationCommandType;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ApplicationCommandInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\DescriptionTrait;
@@ -32,6 +33,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ApplicationCommand implements ApplicationCommandInterface, IdInterface
 {
     use IDTrait, ApplicationIdTrait, NameTrait, DescriptionTrait, NameDescriptionValueLengthTrait, GuildIDTrait;
+
+    /**
+     * @var ApplicationCommandType|null
+     */
+    private $type;
 
     /**
      * 1-32 character name matching ^[\w-]{1,32}$
@@ -97,6 +103,32 @@ class ApplicationCommand implements ApplicationCommandInterface, IdInterface
         $command->setDefaultPermission($defaultPermission);
 
         return $command;
+    }
+
+    /**
+     * @return ApplicationCommandType|null
+     */
+    public function getType(): ?ApplicationCommandType
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param ApplicationCommandType|int|null $type
+     * @return $this
+     */
+    public function setType(ApplicationCommandType|int|null $type): self
+    {
+        if (!is_null($type)) {
+            if (is_int($type)) {
+                if (!ApplicationCommandType::isValid($type)) {
+                    throw new \UnexpectedValueException(sprintf('The value "%d" is not a member of the "%s" class.', $type, ApplicationCommandType::class));
+                }
+                $type = ApplicationCommandType::tryFrom($type);
+            }
+        }
+        $this->type = $type;
+        return $this;
     }
 
     /**
