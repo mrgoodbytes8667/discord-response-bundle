@@ -2,17 +2,19 @@
 
 namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
+use Bytes\DiscordResponseBundle\Enums\ApplicationCommandType;
+use Bytes\DiscordResponseBundle\Objects\Application\Command\ChatInputCommand;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ApplicationCommandInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
-use Bytes\DiscordResponseBundle\Objects\Traits\DescriptionTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameDescriptionValueLengthTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Bytes\ResponseBundle\Interfaces\IdInterface;
-use Doctrine\Common\Collections\ArrayCollection;
+use JetBrains\PhpStorm\Deprecated;
 use Symfony\Component\Serializer\Annotation\Ignore;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\SerializedName;
+use UnexpectedValueException;
 
 /**
  * Class ApplicationCommand
@@ -31,49 +33,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ApplicationCommand implements ApplicationCommandInterface, IdInterface
 {
-    use IDTrait, ApplicationIdTrait, NameTrait, DescriptionTrait, NameDescriptionValueLengthTrait, GuildIDTrait;
+    use IDTrait, ApplicationIdTrait, NameTrait, NameDescriptionValueLengthTrait, GuildIDTrait;
 
     /**
-     * 1-32 character name matching ^[\w-]{1,32}$
-     * @var string|null
-     * @Assert\Length(
-     *      min = 1,
-     *      max = 32,
-     *      minMessage = "Your name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your name cannot be longer than {{ limit }} characters"
-     * )
-     * @Assert\Regex("/^[\w-]{1,32}$/")
+     * @var ApplicationCommandType|null
      */
-    private $name;
-
-    /**
-     * 1-100 character description
-     * @var string|null
-     * @Assert\Length(
-     *      min = 1,
-     *      max = 100,
-     *      minMessage = "Your description must be at least {{ limit }} characters long",
-     *      maxMessage = "Your description cannot be longer than {{ limit }} characters"
-     * )
-     */
-    private $description;
-
-    /**
-     * the parameters for the command
-     * @var ApplicationCommandOption[]|ArrayCollection|null
-     * @Assert\Count(
-     *      max = 25,
-     *      maxMessage = "You cannot specify more than {{ limit }} options per command"
-     * )
-     * @Assert\Valid()
-     */
-    private $options;
+    private $type;
 
     /**
      * whether the command is enabled by default when the app is added to a guild
      * @var bool|null Default true
+     * @SerializedName("default_permission")
      */
-    private $default_permission = true;
+    private $defaultPermission = true;
+
+    /**
+     * autoincrementing version identifier updated during substantial record changes
+     * @var string|null
+     */
+    private $version;
 
     /**
      * @var mixed
@@ -88,44 +66,39 @@ class ApplicationCommand implements ApplicationCommandInterface, IdInterface
      * @param bool $defaultPermission
      * @return static
      */
+    #[Deprecated(
+        reason: 'since 0.10.8, use createChatCommand instead',
+        replacement: '\Bytes\DiscordResponseBundle\Objects\Application\Command\ChatInputCommand::createChatCommand(%parametersList%)'
+    )]
     public static function create(string $name, string $description, ?array $options = null, bool $defaultPermission = true)
     {
-        $command = new static();
-        $command->setName($name);
-        $command->setDescription($description);
-        $command->setOptions($options);
-        $command->setDefaultPermission($defaultPermission);
-
-        return $command;
+        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.8', 'Using "%s" is deprecated, use "%s::%s()" instead.', __METHOD__, ChatInputCommand::class, 'createChatCommand');
+        return ChatInputCommand::createChatCommand($name, $description, $options, $defaultPermission);
     }
 
     /**
-     * @return ApplicationCommandOption[]|null
+     * @return ApplicationCommandType|null
      */
-    public function getOptions(): ?array
+    public function getType(): ?ApplicationCommandType
     {
-        return $this->options;
+        return $this->type;
     }
 
     /**
-     * @param ApplicationCommandOption[]|null $options
+     * @param ApplicationCommandType|int|null $type
      * @return $this
      */
-    public function setOptions(?array $options): self
+    public function setType(ApplicationCommandType|int|null $type): self
     {
-        $this->options = $options;
-        return $this;
-    }
-
-    /**
-     * @param ApplicationCommandOption $option
-     * @return $this
-     */
-    public function addOption(ApplicationCommandOption $option): self
-    {
-        if (!$this->options->contains($option)) {
-            $this->options[] = $option;
+        if (!is_null($type)) {
+            if (is_int($type)) {
+                if (!ApplicationCommandType::isValid($type)) {
+                    throw new UnexpectedValueException(sprintf('The value "%d" is not a member of the "%s" class.', $type, ApplicationCommandType::class));
+                }
+                $type = ApplicationCommandType::tryFrom($type);
+            }
         }
+        $this->type = $type;
         return $this;
     }
 
@@ -134,52 +107,35 @@ class ApplicationCommand implements ApplicationCommandInterface, IdInterface
      */
     public function getDefaultPermission(): ?bool
     {
-        return $this->default_permission;
+        return $this->defaultPermission;
     }
 
     /**
-     * @param bool|null $default_permission
+     * @param bool|null $defaultPermission
      * @return $this
      */
-    public function setDefaultPermission(?bool $default_permission): self
+    public function setDefaultPermission(?bool $defaultPermission): self
     {
-        $this->default_permission = $default_permission;
+        $this->defaultPermission = $defaultPermission;
         return $this;
     }
 
     /**
-     * @return int
-     * @Assert\LessThanOrEqual(4000,
-     *      message = "Your combined name, description, and value properties for each command and its subcommands and groups ({{ value }}) cannot be longer than {{ compared_value }} characters"
-     * )
-     * @Ignore()
+     * @return string|null
      */
-    public function getNameDescriptionValueCharacterLengthRecursively()
+    public function getVersion(): ?string
     {
-        $length = $this->getNameDescriptionValueCharacterLength();
-        foreach ($this->options ?? [] as $option) {
-            $length += $option->getNameDescriptionValueCharacterLength();
-            if (!empty($option->getOptions())) {
-                foreach ($option->getOptions() as $i) {
-                    $length += $i->getNameDescriptionValueCharacterLength();
-                    foreach ($i->getOptions() as $j) {
-                        $length += $j->getNameDescriptionValueCharacterLength();
-                        if (!empty($j->getChoices())) {
-                            foreach ($j->getChoices() as $k) {
-                                $length += $k->getNameDescriptionValueCharacterLength();
-                            }
-                        }
-                    }
-                }
-            }
-            if (!empty($option->getChoices())) {
-                foreach ($option->getChoices() as $i) {
-                    $length += $i->getNameDescriptionValueCharacterLength();
-                }
-            }
-        }
+        return $this->version;
+    }
 
-        return $length;
+    /**
+     * @param string|null $version
+     * @return $this
+     */
+    public function setVersion(?string $version): self
+    {
+        $this->version = $version;
+        return $this;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Bytes\DiscordResponseBundle\Tests\Services;
 
+use Bytes\DiscordResponseBundle\Objects\Application\Command\ChatInputCommand;
 use Bytes\DiscordResponseBundle\Objects\Channel;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ApplicationCommandInterface;
 use Bytes\DiscordResponseBundle\Objects\Message;
@@ -71,7 +72,7 @@ class CommandIdNormalizerTest extends IdNormalizerTestCase
     {
         $this->setupFaker();
 
-        $input = new ApplicationCommand();
+        $input = new ChatInputCommand();
         $input->setGuildId($this->faker->snowflake());
 
         yield [$input];
@@ -110,7 +111,7 @@ class CommandIdNormalizerTest extends IdNormalizerTestCase
 
         $commandId = $this->faker->snowflake();
 
-        $object = new ApplicationCommand();
+        $object = new ChatInputCommand();
         $object->setId($commandId);
 
         yield ['object' => $object, 'commandId' => $commandId];
@@ -131,7 +132,7 @@ class CommandIdNormalizerTest extends IdNormalizerTestCase
 
         yield ['object' => $object];
 
-        $object = new ApplicationCommand();
+        $object = new ChatInputCommand();
 
         yield ['object' => $object];
 

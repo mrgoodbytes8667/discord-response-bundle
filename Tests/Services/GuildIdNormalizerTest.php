@@ -2,6 +2,7 @@
 
 namespace Bytes\DiscordResponseBundle\Tests\Services;
 
+use Bytes\DiscordResponseBundle\Objects\Application\Command\ChatInputCommand;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\GuildIdInterface;
 use Bytes\DiscordResponseBundle\Objects\Message;
 use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommand;
@@ -90,7 +91,7 @@ class GuildIdNormalizerTest extends IdNormalizerTestCase
 
         yield ['object' => $object, 'id' => '230858112993375816'];
 
-        $object = new ApplicationCommand();
+        $object = new ChatInputCommand();
         $object->setGuildId('230858112993375816');
 
         yield ['object' => $object, 'id' => '230858112993375816'];
