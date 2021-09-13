@@ -4,6 +4,7 @@ namespace Bytes\DiscordResponseBundle\Tests\Objects\Slash;
 
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandPermissionType;
+use Bytes\DiscordResponseBundle\Objects\Application\Command\ChatInputCommand;
 use Bytes\DiscordResponseBundle\Objects\Channel;
 use Bytes\DiscordResponseBundle\Objects\Interfaces\ApplicationCommandInterface;
 use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommand;
@@ -109,7 +110,7 @@ class PartialGuildApplicationCommandPermissionTest extends TestCase
     {
         $this->setupFaker();
 
-        $command = new ApplicationCommand();
+        $command = new ChatInputCommand();
         $command->setId($this->faker->snowflake());
         yield [$command];
 
@@ -150,10 +151,10 @@ class PartialGuildApplicationCommandPermissionTest extends TestCase
     {
         $this->setupFaker();
 
-        yield [new ApplicationCommand()];
+        yield [new ChatInputCommand()];
         yield [new Channel()];
 
-        $command = new ApplicationCommand();
+        $command = new ChatInputCommand();
         $command->setGuildId($this->faker->snowflake());
         yield [$command];
 

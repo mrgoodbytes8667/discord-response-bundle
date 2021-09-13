@@ -1,25 +1,23 @@
 <?php
 
-namespace Bytes\DiscordResponseBundle\Tests;
+namespace Bytes\DiscordResponseBundle\Tests\Objects\Application\Command;
 
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType as ACOT;
-use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommand;
+use Bytes\DiscordResponseBundle\Objects\Application\Command\ChatInputCommand;
 use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommandOption as Option;
 use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommandOptionChoice;
-use Bytes\EnumSerializerBundle\Enums\Enum;
 use Bytes\Tests\Common\TestEnumTrait;
 use Bytes\Tests\Common\TestSerializerTrait;
 use Bytes\Tests\Common\TestValidatorTrait;
 use Generator;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\String\ByteString;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 
-class ApplicationCommandTest extends TestCase
+class ChatInputCommandTest extends TestCase
 {
     use TestSerializerTrait, TestValidatorTrait, TestEnumTrait;
 
@@ -30,9 +28,9 @@ class ApplicationCommandTest extends TestCase
 
     /**
      * @param $command
-     * @dataProvider provideValidApplicationCommands
+     * @dataProvider provideValidChatInputCommands
      */
-    public function testCreate(ApplicationCommand $command)
+    public function testCreate(ChatInputCommand $command)
     {
         $this->assertEquals(1, $this->validate($command));
     }
@@ -41,9 +39,9 @@ class ApplicationCommandTest extends TestCase
      * @return Generator
      * @throws ReflectionException
      */
-    public function provideValidApplicationCommands()
+    public function provideValidChatInputCommands()
     {
-        yield ['command' => ApplicationCommand::create('sample', ByteString::fromRandom(), [
+        yield ['command' => ChatInputCommand::createChatCommand('sample', ByteString::fromRandom(), [
             Option::create(ACOT::string(), 'Pick', 'Which is the word sample?', false, [
                 ApplicationCommandOptionChoice::create('Foo'),
                 ApplicationCommandOptionChoice::create('Bar'),
@@ -77,21 +75,21 @@ class ApplicationCommandTest extends TestCase
             ])
         ]);
 
-        yield ['command' => ApplicationCommand::create(ByteString::fromRandom(), ByteString::fromRandom(), $subcommands)];
+        yield ['command' => ChatInputCommand::createChatCommand(ByteString::fromRandom(), ByteString::fromRandom(), $subcommands)];
 
         $groups = [];
         foreach (range(1, 3) as $index) {
             $groups[] = Option::createSubcommandGroup(ByteString::fromRandom(), ByteString::fromRandom(), $subcommands);
         }
 
-        yield ['command' => ApplicationCommand::create(ByteString::fromRandom(), ByteString::fromRandom(), $groups)];
+        yield ['command' => ChatInputCommand::createChatCommand(ByteString::fromRandom(), ByteString::fromRandom(), $groups)];
     }
 
     /**
      * @param $command
-     * @dataProvider provideValidApplicationCommands
+     * @dataProvider provideValidChatInputCommands
      */
-    public function testSerializerDoesNotReturnIgnoredAnnotation(ApplicationCommand $command)
+    public function testSerializerDoesNotReturnIgnoredAnnotation(ChatInputCommand $command)
     {
         $serializer = $this->createSerializer();
         $json = $serializer->serialize($command, 'json');
@@ -101,7 +99,7 @@ class ApplicationCommandTest extends TestCase
     public function testCreateNameTooLong()
     {
         // Name is too long
-        $command = ApplicationCommand::create(ByteString::fromRandom(33), ByteString::fromRandom());
+        $command = ChatInputCommand::createChatCommand(ByteString::fromRandom(33), ByteString::fromRandom());
 
         try {
             $this->validate($command);
@@ -123,7 +121,7 @@ class ApplicationCommandTest extends TestCase
     {
 
         // Name is right length but has an invalid character
-        $command = ApplicationCommand::create(ByteString::fromRandom(10) . ' a', ByteString::fromRandom());
+        $command = ChatInputCommand::createChatCommand(ByteString::fromRandom(10) . ' a', ByteString::fromRandom());
 
         try {
             $this->validate($command);
@@ -141,7 +139,7 @@ class ApplicationCommandTest extends TestCase
     {
 
         // Description is too long
-        $command = ApplicationCommand::create(ByteString::fromRandom(), ByteString::fromRandom(101));
+        $command = ChatInputCommand::createChatCommand(ByteString::fromRandom(), ByteString::fromRandom(101));
 
         try {
             $this->validate($command);
@@ -159,7 +157,7 @@ class ApplicationCommandTest extends TestCase
     {
 
         // Subcommand isn't valid - name too long
-        $command = ApplicationCommand::create('sample', ByteString::fromRandom(), [
+        $command = ChatInputCommand::createChatCommand('sample', ByteString::fromRandom(), [
             Option::create(ACOT::string(), ByteString::fromRandom(33), 'Which is the word sample?', false, [
                 ApplicationCommandOptionChoice::create('Foo'),
                 ApplicationCommandOptionChoice::create('Bar'),
@@ -187,7 +185,7 @@ class ApplicationCommandTest extends TestCase
     {
 
         // Subcommand isn't valid - name is right length but has an invalid character
-        $command = ApplicationCommand::create('sample', ByteString::fromRandom(), [
+        $command = ChatInputCommand::createChatCommand('sample', ByteString::fromRandom(), [
             Option::create(ACOT::string(), ByteString::fromRandom(10) . ' a', ByteString::fromRandom(), false, [
                 ApplicationCommandOptionChoice::create('Foo'),
                 ApplicationCommandOptionChoice::create('Bar'),
@@ -211,7 +209,7 @@ class ApplicationCommandTest extends TestCase
     {
 
         // Subcommand isn't valid - description is too long
-        $command = ApplicationCommand::create(ByteString::fromRandom(), ByteString::fromRandom(), [
+        $command = ChatInputCommand::createChatCommand(ByteString::fromRandom(), ByteString::fromRandom(), [
             Option::create(ACOT::string(), ByteString::fromRandom(), ByteString::fromRandom(101), false, [
                 ApplicationCommandOptionChoice::create('Foo'),
                 ApplicationCommandOptionChoice::create('Bar'),
@@ -242,7 +240,7 @@ class ApplicationCommandTest extends TestCase
         }
 
         try {
-            $this->validate(ApplicationCommand::create(ByteString::fromRandom(), ByteString::fromRandom(), $subcommands));
+            $this->validate(ChatInputCommand::createChatCommand(ByteString::fromRandom(), ByteString::fromRandom(), $subcommands));
         } catch (ValidationFailedException $exception) {
             $this->assertEquals(1, count($exception->getViolations()));
 
@@ -281,7 +279,7 @@ class ApplicationCommandTest extends TestCase
         }
 
         try {
-            $this->validate(ApplicationCommand::create(ByteString::fromRandom(), ByteString::fromRandom(), $groups));
+            $this->validate(ChatInputCommand::createChatCommand(ByteString::fromRandom(), ByteString::fromRandom(), $groups));
         } catch (ValidationFailedException $exception) {
             $this->assertEquals(1, count($exception->getViolations()));
 
@@ -301,7 +299,7 @@ class ApplicationCommandTest extends TestCase
         }
 
         try {
-            $this->validate(ApplicationCommand::create(ByteString::fromRandom(5), ByteString::fromRandom(5), [
+            $this->validate(ChatInputCommand::createChatCommand(ByteString::fromRandom(5), ByteString::fromRandom(5), [
                 Option::create(Arr::random($optionTypes), ByteString::fromRandom(5), ByteString::fromRandom(5), false, $groups)
             ]));
         } catch (ValidationFailedException $exception) {
@@ -323,7 +321,7 @@ class ApplicationCommandTest extends TestCase
         }
 
         try {
-            $this->validate(ApplicationCommand::create(ByteString::fromRandom(), ByteString::fromRandom(), [
+            $this->validate(ChatInputCommand::createChatCommand(ByteString::fromRandom(), ByteString::fromRandom(), [
                 Option::create(Arr::random($optionTypes), ByteString::fromRandom(), ByteString::fromRandom(), false, $groups),
                 Option::create(Arr::random($optionTypes), ByteString::fromRandom(), ByteString::fromRandom(), false, $groups),
                 Option::create(Arr::random($optionTypes), ByteString::fromRandom(), ByteString::fromRandom(), false, $groups),
