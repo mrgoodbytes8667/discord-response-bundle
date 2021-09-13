@@ -4,7 +4,7 @@
 namespace Bytes\DiscordResponseBundle\Objects\Embed;
 
 
-use Bytes\DiscordResponseBundle\Objects\Embed\Traits\NameTrait;
+use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 
 /**
  * Class Field
