@@ -2,13 +2,18 @@
 
 namespace Bytes\DiscordResponseBundle\Tests\Objects\Application\Command;
 
+use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
+use Bytes\Common\Faker\Providers\Discord;
+use Bytes\Common\Faker\Providers\MiscProvider;
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType as ACOT;
+use Bytes\DiscordResponseBundle\Enums\ApplicationCommandType;
 use Bytes\DiscordResponseBundle\Objects\Application\Command\ChatInputCommand;
 use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommandOption as Option;
 use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommandOptionChoice;
 use Bytes\Tests\Common\TestEnumTrait;
 use Bytes\Tests\Common\TestSerializerTrait;
 use Bytes\Tests\Common\TestValidatorTrait;
+use Faker\Factory;
 use Generator;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\TestCase;
@@ -347,4 +352,68 @@ class ChatInputCommandTest extends TestCase
         $this->commandOptionTypes = null;
     }
 
+    /**
+     * @dataProvider provideTypes
+     * @param ApplicationCommandType|int|null $type
+     */
+    public function testGetSetType($type)
+    {
+        $cmd = new ChatInputCommand();
+        $this->assertNull($cmd->getType());
+        $this->assertInstanceOf(ChatInputCommand::class, $cmd->setType(null));
+        $this->assertNull($cmd->getType());
+        $this->assertInstanceOf(ChatInputCommand::class, $cmd->setType($type));
+        $this->assertEquals($type instanceof ApplicationCommandType ? $type : ApplicationCommandType::from($type), $cmd->getType());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideTypes()
+    {
+        yield [ApplicationCommandType::chatInput()];
+        yield [ApplicationCommandType::message()];
+        yield [ApplicationCommandType::user()];
+        yield [ApplicationCommandType::chatInput()->value];
+        yield [ApplicationCommandType::message()->value];
+        yield [ApplicationCommandType::user()->value];
+    }
+
+    /**
+     * @dataProvider provideTypes
+     * @param ApplicationCommandType|int|null $type
+     */
+    public function testSetTypeInvalid()
+    {
+        $this->expectException(\UnexpectedValueException::class);
+        $cmd = new ChatInputCommand();
+        $cmd->setType(-5);
+    }
+
+    /**
+     * @dataProvider provideVersions
+     * @param string|null $version
+     */
+    public function testGetSetVersion($version)
+    {
+        $cmd = new ChatInputCommand();
+        $this->assertNull($cmd->getVersion());
+        $this->assertInstanceOf(ChatInputCommand::class, $cmd->setVersion(null));
+        $this->assertNull($cmd->getVersion());
+        $this->assertInstanceOf(ChatInputCommand::class, $cmd->setVersion($version));
+        $this->assertEquals($version, $cmd->getVersion());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideVersions()
+    {
+        $faker = Factory::create();
+        $faker->addProvider(new MiscProvider($faker));
+        $faker->addProvider(new Discord($faker));
+
+        yield ['45984847365'];
+        yield [$faker->snowflake()];
+    }
 }

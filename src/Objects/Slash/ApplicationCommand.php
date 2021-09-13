@@ -14,6 +14,7 @@ use Bytes\ResponseBundle\Interfaces\IdInterface;
 use JetBrains\PhpStorm\Deprecated;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Serializer\Annotation\SerializedName;
+use UnexpectedValueException;
 
 /**
  * Class ApplicationCommand
@@ -92,7 +93,7 @@ class ApplicationCommand implements ApplicationCommandInterface, IdInterface
         if (!is_null($type)) {
             if (is_int($type)) {
                 if (!ApplicationCommandType::isValid($type)) {
-                    throw new \UnexpectedValueException(sprintf('The value "%d" is not a member of the "%s" class.', $type, ApplicationCommandType::class));
+                    throw new UnexpectedValueException(sprintf('The value "%d" is not a member of the "%s" class.', $type, ApplicationCommandType::class));
                 }
                 $type = ApplicationCommandType::tryFrom($type);
             }
