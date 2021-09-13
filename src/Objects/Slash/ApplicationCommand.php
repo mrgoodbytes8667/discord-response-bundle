@@ -29,7 +29,7 @@ use UnexpectedValueException;
  * @property string|null $applicationId unique id of the parent application (snowflake)
  * @property string|null $guildId guild id of the command, if not global (snowflake)
  *
- * @version v0.9.12 As of 2021-08-03 Discord Documentation
+ * @version v0.11.0 As of 2021-09-13 Discord Documentation
  */
 class ApplicationCommand implements ApplicationCommandInterface, IdInterface
 {

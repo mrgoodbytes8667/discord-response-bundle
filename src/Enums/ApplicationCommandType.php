@@ -13,7 +13,7 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  *
  * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types
  *
- * @version v0.10.8 As of 2021-09-13 Discord Documentation
+ * @version v0.11.0 As of 2021-09-13 Discord Documentation
  */
 class ApplicationCommandType extends Enum
 {

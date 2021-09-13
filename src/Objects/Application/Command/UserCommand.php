@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @link https://discord.com/developers/docs/interactions/application-commands#user-commands
+ *
+ * @version v0.11.0 As of 2021-09-13 Discord Documentation
  */
 class UserCommand extends ApplicationCommand
 {

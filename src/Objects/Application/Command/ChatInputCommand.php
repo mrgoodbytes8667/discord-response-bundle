@@ -11,6 +11,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Slash Commands
+ * Slash commands (the CHAT_INPUT type) are a type of application command. They're made up of a name, description, and a
+ * block of options, which you can think of like arguments to a function. The name and description help users find your
+ * command among many others, and the options validate user input as they fill out your command.
+ *
+ * Slash commands can also have groups and subcommands to further organize commands.
+ *
+ * @link https://discord.com/developers/docs/interactions/application-commands#slash-commands
+ *
+ * @version v0.11.0 As of 2021-09-13 Discord Documentation
+ */
 class ChatInputCommand extends ApplicationCommand
 {
     use DescriptionTrait, NameTrait;
