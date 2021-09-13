@@ -8,9 +8,9 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @link https://discord.com/developers/docs/interactions/application-commands#message-commands
+ * @link https://discord.com/developers/docs/interactions/application-commands#user-commands
  */
-class MessageCommand extends ApplicationCommand
+class UserCommand extends ApplicationCommand
 {
     use NameTrait;
 
@@ -31,12 +31,12 @@ class MessageCommand extends ApplicationCommand
      * @param bool $defaultPermission
      * @return static
      */
-    public static function createMessageCommand(string $name, bool $defaultPermission = true)
+    public static function createUserCommand(string $name, bool $defaultPermission = true)
     {
         $command = new static();
         $command->setName($name)
             ->setDefaultPermission($defaultPermission)
-            ->setType(ApplicationCommandType::message());
+            ->setType(ApplicationCommandType::user());
 
         return $command;
     }
