@@ -7,6 +7,7 @@ use Bytes\DiscordResponseBundle\Objects\Member;
 use Bytes\DiscordResponseBundle\Objects\Message;
 use Bytes\DiscordResponseBundle\Objects\Role;
 use Bytes\DiscordResponseBundle\Objects\User;
+use Illuminate\Support\Arr;
 
 /**
  * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure
@@ -118,6 +119,14 @@ class ApplicationCommandInteractionDataResolved
     public function getMessages(): ?array
     {
         return $this->messages;
+    }
+
+    /**
+     * @return Message|null
+     */
+    public function getMessage(): ?Message
+    {
+        return Arr::first($this->getMessages());
     }
 
     /**
