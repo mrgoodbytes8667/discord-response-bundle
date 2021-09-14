@@ -133,4 +133,24 @@ class ApplicationCommandInteractionDataResolvedTest extends TestCase
         $this->setupFaker();
         yield [[new Message()]];
     }
+
+    /**
+     * @dataProvider provideMessage
+     * @param mixed $messages
+     */
+    public function testGetMessage($messages)
+    {
+        $applicationCommandInteractionDataResolved = new ApplicationCommandInteractionDataResolved();
+        $this->assertInstanceOf(ApplicationCommandInteractionDataResolved::class, $applicationCommandInteractionDataResolved->setMessages([$messages]));
+        $this->assertEquals($messages, $applicationCommandInteractionDataResolved->getMessage());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideMessage()
+    {
+        $this->setupFaker();
+        yield [new Message()];
+    }
 }
