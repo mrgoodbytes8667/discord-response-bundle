@@ -107,6 +107,13 @@ class DiscordImageUrlBuilder
     }
 
     /**
+     * Returns the default discord logo on a color determined by the discriminator
+     * Samples as of 9/2/2021:
+     * 0 -> #5865F2 (blurple)
+     * 1 -> #757E8A (grey)
+     * 2 -> #3BA55C (green)
+     * 3 -> #FAA61A (yellow)
+     * 4 -> #ED4245 (red)
      * @param ImageBuilderInterface|string $user
      * @return string|null
      * @throws Exception
