@@ -5,6 +5,7 @@ namespace Bytes\DiscordResponseBundle\Enums;
 
 
 use Bytes\EnumSerializerBundle\Enums\Enum;
+use function Symfony\Component\String\u;
 
 /**
  * @method static self chatInput() Slash commands; a text-based command that shows up when a user types /
@@ -28,6 +29,21 @@ class ApplicationCommandType extends Enum
             "user" => 2,
             "message" => 3,
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function formChoices(): array
+    {
+        $return = [];
+        foreach (static::values() as $r)
+        {
+            $choice = static::from($r);
+            $return[u($choice->label)->snake()->replace('_', ' ')->title(true)->toString()] = $choice->value;
+        }
+
+        return $return;
     }
 
     /**
