@@ -5,6 +5,7 @@ namespace Bytes\DiscordResponseBundle\Tests\Objects\Slash;
 use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Objects\Channel;
 use Bytes\DiscordResponseBundle\Objects\Member;
+use Bytes\DiscordResponseBundle\Objects\Message;
 use Bytes\DiscordResponseBundle\Objects\Role;
 use Bytes\DiscordResponseBundle\Objects\Slash\ApplicationCommandInteractionDataResolved;
 use Bytes\DiscordResponseBundle\Objects\User;
@@ -108,5 +109,48 @@ class ApplicationCommandInteractionDataResolvedTest extends TestCase
     {
         $this->setupFaker();
         yield [[new Channel()]];
+    }
+
+    /**
+     * @dataProvider provideMessages
+     * @param mixed $messages
+     */
+    public function testGetSetMessages($messages)
+    {
+        $applicationCommandInteractionDataResolved = new ApplicationCommandInteractionDataResolved();
+        $this->assertNull($applicationCommandInteractionDataResolved->getMessages());
+        $this->assertInstanceOf(ApplicationCommandInteractionDataResolved::class, $applicationCommandInteractionDataResolved->setMessages(null));
+        $this->assertNull($applicationCommandInteractionDataResolved->getMessages());
+        $this->assertInstanceOf(ApplicationCommandInteractionDataResolved::class, $applicationCommandInteractionDataResolved->setMessages($messages));
+        $this->assertEquals($messages, $applicationCommandInteractionDataResolved->getMessages());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideMessages()
+    {
+        $this->setupFaker();
+        yield [[new Message()]];
+    }
+
+    /**
+     * @dataProvider provideMessage
+     * @param mixed $messages
+     */
+    public function testGetMessage($messages)
+    {
+        $applicationCommandInteractionDataResolved = new ApplicationCommandInteractionDataResolved();
+        $this->assertInstanceOf(ApplicationCommandInteractionDataResolved::class, $applicationCommandInteractionDataResolved->setMessages([$messages]));
+        $this->assertEquals($messages, $applicationCommandInteractionDataResolved->getMessage());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideMessage()
+    {
+        $this->setupFaker();
+        yield [new Message()];
     }
 }
