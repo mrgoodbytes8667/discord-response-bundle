@@ -4,13 +4,14 @@ namespace Bytes\DiscordResponseBundle\Objects\Slash;
 
 use Bytes\DiscordResponseBundle\Objects\Channel;
 use Bytes\DiscordResponseBundle\Objects\Member;
+use Bytes\DiscordResponseBundle\Objects\Message;
 use Bytes\DiscordResponseBundle\Objects\Role;
 use Bytes\DiscordResponseBundle\Objects\User;
 
 /**
- * @link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-application-command-interaction-data-resolved-structure
+ * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure
  *
- * @version v0.9.12 As of 2021-08-03 Discord Documentation
+ * @version v0.11.1 As of 2021-09-14 Discord Documentation
  */
 class ApplicationCommandInteractionDataResolved
 {
@@ -33,6 +34,11 @@ class ApplicationCommandInteractionDataResolved
      * @var Channel[]|null
      */
     private $channels;
+
+    /**
+     * @var Message[]|null
+     */
+    private $messages;
 
     /**
      * @return User[]|null
@@ -103,6 +109,24 @@ class ApplicationCommandInteractionDataResolved
     public function setChannels(?array $channels): self
     {
         $this->channels = $channels;
+        return $this;
+    }
+
+    /**
+     * @return Message[]|null
+     */
+    public function getMessages(): ?array
+    {
+        return $this->messages;
+    }
+
+    /**
+     * @param Message[]|null $messages
+     * @return $this
+     */
+    public function setMessages(?array $messages): self
+    {
+        $this->messages = $messages;
         return $this;
     }
 }
