@@ -54,4 +54,20 @@ class ApplicationCommandTypeTest extends TestCase
         yield ['value' => 2, 'enum' => ApplicationCommandType::user()];
         yield ['value' => 3, 'enum' => ApplicationCommandType::message()];
     }
+
+    /**
+     *
+     */
+    public function testFormChoices()
+    {
+        $choices = ApplicationCommandType::formChoices();
+        $this->assertCount(3, $choices);
+
+        $this->assertArrayHasKey('Chat Input', $choices);
+        $this->assertArrayHasKey('User', $choices);
+        $this->assertArrayHasKey('Message', $choices);
+        $this->assertEquals(1, $choices['Chat Input']);
+        $this->assertEquals(2, $choices['User']);
+        $this->assertEquals(3, $choices['Message']);
+    }
 }
