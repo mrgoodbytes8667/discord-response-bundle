@@ -36,6 +36,11 @@ class ApplicationCommandOption implements NameInterface
      *      maxMessage = "Your name cannot be longer than {{ limit }} characters"
      * )
      * @Assert\Regex("/^[\w-]{1,32}$/")
+     * @Assert\Regex(
+     *     pattern="/([A-Z].*)/",
+     *     match=false,
+     *     message="Your option name may not contain uppercase characters."
+     * )
      */
     private $name;
 
