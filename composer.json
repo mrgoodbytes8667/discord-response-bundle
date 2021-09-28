@@ -8,15 +8,9 @@
         "ext-json": "*",
         "illuminate/support": "^8.0",
         "mrgoodbytes8667/response-bundle": "^2.0.12",
-        "symfony/config": "^5.3",
-        "symfony/console": "^5.3",
-        "symfony/dependency-injection": "^5.3",
-        "symfony/expression-language": "^5.3",
-        "symfony/framework-bundle": "^5.3",
+        "symfony/expression-language": "^5.3 | ^6.0",
         "symfony/polyfill-uuid": "^1.20",
-        "symfony/serializer": "^5.3",
-        "symfony/string": "^5.3",
-        "symfony/validator": "^5.3"
+        "symfony/validator": "^5.3 | ^6.0"
     },
     "require-dev": {
         "doctrine/common": "^3.0",
@@ -25,7 +19,7 @@
         "mrgoodbytes8667/test-common-faker": "^0.3.3",
         "mrgoodbytes8667/test-discord-faker": ">=0.0.7",
         "symfony/test-pack": "^1.0.8",
-        "symfony/var-dumper": "^5.3"
+        "symfony/var-dumper": "^5.3 | ^6.0"
     },
     "authors": [
         {
@@ -54,6 +48,11 @@
         "psr-4": {
             "Bytes\\DiscordResponseBundle\\": "src/",
             "Bytes\\DiscordResponseBundle\\Tests\\": "Tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.12.x-dev"
         }
     }
 }
