@@ -55,5 +55,6 @@
             "Bytes\\DiscordResponseBundle\\": "src/",
             "Bytes\\DiscordResponseBundle\\Tests\\": "Tests/"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
