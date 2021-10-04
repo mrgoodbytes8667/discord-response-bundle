@@ -7,7 +7,7 @@
         "php": "^8.0",
         "ext-json": "*",
         "illuminate/support": "^8.0",
-        "mrgoodbytes8667/response-bundle": "^2.0.12",
+        "mrgoodbytes8667/response-bundle": "^2.1",
         "symfony/expression-language": "^5.3 | ^6.0",
         "symfony/polyfill-uuid": "^1.20",
         "symfony/validator": "^5.3 | ^6.0"
