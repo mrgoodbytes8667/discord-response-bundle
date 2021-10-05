@@ -22,17 +22,17 @@ class AllowedMentions
      * @var string[]|null
      * @Assert\Unique()
      */
-    private ?array $parse = null;
+    private ?array $parse = [];
 
     /**
      * @var string[]|null
      */
-    private ?array $roles = null;
+    private ?array $roles = [];
 
     /**
      * @var array|null
      */
-    private ?array $users = null;
+    private ?array $users = [];
 
     /**
      * @return string[]|null

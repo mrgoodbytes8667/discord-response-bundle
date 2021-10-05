@@ -1,14 +1,15 @@
 <?php
 
-namespace Bytes\DiscordResponseBundle\Tests;
+namespace Bytes\DiscordResponseBundle\Tests\Objects\Message;
 
+use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Objects\Message\AllowedMentions;
 use Bytes\DiscordResponseBundle\Tests\TestRolesSerializationCase;
 use Faker\Factory;
-use Symfony\Component\Validator\Validation;
 
 class AllowedMentionsTest extends TestRolesSerializationCase
 {
+    use TestDiscordFakerTrait;
 
     public function testCreateForEveryone()
     {
@@ -106,8 +107,7 @@ class AllowedMentionsTest extends TestRolesSerializationCase
         $this->assertCount(0, $manual->getUsers() ?? []);
         $manual->setUsers($users);
         $this->assertCount(3, $manual->getUsers());
-        foreach($users as $index => $user)
-        {
+        foreach ($users as $index => $user) {
             $this->assertEquals($user, $manual->getUsers()[$index]);
         }
 
@@ -116,11 +116,15 @@ class AllowedMentionsTest extends TestRolesSerializationCase
 
     public function testValidationPass()
     {
+        $allowedMention = AllowedMentions::createForRoles($this->faker->roleId());
+        $errors = $this->validate($allowedMention);
+        $this->assertEquals(1, $errors);
+
         $this->validationPass([
-                     AllowedMentions::create(null, ['everyone', 'users']),
-                     AllowedMentions::create($this->generateFakeRoles(1), ['everyone']),
-                     AllowedMentions::create(null, []),
-                 ]);
+            AllowedMentions::create(null, ['everyone', 'users']),
+            AllowedMentions::create($this->generateFakeRoles(1), ['everyone']),
+            AllowedMentions::create(null, []),
+        ]);
     }
 
     /**
@@ -130,9 +134,9 @@ class AllowedMentionsTest extends TestRolesSerializationCase
     public function testValidationFail(AllowedMentions $manual)
     {
         $this->validationFail([
-                     AllowedMentions::create(['a'], ['roles']),
-                     AllowedMentions::create(null, ['fake'])
-                 ]);
+            AllowedMentions::create(['a'], ['roles']),
+            AllowedMentions::create(null, ['fake'])
+        ]);
 
         $manual->setParse(['users']);
         $this->validationFail([$manual]);

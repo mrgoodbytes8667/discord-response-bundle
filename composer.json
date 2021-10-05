@@ -46,7 +46,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Bytes\\DiscordResponseBundle\\": "src/",
+            "Bytes\\DiscordResponseBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Bytes\\DiscordResponseBundle\\Tests\\": "Tests/"
         }
     },
