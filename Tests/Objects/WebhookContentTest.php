@@ -79,7 +79,11 @@ class WebhookContentTest extends TestRolesSerializationCase
         $c['username'] = $webhookContent->getUsername();
         $c['avatarUrl'] = $webhookContent->getAvatarUrl();
         $c['embeds'] = $webhookContent->getEmbeds();
-        $c['allowed_mentions'] = [];
+        $c['allowed_mentions'] = [
+            'parse' => [],
+            'roles' => [],
+            'users' => [],
+        ];
 
         if (!is_null($webhookContent->getAllowedMentions()->getParse())) {
             $c['allowed_mentions']['parse'] = $webhookContent->getAllowedMentions()->getParse();
