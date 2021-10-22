@@ -22,6 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package Bytes\DiscordResponseBundle\Objects
  *
  * @link https://discord.com/developers/docs/topics/permissions#role-object
+ *
+ * @version v0.12.2 As of 2021-10-22 Discord Documentation
  */
 class Role implements ErrorInterface, IdInterface, NameInterface
 {
@@ -56,6 +58,18 @@ class Role implements ErrorInterface, IdInterface, NameInterface
     private $hoist;
 
     /**
+     * role icon hash
+     * @var string|null
+     */
+    private $icon;
+
+    /**
+     * role unicode emoji
+     * @var string|null
+     */
+    private $unicode_emoji;
+
+    /**
      * position of this role
      * @var int|null
      */
@@ -82,6 +96,12 @@ class Role implements ErrorInterface, IdInterface, NameInterface
      * @var bool|null
      */
     private $mentionable;
+
+    /**
+     * the tags this role has
+     * @var RoleTag|null
+     */
+    private $tags;
 
     /**
      * Provided by DiscordJS only
@@ -123,6 +143,42 @@ class Role implements ErrorInterface, IdInterface, NameInterface
     public function setHoist(?bool $hoist): self
     {
         $this->hoist = $hoist;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param string|null $icon
+     * @return $this
+     */
+    public function setIcon(?string $icon): self
+    {
+        $this->icon = $icon;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUnicodeEmoji(): ?string
+    {
+        return $this->unicode_emoji;
+    }
+
+    /**
+     * @param string|null $unicode_emoji
+     * @return $this
+     */
+    public function setUnicodeEmoji(?string $unicode_emoji): self
+    {
+        $this->unicode_emoji = $unicode_emoji;
         return $this;
     }
 
@@ -195,6 +251,24 @@ class Role implements ErrorInterface, IdInterface, NameInterface
     public function setMentionable(?bool $mentionable): self
     {
         $this->mentionable = $mentionable;
+        return $this;
+    }
+
+    /**
+     * @return RoleTag|null
+     */
+    public function getTags(): ?RoleTag
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param RoleTag|null $tags
+     * @return $this
+     */
+    public function setTags(?RoleTag $tags): self
+    {
+        $this->tags = $tags;
         return $this;
     }
 

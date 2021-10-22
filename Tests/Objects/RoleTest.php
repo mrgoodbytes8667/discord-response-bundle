@@ -1,9 +1,11 @@
 <?php
 
-namespace Bytes\DiscordResponseBundle\Tests;
+namespace Bytes\DiscordResponseBundle\Tests\Objects;
 
+use Bytes\Common\Faker\Discord\TestDiscordFakerTrait;
 use Bytes\DiscordResponseBundle\Enums\Permissions;
 use Bytes\DiscordResponseBundle\Objects\Role;
+use Bytes\DiscordResponseBundle\Objects\RoleTag;
 use Bytes\Tests\Common\TestEnumTrait;
 use Generator;
 use Illuminate\Support\Arr;
@@ -12,12 +14,9 @@ use ReflectionException;
 use Symfony\Component\String\ByteString;
 use TypeError;
 
-/**
- * Class RoleTest
- * @package Bytes\DiscordResponseBundle\Tests
- */
 class RoleTest extends TestCase
 {
+    use TestDiscordFakerTrait;
     use TestEnumTrait;
 
     /**
@@ -192,5 +191,139 @@ class RoleTest extends TestCase
         foreach (range(0, 10) as $index) {
             yield ['int' => $index];
         }
+    }
+
+    /**
+     * @dataProvider provideIcon
+     * @param mixed $icon
+     */
+    public function testGetSetIcon($icon)
+    {
+        $role = new Role();
+        $this->assertNull($role->getIcon());
+        $this->assertInstanceOf(Role::class, $role->setIcon(null));
+        $this->assertNull($role->getIcon());
+        $this->assertInstanceOf(Role::class, $role->setIcon($icon));
+        $this->assertEquals($icon, $role->getIcon());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideIcon()
+    {
+        $this->setupFaker();
+        yield [$this->faker->word()];
+    }
+
+    /**
+     * @dataProvider provideUnicodeEmoji
+     * @param mixed $unicodeEmoji
+     */
+    public function testGetSetUnicodeEmoji($unicodeEmoji)
+    {
+        $role = new Role();
+        $this->assertNull($role->getUnicodeEmoji());
+        $this->assertInstanceOf(Role::class, $role->setUnicodeEmoji(null));
+        $this->assertNull($role->getUnicodeEmoji());
+        $this->assertInstanceOf(Role::class, $role->setUnicodeEmoji($unicodeEmoji));
+        $this->assertEquals($unicodeEmoji, $role->getUnicodeEmoji());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideUnicodeEmoji()
+    {
+        $this->setupFaker();
+        yield [$this->faker->word()];
+    }
+
+    /**
+     * @dataProvider provideTags
+     * @param mixed $tags
+     */
+    public function testGetSetTags($tags)
+    {
+        $role = new Role();
+        $this->assertNull($role->getTags());
+        $this->assertInstanceOf(Role::class, $role->setTags(null));
+        $this->assertNull($role->getTags());
+        $this->assertInstanceOf(Role::class, $role->setTags($tags));
+        $this->assertEquals($tags, $role->getTags());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideTags()
+    {
+        yield [new RoleTag()];
+    }
+
+    /**
+     * @dataProvider provideId
+     * @param mixed $id
+     */
+    public function testGetSetId($id)
+    {
+        $role = new Role();
+        $this->assertNull($role->getId());
+        $this->assertInstanceOf(Role::class, $role->setId(null));
+        $this->assertNull($role->getId());
+        $this->assertInstanceOf(Role::class, $role->setId($id));
+        $this->assertEquals($id, $role->getId());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideId()
+    {
+        $this->setupFaker();
+        yield [$this->faker->snowflake()];
+    }
+
+    /**
+     * @dataProvider provideName
+     * @param mixed $name
+     */
+    public function testGetSetName($name)
+    {
+        $role = new Role();
+        $this->assertInstanceOf(Role::class, $role->setName($name));
+        $this->assertEquals($name, $role->getName());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideName()
+    {
+        $this->setupFaker();
+        yield [$this->faker->word()];
+    }
+
+    /**
+     * @dataProvider provideDeleted
+     * @param mixed $deleted
+     */
+    public function testGetSetDeleted($deleted)
+    {
+        $role = new Role();
+        $this->assertNull($role->getDeleted());
+        $this->assertInstanceOf(Role::class, $role->setDeleted(null));
+        $this->assertNull($role->getDeleted());
+        $this->assertInstanceOf(Role::class, $role->setDeleted($deleted));
+        $this->assertEquals($deleted, $role->getDeleted());
+    }
+
+    /**
+     * @return Generator
+     */
+    public function provideDeleted()
+    {
+        $this->setupFaker();
+        yield [$this->faker->boolean()];
     }
 }
