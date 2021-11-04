@@ -63,34 +63,19 @@ class ChannelTypes extends Enum
      * @return ChannelTypes|null
      * @throws BadMethodCallException
      */
-    public static function getFromDiscordJS(string $value)
+    public static function getFromDiscordJS(string $value): ?static
     {
-        switch ($value) {
-            case 'dm':
-                return new self(static::DM);
-                break;
-            case 'text':
-                return new self(static::GUILD_TEXT);
-                break;
-            case 'voice':
-                return new self(static::GUILD_VOICE);
-                break;
-            case 'category':
-                return new self(static::GUILD_CATEGORY);
-                break;
-            case 'news':
-                return new self(static::GUILD_NEWS);
-                break;
-            case 'store':
-                return new self(static::GUILD_STORE);
-                break;
-            case 'unknown':
-                return new self(-1);
-                break;
-            default:
-                return null;
-                break;
-        }
+        return match (strtolower($value)) {
+            'dm' => static::from(static::DM),
+            'guild_text', 'text' => static::from(static::GUILD_TEXT),
+            'guild_voice', 'voice' => static::from(static::GUILD_VOICE),
+            'guild_category', 'category' => static::from(static::GUILD_CATEGORY),
+            'guild_news', 'news' => static::from(static::GUILD_NEWS),
+            'guild_store', 'store' => static::from(static::GUILD_STORE),
+            'unknown' => static::from(-1),
+            'group_dm' => static::from(static::GROUP_DM),
+            default => null,
+        };
     }
 
     /**
