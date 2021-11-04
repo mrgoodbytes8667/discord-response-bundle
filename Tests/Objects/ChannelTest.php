@@ -283,6 +283,17 @@ class ChannelTest extends TestCase
     /**
      *
      */
+    public function testGetSetTypeNull()
+    {
+        $channel = new Channel();
+        $this->assertNull($channel->getType());
+        $this->assertInstanceOf(Channel::class, $channel->setType(null));
+        $this->assertNull($channel->getType());
+    }
+
+    /**
+     *
+     */
     public function testGetSetOwnerId()
     {
         $ownerId = $this->faker->userId();
