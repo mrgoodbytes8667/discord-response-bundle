@@ -51,6 +51,7 @@ class ChannelTypesTest extends TestCase
     {
         yield ['discordjs' => 'dm', 'enum' => ChannelTypes::dm()];
         yield ['discordjs' => 'text', 'enum' => ChannelTypes::guildText()];
+        yield ['discordjs' => 'guild_text', 'enum' => ChannelTypes::guildText()];
         yield ['discordjs' => 'voice', 'enum' => ChannelTypes::guildVoice()];
         yield ['discordjs' => 'category', 'enum' => ChannelTypes::guildCategory()];
         yield ['discordjs' => 'news', 'enum' => ChannelTypes::guildNews()];

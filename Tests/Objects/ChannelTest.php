@@ -279,6 +279,7 @@ class ChannelTest extends TestCase
         yield ['type' => 'dm', 'expected' => ChannelTypes::from(ChannelTypes::DM)->value];
         yield ['type' => 'text', 'expected' => ChannelTypes::from(ChannelTypes::GUILD_TEXT)->value];
         yield ['type' => 'GUILD_TEXT', 'expected' => ChannelTypes::guildText()->value];
+        yield ['type' => 'GROUP_DM', 'expected' => ChannelTypes::groupDm()->value];
     }
 
     /**
