@@ -148,7 +148,11 @@ class Channel implements ErrorInterface, IdInterface, NameInterface
     public function setType($type): self
     {
         if (!is_null($type) && !is_numeric($type)) {
-            $type = ChannelTypes::getFromDiscordJS($type)->value;
+            $enum = ChannelTypes::getFromDiscordJS($type) ?? ChannelTypes::tryFrom($type);
+
+            if (!empty($enum)) {
+                $type = $enum->value;
+            }
         }
         $this->type = $type;
         return $this;
