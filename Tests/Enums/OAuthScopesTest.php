@@ -154,11 +154,11 @@ class OAuthScopesTest extends TestCase
      */
     public function testEnumLabelsValues()
     {
-        $values = OAuthScopes::getValues();
+        $values = OAuthScopes::toValues();
         $this->assertIsArray($values);
         $this->assertCount(21, $values);
 
-        $labels = OAuthScopes::getLabels();
+        $labels = OAuthScopes::toLabels();
 
         $this->assertIsArray($labels);
         $this->assertCount(21, $labels);
