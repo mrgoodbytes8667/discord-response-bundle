@@ -8,7 +8,6 @@ use Bytes\DiscordResponseBundle\Objects\Embed\Embed;
 use Bytes\DiscordResponseBundle\Objects\MessageReference;
 use Doctrine\Common\Collections\ArrayCollection;
 use Illuminate\Support\Arr;
-use JetBrains\PhpStorm\Deprecated;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -320,21 +319,6 @@ class Content
             $static->setTts($tts);
         }
         return $static;
-    }
-
-    /**
-     * @param Embed|array|null $embeds
-     * @param string|null $content
-     * @param AllowedMentions|null $allowedMentions
-     * @param Component|array|null $components
-     * @param string[]|null $stickers
-     * @param bool|null $tts
-     * @return static
-     */
-    #[Deprecated(reason: 'since 0.11.0, use "create()" instead.', replacement: '%class%::create(%parametersList%)')]
-    public static function new(Embed|array|null $embeds = null, ?string $content = null, ?AllowedMentions $allowedMentions = null, Component|array|null $components = null, ?array $stickers = null, ?bool $tts = null): static
-    {
-        return static::create($embeds, $content, $allowedMentions, $components, $stickers, $tts);
     }
 
     /**
