@@ -11,7 +11,6 @@ use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameDescriptionValueLengthTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Bytes\ResponseBundle\Interfaces\IdInterface;
-use JetBrains\PhpStorm\Deprecated;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use UnexpectedValueException;
@@ -58,23 +57,6 @@ class ApplicationCommand implements ApplicationCommandInterface, IdInterface
      * @Ignore()
      */
     private $entityId;
-
-    /**
-     * @param string $name
-     * @param string $description
-     * @param array|null $options
-     * @param bool $defaultPermission
-     * @return static
-     */
-    #[Deprecated(
-        reason: 'since 0.10.8, use createChatCommand instead',
-        replacement: '\Bytes\DiscordResponseBundle\Objects\Application\Command\ChatInputCommand::createChatCommand(%parametersList%)'
-    )]
-    public static function create(string $name, string $description, ?array $options = null, bool $defaultPermission = true)
-    {
-        trigger_deprecation('mrgoodbytes8667/discord-response-bundle', '0.10.8', 'Using "%s" is deprecated, use "%s::%s()" instead.', __METHOD__, ChatInputCommand::class, 'createChatCommand');
-        return ChatInputCommand::createChatCommand($name, $description, $options, $defaultPermission);
-    }
 
     /**
      * @return ApplicationCommandType|null
