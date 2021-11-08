@@ -6,7 +6,7 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
-        "illuminate/support": "^8.0",
+        "illuminate/collections": "^8.69",
         "mrgoodbytes8667/response-bundle": "^2.1",
         "symfony/expression-language": "^5.3 | ^6.0",
         "symfony/polyfill-uuid": "^1.20",
@@ -16,7 +16,7 @@
         "doctrine/common": "^3.0",
         "fakerphp/faker": "^1.13",
         "mrgoodbytes8667/test-common": ">=0.0.18",
-        "mrgoodbytes8667/test-common-faker": "^0.3.3",
+        "mrgoodbytes8667/test-common-faker": ">=0.3.6",
         "mrgoodbytes8667/test-discord-faker": ">=0.0.7",
         "symfony/test-pack": "^1.0.8",
         "symfony/var-dumper": "^5.3 | ^6.0"
