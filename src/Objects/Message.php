@@ -198,13 +198,6 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     private $stickerItems;
 
     /**
-     * the stickers sent with the message (bots currently can only receive messages with stickers, not send)
-     * @var mixed
-     * @deprecated Since 0.9.8, use sticker_items instead
-     */
-    private $stickers;
-
-    /**
      * @return string|null
      */
     public function getMessageId(): ?string
