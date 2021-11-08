@@ -120,35 +120,4 @@ class OAuthScopes extends Enum
             'APPLICATIONS_COMMANDS_UPDATE' => 'applications.commands.update',
         ];
     }
-
-    /**
-     * @return string[]
-     * @deprecated Only included for backwards compatibility
-     */
-    protected static function labels(): array
-    {
-        return [
-            'BOT' => 'BOT',
-            'CONNECTIONS' => 'CONNECTIONS',
-            'EMAIL' => 'EMAIL',
-            'IDENTIFY' => 'IDENTIFY',
-            'GUILDS' => 'GUILDS',
-            'GUILDS_JOIN' => 'GUILDS_JOIN',
-            'GDM_JOIN' => 'GDM_JOIN',
-            'MESSAGES_READ' => 'MESSAGES_READ',
-            'RPC' => 'RPC',
-            'RPC_API' => 'RPC_API',
-            'RPC_NOTIFICATIONS_READ' => 'RPC_NOTIFICATIONS_READ',
-            'WEBHOOK_INCOMING' => 'WEBHOOK_INCOMING',
-            'APPLICATIONS_BUILDS_UPLOAD' => 'APPLICATIONS_BUILDS_UPLOAD',
-            'APPLICATIONS_BUILDS_READ' => 'APPLICATIONS_BUILDS_READ',
-            'APPLICATIONS_STORE_UPDATE' => 'APPLICATIONS_STORE_UPDATE',
-            'APPLICATIONS_ENTITLEMENTS' => 'APPLICATIONS_ENTITLEMENTS',
-            'RELATIONSHIPS_READ' => 'RELATIONSHIPS_READ',
-            'ACTIVITIES_READ' => 'ACTIVITIES_READ',
-            'ACTIVITIES_WRITE' => 'ACTIVITIES_WRITE',
-            'APPLICATIONS_COMMANDS' => 'APPLICATIONS_COMMANDS',
-            'APPLICATIONS_COMMANDS_UPDATE' => 'APPLICATIONS_COMMANDS_UPDATE',
-        ];
-    }
 }
