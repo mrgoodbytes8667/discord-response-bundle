@@ -11,7 +11,6 @@ use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\ResponseBundle\Interfaces\IdInterface;
 use Bytes\ResponseBundle\Interfaces\UserIdInterface;
 use JetBrains\PhpStorm\ArrayShape;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class User
@@ -24,27 +23,23 @@ class User implements ErrorInterface, IdInterface, UserIdInterface, ImageBuilder
     /**
      * the user's username, not unique across the platform
      * @var string|null
-     * @Groups("discordjs")
      */
     private $username;
 
     /**
      * the user's 4-digit discord-tag
      * @var string|null
-     * @Groups("discordjs")
      */
     private $discriminator;
     
     /**
      * the user's avatar hash
      * @var string|null
-     * @Groups("discordjs")
      */
     private $avatar;
     
     /**
      * @var bool|null
-     * @Groups("discordjs")
      */
     private $bot;
     

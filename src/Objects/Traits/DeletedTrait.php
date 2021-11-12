@@ -4,7 +4,6 @@
 namespace Bytes\DiscordResponseBundle\Objects\Traits;
 
 
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Trait DeletedTrait
@@ -14,7 +13,6 @@ trait DeletedTrait
 {
     /**
      * @var bool|null
-     * @Groups("discordjs")
      */
     private $deleted;
 

@@ -15,7 +15,6 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Bytes\DiscordResponseBundle\Routing\DiscordImageUrlBuilder;
 use Bytes\ResponseBundle\Interfaces\IdInterface;
 use JetBrains\PhpStorm\ArrayShape;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class PartialGuild
@@ -29,7 +28,6 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
 
     /**
      * @var string|null
-     * @Groups({"discordapi", "discordjs"})
      */
     protected $icon;
 
