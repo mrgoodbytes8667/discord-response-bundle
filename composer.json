@@ -53,10 +53,5 @@
         "psr-4": {
             "Bytes\\DiscordResponseBundle\\Tests\\": "Tests/"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.12.x-dev"
-        }
     }
 }
