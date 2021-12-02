@@ -12,8 +12,6 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  */
 class ButtonStyleTest extends TestCase
 {
-    use EnumAssertions;
-
     /**
      * @dataProvider provideEnums
      * @param string $value
@@ -23,9 +21,9 @@ class ButtonStyleTest extends TestCase
     {
         $this->assertTrue(ButtonStyle::isValid($value));
         $type = ButtonStyle::from($value);
-        $this->assertSameEnum($enum, $type);
-        $this->assertSameEnumLabel($enum, $type->label);
-        $this->assertSameEnumValue($enum, $type->value);
+        EnumAssertions::assertSameEnum($enum, $type);
+        EnumAssertions::assertSameEnumLabel($enum, $type->label);
+        EnumAssertions::assertSameEnumValue($enum, $type->value);
     }
 
     /**

@@ -14,8 +14,6 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  */
 class MessageTypeTest extends TestCase
 {
-    use EnumAssertions;
-
     /**
      * @dataProvider provideEnums
      * @param string $value
@@ -26,9 +24,9 @@ class MessageTypeTest extends TestCase
     {
         $this->assertTrue(MessageType::isValid($value));
         $type = MessageType::from($value);
-        $this->assertSameEnum($enum, $type);
-        $this->assertSameEnumLabel($enum, $label);
-        $this->assertSameEnumValue($enum, $value);
+        EnumAssertions::assertSameEnum($enum, $type);
+        EnumAssertions::assertSameEnumLabel($enum, $label);
+        EnumAssertions::assertSameEnumValue($enum, $value);
 
         $this->assertEquals($label, $enum->label);
         $this->assertEquals($value, $enum->value);

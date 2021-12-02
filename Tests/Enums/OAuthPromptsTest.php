@@ -16,8 +16,6 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  */
 class OAuthPromptsTest extends TestCase
 {
-    use EnumAssertions;
-
     /**
      * @dataProvider provideEnums
      * @param string $value
@@ -27,9 +25,9 @@ class OAuthPromptsTest extends TestCase
     {
         $this->assertTrue(OAuthPrompts::isValid($value));
         $type = OAuthPrompts::from($value);
-        $this->assertSameEnum($enum, $type);
-        $this->assertSameEnumLabel($enum, $type->label);
-        $this->assertSameEnumValue($enum, $type->value);
+        EnumAssertions::assertSameEnum($enum, $type);
+        EnumAssertions::assertSameEnumLabel($enum, $type->label);
+        EnumAssertions::assertSameEnumValue($enum, $type->value);
     }
 
     /**

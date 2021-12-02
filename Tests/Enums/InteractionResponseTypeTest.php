@@ -15,8 +15,6 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  */
 class InteractionResponseTypeTest extends TestCase
 {
-    use EnumAssertions;
-
     /**
      * @dataProvider provideData
      *
@@ -33,9 +31,9 @@ class InteractionResponseTypeTest extends TestCase
 
         $this->assertTrue(InteractionResponseType::isValid($value));
         $type = InteractionResponseType::from($value);
-        $this->assertSameEnum($entry, $type);
-        $this->assertSameEnumLabel($entry, $type->label);
-        $this->assertSameEnumValue($entry, $type->value);
+        EnumAssertions::assertSameEnum($entry, $type);
+        EnumAssertions::assertSameEnumLabel($entry, $type->label);
+        EnumAssertions::assertSameEnumValue($entry, $type->value);
     }
 
     /**

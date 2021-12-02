@@ -17,7 +17,7 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  */
 class JsonErrorCodesTest extends TestCase
 {
-    use EnumAssertions, NullProviderTrait;
+    use NullProviderTrait;
 
     /**
      * @dataProvider provideEnums
@@ -28,9 +28,9 @@ class JsonErrorCodesTest extends TestCase
     {
         $this->assertTrue(JsonErrorCodes::isValid($value));
         $type = JsonErrorCodes::from($value);
-        $this->assertSameEnum($enum, $type);
-        $this->assertSameEnumLabel($enum, $type->label);
-        $this->assertSameEnumValue($enum, $type->value);
+        EnumAssertions::assertSameEnum($enum, $type);
+        EnumAssertions::assertSameEnumLabel($enum, $type->label);
+        EnumAssertions::assertSameEnumValue($enum, $type->value);
     }
 
     /**
