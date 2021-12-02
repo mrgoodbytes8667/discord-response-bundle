@@ -17,7 +17,7 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  */
 class OAuthScopesTest extends TestCase
 {
-    use EnumAssertions, TestEnumTrait;
+    use TestEnumTrait;
 
     /**
      *
@@ -107,9 +107,9 @@ class OAuthScopesTest extends TestCase
     {
         $this->assertTrue(OAuthScopes::isValid($value));
         $type = OAuthScopes::from($value);
-        $this->assertSameEnum($enum, $type);
-        $this->assertSameEnumLabel($enum, $type->label);
-        $this->assertSameEnumValue($enum, $type->value);
+        EnumAssertions::assertSameEnum($enum, $type);
+        EnumAssertions::assertSameEnumLabel($enum, $type->label);
+        EnumAssertions::assertSameEnumValue($enum, $type->value);
     }
 
     /**

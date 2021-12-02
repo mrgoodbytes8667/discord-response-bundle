@@ -12,8 +12,6 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  */
 class InteractionTypeTest extends TestCase
 {
-    use EnumAssertions;
-
     /**
      * @dataProvider provideEnums
      * @param string $value
@@ -23,9 +21,9 @@ class InteractionTypeTest extends TestCase
     {
         $this->assertTrue(InteractionType::isValid($value));
         $type = InteractionType::from($value);
-        $this->assertSameEnum($enum, $type);
-        $this->assertSameEnumLabel($enum, $type->label);
-        $this->assertSameEnumValue($enum, $type->value);
+        EnumAssertions::assertSameEnum($enum, $type);
+        EnumAssertions::assertSameEnumLabel($enum, $type->label);
+        EnumAssertions::assertSameEnumValue($enum, $type->value);
         $this->assertNotEmpty(json_encode($type));
     }
 

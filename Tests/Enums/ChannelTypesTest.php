@@ -13,7 +13,7 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  */
 class ChannelTypesTest extends TestCase
 {
-    use TestEnumTrait, EnumAssertions;
+    use TestEnumTrait;
 
     /**
      * @dataProvider provideDiscordJsValues
@@ -23,8 +23,8 @@ class ChannelTypesTest extends TestCase
     public function testGetFromDiscordJS(string $discordjs, ChannelTypes $enum)
     {
         $type = ChannelTypes::getFromDiscordJS($discordjs);
-        $this->assertIsEnum($type);
-        $this->assertSameEnum($enum, $type);
+        EnumAssertions::assertIsEnum($type);
+        EnumAssertions::assertSameEnum($enum, $type);
     }
 
     /**
