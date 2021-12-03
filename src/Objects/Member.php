@@ -8,7 +8,6 @@ use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Services\DiscordDatetimeInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -54,26 +53,22 @@ class Member implements ErrorInterface
 
     /**
      * @var string|null
-     * @Groups("discordjs")
      */
     private $guildId;
 
     /**
      * @var string|null
-     * @Groups("discordjs")
      */
     private $userID;
 
     /**
      * Virtual only, get via $nick
      * @var string|null
-     * @Groups("discordjs")
      */
     private $nickname;
 
     /**
      * @var string|null
-     * @Groups("discordjs")
      */
     private $displayName;
 

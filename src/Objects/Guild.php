@@ -6,7 +6,6 @@ namespace Bytes\DiscordResponseBundle\Objects;
 
 use Bytes\DiscordResponseBundle\Objects\Traits\ApplicationIdTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\DeletedTrait;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class Guild
@@ -30,7 +29,6 @@ class Guild extends PartialGuild
 
     /**
      * @var string|null
-     * @Groups({"discordapi", "discordjs"})
      */
     private $ownerId;
 

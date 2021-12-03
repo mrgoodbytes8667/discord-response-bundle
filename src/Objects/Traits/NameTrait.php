@@ -4,7 +4,6 @@
 namespace Bytes\DiscordResponseBundle\Objects\Traits;
 
 
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Trait NameTrait
@@ -14,7 +13,6 @@ trait NameTrait
 {
     /**
      * @var string
-     * @Groups({"discordapi", "discordjs"})
      */
     private $name;
 

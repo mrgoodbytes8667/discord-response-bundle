@@ -13,7 +13,6 @@ use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Bytes\ResponseBundle\Interfaces\IdInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -29,14 +28,12 @@ class Channel implements ErrorInterface, IdInterface, NameInterface
     /**
      * the name of the channel (2-100 characters)
      * @var string|null
-     * @Groups({"discordapi", "discordjs"})
      */
     private $name;
 
     /**
      * the type of channel
      * @var string|int|null = ChannelTypes::all()[$any]
-     * @Groups({"discordapi", "discordjs"})
      */
     private $type;
 
@@ -49,14 +46,12 @@ class Channel implements ErrorInterface, IdInterface, NameInterface
     /**
      * sorting position of the channel
      * @var int|null
-     * @Groups("discordapi")
      */
     private $position;
 
     /**
      * sorting position of the channel
      * @var int|null
-     * @Groups("discordjs")
      */
     private $rawPosition;
 
@@ -167,7 +162,6 @@ class Channel implements ErrorInterface, IdInterface, NameInterface
 
     /**
      * @return string|null
-     * @Groups({"discordapi"})
      */
     public function getGuildId(): ?string
     {
@@ -186,7 +180,6 @@ class Channel implements ErrorInterface, IdInterface, NameInterface
 
     /**
      * @return string|null
-     * @Groups({ "discordjs"})
      */
     public function getGuild(): ?string
     {

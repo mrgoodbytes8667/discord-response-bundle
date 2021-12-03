@@ -11,7 +11,6 @@ use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Bytes\ResponseBundle\Interfaces\IdInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -31,7 +30,6 @@ class Role implements ErrorInterface, IdInterface, NameInterface
 
     /**
      * @var string
-     * @Groups({"discordapi", "discordjs"})
      * @Assert\AtLeastOneOf({
      *     @Assert\Blank(),
      *     @Assert\Length(
@@ -81,7 +79,6 @@ class Role implements ErrorInterface, IdInterface, NameInterface
      * @var string|int|null
      *
      * @link https://discord.com/developers/docs/change-log#september-24-2020
-     * @Groups({"discordapi", "discordjs"})
      */
     private $permissions;
 
@@ -106,7 +103,6 @@ class Role implements ErrorInterface, IdInterface, NameInterface
     /**
      * Provided by DiscordJS only
      * @var string|null
-     * @Groups("discordjs")
      */
     private $guild;
 

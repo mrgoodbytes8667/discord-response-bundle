@@ -4,7 +4,6 @@
 namespace Bytes\DiscordResponseBundle\Objects\Traits;
 
 
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Trait ErrorTrait
@@ -14,25 +13,21 @@ trait ErrorTrait
 {
     /**
      * @var string|null
-     * @Groups({"discordapi", "discordjs"})
      */
     protected $message;
 
     /**
      * @var int|null
-     * @Groups({"discordapi", "discordjs"})
      */
     protected $code;
 
     /**
      * @var int|null
-     * @Groups({"discordapi", "discordjs"})
      */
     protected $retryAfter;
 
     /**
      * @var bool|null
-     * @Groups({"discordapi", "discordjs"})
      */
     protected $global;
 
