@@ -4,7 +4,8 @@
 namespace Bytes\DiscordResponseBundle\Enums;
 
 
-use Bytes\EnumSerializerBundle\Enums\Enum;
+use Bytes\EnumSerializerBundle\Enums\IntBackedEnumInterface;
+use Bytes\EnumSerializerBundle\Enums\IntBackedEnumTrait;
 
 /**
  * Class ApplicationCommandOptionType
@@ -25,32 +26,34 @@ use Bytes\EnumSerializerBundle\Enums\Enum;
  *
  * @version v0.9.12 As of 2021-08-03 Discord Documentation
  */
-class ApplicationCommandOptionType extends Enum
+enum ApplicationCommandOptionType: int implements IntBackedEnumInterface
 {
+    use IntBackedEnumTrait;
 
+    case subCommand = 1;
+    case subCommandGroup = 2;
+    case string = 3;
     /**
-     * @return int[]
+     * Any integer between -2^53 and 2^53
      */
-    protected static function values(): array
-    {
-        return [
-            "subCommand" => 1,
-            "subCommandGroup" => 2,
-            "string" => 3,
-            "integer" => 4,
-            "boolean" => 5,
-            "user" => 6,
-            "channel" => 7,
-            "role" => 8,
-            "mentionable" => 9,
-            'number' => 10,
-        ];
-    }
+    case integer = 4;
+    case boolean = 5;
+    case user = 6;
+    case channel = 7;
+    case role = 8;
+    /**
+     * Includes users and roles
+     */
+    case mentionable = 9;
+    /**
+     * Any double between -2^53 and 2^53
+     */
+    case number = 10;
 
     /**
      * @return int
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): int
     {
         return $this->value;
     }
