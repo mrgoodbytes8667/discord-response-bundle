@@ -6,21 +6,11 @@ namespace Bytes\DiscordResponseBundle\Enums;
 
 use Bytes\EnumSerializerBundle\Enums\IntBackedEnumInterface;
 use Bytes\EnumSerializerBundle\Enums\IntBackedEnumTrait;
+use JetBrains\PhpStorm\Deprecated;
 
 /**
  * Class ApplicationCommandOptionType
  * @package Bytes\DiscordResponseBundle\Enums
- *
- * @method static self subCommand()
- * @method static self subCommandGroup()
- * @method static self string()
- * @method static self integer() Any integer between -2^53 and 2^53
- * @method static self boolean()
- * @method static self user()
- * @method static self channel()
- * @method static self role()
- * @method static self mentionable() Includes users and roles
- * @method static self number() Any double between -2^53 and 2^53
  *
  * @link https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoptiontype
  *
@@ -30,25 +20,85 @@ enum ApplicationCommandOptionType: int implements IntBackedEnumInterface
 {
     use IntBackedEnumTrait;
 
-    case subCommand = 1;
-    case subCommandGroup = 2;
-    case string = 3;
+    case SUBCOMMAND = 1;
+    case SUB_COMMAND_GROUP = 2;
+    case STRING = 3;
     /**
      * Any integer between -2^53 and 2^53
      */
-    case integer = 4;
-    case boolean = 5;
-    case user = 6;
-    case channel = 7;
-    case role = 8;
+    case INTEGER = 4;
+    case BOOLEAN = 5;
+    case USER = 6;
+    case CHANNEL = 7;
+    case ROLE = 8;
     /**
      * Includes users and roles
      */
-    case mentionable = 9;
+    case MENTIONABLE = 9;
     /**
      * Any double between -2^53 and 2^53
      */
-    case number = 10;
+    case NUMBER = 10;
+
+    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::SUBCOMMAND')]
+    public static function subCommand(): ApplicationCommandOptionType
+    {
+        return ApplicationCommandOptionType::SUBCOMMAND;
+    }
+
+    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::SUB_COMMAND_GROUP')]
+    public static function subCommandGroup(): ApplicationCommandOptionType
+    {
+        return ApplicationCommandOptionType::SUB_COMMAND_GROUP;
+    }
+
+    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::STRING')]
+    public static function string(): ApplicationCommandOptionType
+    {
+        return ApplicationCommandOptionType::STRING;
+    }
+
+    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::INTEGER')]
+    public static function integer(): ApplicationCommandOptionType
+    {
+        return ApplicationCommandOptionType::INTEGER;
+    }
+
+    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::BOOLEAN')]
+    public static function boolean(): ApplicationCommandOptionType
+    {
+        return ApplicationCommandOptionType::BOOLEAN;
+    }
+
+    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::USER')]
+    public static function user(): ApplicationCommandOptionType
+    {
+        return ApplicationCommandOptionType::USER;
+    }
+
+    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::CHANNEL')]
+    public static function channel(): ApplicationCommandOptionType
+    {
+        return ApplicationCommandOptionType::CHANNEL;
+    }
+
+    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::ROLE')]
+    public static function role(): ApplicationCommandOptionType
+    {
+        return ApplicationCommandOptionType::ROLE;
+    }
+
+    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::MENTIONABLE')]
+    public static function mentionable(): ApplicationCommandOptionType
+    {
+        return ApplicationCommandOptionType::MENTIONABLE;
+    }
+
+    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::NUMBER')]
+    public static function number(): ApplicationCommandOptionType
+    {
+        return ApplicationCommandOptionType::NUMBER;
+    }
 
     /**
      * @return int
