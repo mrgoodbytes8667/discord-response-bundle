@@ -32,6 +32,7 @@ trait ApplicationCommandOptionTypeTrait
         if ($type instanceof ApplicationCommandOptionType) {
             $type = $type->value;
         }
+        
         $this->type = $type;
         return $this;
     }

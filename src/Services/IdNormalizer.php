@@ -44,11 +44,13 @@ class IdNormalizer extends BaseIdNormalizer
             } else {
                 $allowNull = false;
             }
+            
             if (count($arguments) >= 1) {
                 $recursivelyNormalize = array_shift($arguments);
             } else {
                 $recursivelyNormalize = true;
             }
+            
             $to = $name->afterLast('normalize')->beforeLast('Argument')->camel()->toString();
             switch ($to) {
                 case 'guildId':
@@ -69,12 +71,15 @@ class IdNormalizer extends BaseIdNormalizer
                 if ($allowNull) {
                     return null;
                 }
+                
                 throw new InvalidArgumentException($message);
             }
+            
             if (is_int($object))
             {
                 return (string)$object;
             }
+            
             if (is_string($object)) {
                 if (empty($object)) {
                     if ($allowNull) {
@@ -83,8 +88,10 @@ class IdNormalizer extends BaseIdNormalizer
                         throw new InvalidArgumentException($message);
                     }
                 }
+                
                 return $object;
             }
+            
             if (is_subclass_of($object, $class) || (is_object($object) && method_exists($object, $method))) {
                 $id = $object->$method();
                 if (empty($id)) {
@@ -94,11 +101,14 @@ class IdNormalizer extends BaseIdNormalizer
                         if ($allowNull) {
                             return null;
                         }
+                        
                         throw new InvalidArgumentException($message);
                     }
                 }
+                
                 return $id;
             }
+            
             if ($recursivelyNormalize) {
                 return self::normalizeIdArgument($object, $message, $allowNull);
             } else {
@@ -119,6 +129,7 @@ class IdNormalizer extends BaseIdNormalizer
         if (empty($channelId)) {
             throw new InvalidArgumentException($channelIdMessage);
         }
+        
         $messageId = $message->getMessageId();
         if (empty($messageId)) {
             throw new InvalidArgumentException($messageIdMessage);

@@ -37,6 +37,7 @@ class User implements TokenValidationResponseInterface, ErrorInterface
         if (empty($application)) {
             $this->application = new Application();
         }
+        
         if (empty($user)) {
             $this->user = new UserClass();
         }
@@ -167,6 +168,7 @@ class User implements TokenValidationResponseInterface, ErrorInterface
         if (empty($this->application?->getId()) || empty($clientId)) {
             return false;
         }
+        
         return $this->application?->getId() === $clientId;
     }
 
@@ -179,6 +181,7 @@ class User implements TokenValidationResponseInterface, ErrorInterface
         if (empty($this->user?->getUsername()) || empty($userName)) {
             return false;
         }
+        
         return $this->user?->getUsername() === $userName;
     }
 
@@ -191,6 +194,7 @@ class User implements TokenValidationResponseInterface, ErrorInterface
         if (empty($this->user?->getId()) || empty($id)) {
             return false;
         }
+        
         return $this->user?->getId() === $id;
     }
 

@@ -16,9 +16,9 @@ trait IconUrlTrait
 {
     /**
      * @var string|null
-     * @Assert\Url
-     * @SerializedName("icon_url")
      */
+    #[Assert\Url]
+    #[SerializedName('icon_url')]
     protected $iconUrl;
 
     /**

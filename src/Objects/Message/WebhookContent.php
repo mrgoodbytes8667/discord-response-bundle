@@ -28,14 +28,14 @@ class WebhookContent
      *         max = 2000
      *     )
      * })
-     * @SerializedName("content")
      */
+    #[SerializedName('content')]
     private $content = null;
 
     /**
      * @var string|null
-     * @SerializedName("username")
      */
+    #[SerializedName('username')]
     private $username;
 
     /**
@@ -44,42 +44,39 @@ class WebhookContent
      *     @Assert\Blank(),
      *     @Assert\Url()
      * })
-     * @SerializedName("avatar_url")
      */
+    #[SerializedName('avatar_url')]
     private $avatar_url;
 
     /**
      * @var boolean|null
-     * @SerializedName("tts")
      */
+    #[SerializedName('tts')]
     private $tts;
 
     /**
      * @var mixed|null
-     * @SerializedName("file")
      */
+    #[SerializedName('file')]
     private $file;
 
     /**
      * @var Embed[]|null
-     * @Assert\Count(
-     *      max = 10,
-     *      maxMessage = "You cannot specify more than {{ limit }} embeds"
-     * )
-     * @SerializedName("embeds")
      */
+    #[Assert\Count(max: 10, maxMessage: 'You cannot specify more than {{ limit }} embeds')]
+    #[SerializedName('embeds')]
     private $embeds;
 
     /**
      * @var string|null
-     * @SerializedName("payload_json")
      */
+    #[SerializedName('payload_json')]
     private $payload_json;
 
     /**
      * @var AllowedMentions|null
-     * @SerializedName("allowed_mentions")
      */
+    #[SerializedName('allowed_mentions')]
     private $allowedMentions;
 
     /**
@@ -104,26 +101,33 @@ class WebhookContent
         if (empty($allowedMentions)) {
             $allowedMentions = AllowedMentions::create();
         }
+        
         $static->setAllowedMentions($allowedMentions);
         if (!empty($embeds)) {
             $static->setEmbeds(Arr::wrap($embeds));
         }
+        
         if (!empty($content)) {
             $static->setContent($content);
         }
+        
         if (!is_null($tts)) {
             $static->setTts($tts);
         }
+        
         if (!is_null($username)) {
             $static->setUsername($username);
         }
+        
         if (!is_null($avatarUrl)) {
             $static->setAvatarUrl($avatarUrl);
         }
+        
         if(!is_null($components))
         {
             $static->setComponents(Arr::wrap($components));
         }
+        
         return $static;
     }
 
@@ -244,6 +248,7 @@ class WebhookContent
         if (!in_array($embed, $this->embeds ?? [])) {
             $this->embeds[] = $embed;
         }
+        
         return $this;
     }
 
@@ -304,8 +309,8 @@ class WebhookContent
     /**
      * @param ExecutionContextInterface $context
      * @param $payload
-     * @Assert\Callback
      */
+    #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload)
     {
         if (empty($this->content) && empty($this->embeds)) {

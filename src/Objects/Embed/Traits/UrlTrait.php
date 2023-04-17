@@ -15,8 +15,8 @@ trait UrlTrait
 {
     /**
      * @var string|null
-     * @Assert\Url
      */
+    #[Assert\Url]
     protected $url;
 
     /**

@@ -25,6 +25,7 @@ class Image
         if (!empty($url) && $uuid) {
             $this->url .= '?' . uuid_create(UUID_TYPE_RANDOM);
         }
+        
         return $this;
     }
 }

@@ -25,13 +25,8 @@ class ApplicationCommandOptionChoice implements NameInterface
     /**
      * 1-100 character choice name
      * @var string|null
-     * @Assert\Length(
-     *      min = 1,
-     *      max = 100,
-     *      minMessage = "Your name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your name cannot be longer than {{ limit }} characters"
-     * )
      */
+    #[Assert\Length(min: 1, max: 100, minMessage: 'Your name must be at least {{ limit }} characters long', maxMessage: 'Your name cannot be longer than {{ limit }} characters')]
     private $name;
 
     /**

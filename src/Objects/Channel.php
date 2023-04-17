@@ -58,8 +58,8 @@ class Channel implements ErrorInterface, IdInterface, NameInterface
     /**
      * explicit permission overwrites for members and roles
      * @var Overwrite[]|null
-     * @SerializedName("permission_overwrites")
      */
+    #[SerializedName('permission_overwrites')]
     private $permissionOverwrites;
 
     /**
@@ -149,6 +149,7 @@ class Channel implements ErrorInterface, IdInterface, NameInterface
                 $type = $enum->value;
             }
         }
+        
         $this->type = $type;
         return $this;
     }
@@ -250,6 +251,7 @@ class Channel implements ErrorInterface, IdInterface, NameInterface
         if (!in_array($permissionOverwrites, $this->permissionOverwritess ?? [])) {
             $this->permissionOverwrites[] = $permissionOverwrites;
         }
+        
         return $this;
     }
 

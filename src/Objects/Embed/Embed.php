@@ -18,24 +18,20 @@ class Embed
 {
     /**
      * @var string|null
-     * @Assert\Length(
-     *     max = 256
-     * )
      */
+    #[Assert\Length(max: 256)]
     protected $title;
 
     /**
      * @var string|null
-     * @Assert\Length(
-     *     max = 2048
-     * )
      */
+    #[Assert\Length(max: 2048)]
     protected $description;
 
     /**
      * @var string|null
-     * @Assert\Url
      */
+    #[Assert\Url]
     protected $url;
 
     /**
@@ -88,15 +84,19 @@ class Embed
         if (!empty($title)) {
             $embed->setTitle($title);
         }
+        
         if (!empty($url)) {
             $embed->setUrl($url);
         }
+        
         if (!is_null($color) && (is_float($color) || is_int($color))) {
             $embed->setColor($color);
         }
+        
         if (!empty($description)) {
             $embed->setDescription($description);
         }
+        
         if (!empty($thumbnail)) {
             $embed->setThumbnail($thumbnail);
         }
@@ -163,6 +163,7 @@ class Embed
             $object->setIconUrl($iconUrl);
             $footer = $object;
         }
+        
         if (!($footer instanceof Footer)) {
             throw new InvalidArgumentException('The supplied argument is not an instance of the Footer class or text.');
         }
@@ -195,6 +196,7 @@ class Embed
             $object->setIconUrl($iconUrl);
             $author = $object;
         }
+        
         if (!($author instanceof Author)) {
             throw new InvalidArgumentException('The supplied argument is not an instance of the Author class or text.');
         }
@@ -237,9 +239,11 @@ class Embed
             $object->setInline($inline);
             $field = $object;
         }
+        
         if (!($field instanceof Field)) {
             throw new InvalidArgumentException('The supplied argument is not an instance of the Field class or text.');
         }
+        
         if (empty($field->getValue())) {
             throw new InvalidArgumentException('Field value cannot be blank.');
         }
@@ -304,10 +308,12 @@ class Embed
                 $object->setUrl($image);
                 $image = $object;
             }
+            
             if (!($image instanceof Image)) {
                 throw new InvalidArgumentException('The supplied image is not an instance of the Image class or a URL.');
             }
         }
+        
         $this->image = $image;
         return $this;
     }
@@ -333,18 +339,20 @@ class Embed
                 $object->setUrl($thumbnail, $uuid);
                 $thumbnail = $object;
             }
+            
             if (!($thumbnail instanceof Image)) {
                 throw new InvalidArgumentException('The supplied image is not an instance of the Image class or a URL.');
             }
         }
+        
         $this->thumbnail = $thumbnail;
         return $this;
     }
 
     /**
      * @return DateTimeInterface|null
-     * @Ignore()
      */
+    #[Ignore]
     public function getTimestamp(): ?DateTimeInterface
     {
         return $this->timestamp;
@@ -364,10 +372,10 @@ class Embed
      * Returns an ISO-8601 formatted date string. Note that it uses ATOM and not ISO-8601 because of backwards compatibility. See link below.
      * @return string|null
      *
-     * @SerializedName("timestamp")
      *
      * @link https://www.php.net/manual/en/class.datetimeinterface.php#datetime.constants.types
      */
+    #[SerializedName('timestamp')]
     public function getFormattedTimestamp(): ?string
     {
         if (!empty($this->timestamp)) {

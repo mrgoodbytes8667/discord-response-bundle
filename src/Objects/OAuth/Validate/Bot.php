@@ -74,6 +74,7 @@ class Bot extends Application implements TokenValidationResponseInterface
         if (isset($args['verifyKey'])) {
             $static->setVerifyKey($args['verifyKey']);
         }
+        
         return $static;
     }
 
@@ -118,6 +119,7 @@ class Bot extends Application implements TokenValidationResponseInterface
         if (empty($this->getId()) || empty($id)) {
             return false;
         }
+        
         return $this->getId() === $id;
     }
 
@@ -140,6 +142,7 @@ class Bot extends Application implements TokenValidationResponseInterface
         if (empty($this->getId()) || empty($clientId)) {
             return false;
         }
+        
         return $this->getId() === $clientId;
     }
 
@@ -152,6 +155,7 @@ class Bot extends Application implements TokenValidationResponseInterface
         if (empty($this->getName()) || empty($userName)) {
             return false;
         }
+        
         return $this->getName() === $userName;
     }
 

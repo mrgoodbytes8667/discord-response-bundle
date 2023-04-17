@@ -137,8 +137,10 @@ class Permissions extends Enum
             if ($v instanceof static) {
                 $v = $v->value;
             }
+            
             $return |= $v;
         }
+        
         return $return;
     }
 
@@ -175,6 +177,7 @@ class Permissions extends Enum
         if ($permission instanceof static) {
             $permission = $permission->value;
         }
+        
         return (($flags & $permission) == $permission);
     }
 

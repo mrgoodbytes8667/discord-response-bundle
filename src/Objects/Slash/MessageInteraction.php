@@ -37,14 +37,9 @@ class MessageInteraction implements IdInterface, NameInterface
      * the name of the ApplicationCommand
      * 1-32 character name matching ^[\w-]{1,32}$
      * @var string|null
-     * @Assert\Length(
-     *      min = 1,
-     *      max = 32,
-     *      minMessage = "Your name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your name cannot be longer than {{ limit }} characters"
-     * )
-     * @Assert\Regex("/^[\w-]{1,32}$/")
      */
+    #[Assert\Length(min: 1, max: 32, minMessage: 'Your name must be at least {{ limit }} characters long', maxMessage: 'Your name cannot be longer than {{ limit }} characters')]
+    #[Assert\Regex('/^[\w-]{1,32}$/')]
     private $name;
 
     /**

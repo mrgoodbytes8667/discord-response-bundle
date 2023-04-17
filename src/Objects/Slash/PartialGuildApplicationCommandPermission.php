@@ -70,6 +70,7 @@ class PartialGuildApplicationCommandPermission
         if (!$permissions->contains($permission)) {
             $this->permissions[] = $permission;
         }
+        
         return $this;
     }
 }

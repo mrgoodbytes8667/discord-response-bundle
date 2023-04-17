@@ -67,6 +67,7 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
         if (empty($this->getId()) || empty($this->getIcon())) {
             return null;
         }
+        
         return DiscordImageUrlBuilder::getIconUrl($this->getId(), $this->getIcon(), $extension);
     }
 
@@ -151,6 +152,7 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
         if (!in_array($feature, $this->features ?? [])) {
             $this->features[] = $feature;
         }
+        
         return $this;
     }
 

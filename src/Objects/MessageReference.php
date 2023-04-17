@@ -30,29 +30,29 @@ class MessageReference implements ChannelIdInterface, GuildIdInterface
     /**
      * id of the originating message
      * @var string|null
-     * @SerializedName("message_id")
      */
+    #[SerializedName('message_id')]
     private $messageId;
 
     /**
      * (snowflake) id of the originating message's channel. optional when creating a reply, but will always be present when receiving an event/response that includes this data model.
      * @var string|null
-     * @SerializedName("channel_id")
      */
+    #[SerializedName('channel_id')]
     protected $channelID;
 
     /**
      * (snowflake) id of the originating message's guild
      * @var string|null
-     * @SerializedName("guild_id")
      */
+    #[SerializedName('guild_id')]
     private $guildId;
 
     /**
      * when sending, whether to error if the referenced message doesn't exist instead of sending as a normal (non-reply) message, default true
      * @var bool|null
-     * @SerializedName("fail_if_not_exists")
      */
+    #[SerializedName('fail_if_not_exists')]
     private $failIfNotExists = true;
 
     /**

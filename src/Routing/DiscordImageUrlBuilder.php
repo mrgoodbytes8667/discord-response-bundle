@@ -31,9 +31,11 @@ class DiscordImageUrlBuilder
             {
                 return null;
             }
+            
             $user = $parts['userId'];
             $avatar = $parts['userAvatar'];
         }
+        
         if (empty($user) || empty($avatar)) {
             return null;
         }
@@ -85,9 +87,11 @@ class DiscordImageUrlBuilder
             {
                 return null;
             }
+            
             $guildId = $parts['guildId'];
             $icon = $parts['guildIcon'];
         }
+        
         if (empty($guildId) || empty($icon)) {
             return null;
         }
@@ -133,6 +137,7 @@ class DiscordImageUrlBuilder
                 $user = random_int(6, 10);
             }
         }
+        
         return static::buildUrl(['embed', 'avatars', ($user % 5) . '.png']);
     }
 }

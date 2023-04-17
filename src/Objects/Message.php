@@ -154,8 +154,8 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     /**
      * reference data sent with crossposted messages and replies
      * @var MessageReference|null
-     * @SerializedName("message_reference")
      */
+    #[SerializedName('message_reference')]
     private $messageReference;
 
     /**
@@ -170,8 +170,8 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
      * referenced_message field is not present, the backend did not attempt to fetch the message that was being replied
      * to, so its state is unknown. If the field exists but is null, the referenced message was deleted.
      * @var Message|null
-     * @SerializedName("referenced_message")
      */
+    #[SerializedName('referenced_message')]
     private $referencedMessage;
 
     /**
@@ -295,6 +295,7 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
         if (is_string($editedTimestamp)) {
             $editedTimestamp = new DateTime($editedTimestamp);
         }
+        
         $this->editedTimestamp = $editedTimestamp;
         return $this;
     }

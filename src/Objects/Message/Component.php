@@ -31,9 +31,9 @@ class Component
      * a developer-defined identifier for the component, max 100 characters
      * Types: Buttons, Select Menus
      * @var string|null
-     * @Assert\Length(max=100)
-     * @SerializedName("custom_id")
      */
+    #[Assert\Length(max: 100)]
+    #[SerializedName('custom_id')]
     private $customId;
 
     /**
@@ -54,8 +54,8 @@ class Component
      * text that appears on the button, max 80 characters
      * Types: Buttons
      * @var string|null
-     * @Assert\Length(max=80)
      */
+    #[Assert\Length(max: 80)]
     private $label;
 
     /**
@@ -69,47 +69,44 @@ class Component
      * a url for link-style buttons
      * Types: Buttons
      * @var string|null
-     * @Assert\Url()
      */
+    #[Assert\Url]
     private $url;
 
     /**
      * the choices in the select, max 25
      * Types: Select Menus
      * @var SelectOption[]|null
-     * @Assert\Count(
-     *     max=25,
-     *     maxMessage = "This component should contain {{ limit }} options or less."
-     * )
      */
+    #[Assert\Count(max: 25, maxMessage: 'This component should contain {{ limit }} options or less.')]
     private $options;
 
     /**
      * custom placeholder text if nothing is selected, max 100 characters
      * Types: Select Menus
      * @var string|null
-     * @Assert\Length(max=100)
      */
+    #[Assert\Length(max: 100)]
     private $placeholder;
 
     /**
      * the minimum number of items that must be chosen; default 1, min 0, max 25
      * Types: Select Menus
      * @var int|null
-     * @Assert\GreaterThanOrEqual(0)
-     * @Assert\LessThanOrEqual(25)
-     * @SerializedName("min_values")
      */
+    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\LessThanOrEqual(25)]
+    #[SerializedName('min_values')]
     private $minValues;
 
     /**
      * the maximum number of items that can be chosen; default 1, max 25
      * Types: Select Menus
      * @var int|null
-     * @Assert\GreaterThanOrEqual(1)
-     * @Assert\LessThanOrEqual(25)
-     * @SerializedName("max_values")
      */
+    #[Assert\GreaterThanOrEqual(1)]
+    #[Assert\LessThanOrEqual(25)]
+    #[SerializedName('max_values')]
     private $maxValues;
 
     /**
@@ -196,6 +193,7 @@ class Component
         if ($style->equals(ButtonStyle::link())) {
             throw new UnexpectedValueException('Interactive buttons cannot use the link style');
         }
+        
         return static::create(ComponentType::button(), customId: $customId, disabled: $disabled, style: $style,
             label: $label, emoji: $emoji);
     }
@@ -338,10 +336,10 @@ class Component
     }
 
     /**
-     * @Assert\Callback
      * @param ExecutionContextInterface $context
      * @param $payload
      */
+    #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload)
     {
         switch ($this->getType()) {
@@ -360,6 +358,7 @@ class Component
                             ->atPath('url')
                             ->addViolation();
                     }
+                    
                     // For non-link buttons
                     // URL must be null
                 } elseif (!is_null($this->getUrl())) {
@@ -372,6 +371,7 @@ class Component
                         ->atPath('customId')
                         ->addViolation();
                 }
+                
                 break;
         }
     }
@@ -395,9 +395,11 @@ class Component
                 if (!ComponentType::isValid($type)) {
                     throw new UnexpectedValueException(sprintf('The value "%d" is not a member of the "%s" class.', $type, ComponentType::class));
                 }
+                
                 $type = ComponentType::tryFrom($type);
             }
         }
+        
         $this->type = $type;
         return $this;
     }
@@ -421,9 +423,11 @@ class Component
                 if (!ButtonStyle::isValid($style)) {
                     throw new UnexpectedValueException(sprintf('The value "%d" is not a member of the "%s" class.', $style, ButtonStyle::class));
                 }
+                
                 $style = ButtonStyle::tryFrom($style);
             }
         }
+        
         $this->style = $style;
         return $this;
     }

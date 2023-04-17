@@ -119,9 +119,11 @@ class ApplicationCommandInteractionData implements IdInterface, NameInterface
                 if (!ComponentType::isValid($type)) {
                     throw new UnexpectedValueException(sprintf('The value "%d" is not a member of the "%s" class.', $type, ComponentType::class));
                 }
+                
                 $type = ComponentType::tryFrom($type);
             }
         }
+        
         $this->componentType = $type;
         return $this;
     }

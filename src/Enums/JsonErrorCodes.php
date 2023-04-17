@@ -164,6 +164,7 @@ class JsonErrorCodes extends Enum
         if (is_null($code)) {
             return false;
         }
+        
         return $code->equals(
             static::unknownAccount(), static::unknownApplication(), static::unknownChannel(), static::unknownGuild(),
             static::unknownIntegration(), static::unknownInvite(), static::unknownMember(), static::unknownMessage(),

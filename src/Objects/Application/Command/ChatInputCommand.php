@@ -30,42 +30,25 @@ class ChatInputCommand extends ApplicationCommand
     /**
      * 1-32 character name matching ^[\w-]{1,32}$
      * @var string|null
-     * @Assert\Length(
-     *      min = 1,
-     *      max = 32,
-     *      minMessage = "Your name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your name cannot be longer than {{ limit }} characters"
-     * )
-     * @Assert\Regex("/^[\w-]{1,32}$/")
-     * @Assert\Regex(
-     *     pattern="/([A-Z].*)/",
-     *     match=false,
-     *     message="Your name may not contain uppercase characters."
-     * )
      */
+    #[Assert\Length(min: 1, max: 32, minMessage: 'Your name must be at least {{ limit }} characters long', maxMessage: 'Your name cannot be longer than {{ limit }} characters')]
+    #[Assert\Regex('/^[\w-]{1,32}$/')]
+    #[Assert\Regex(pattern: '/([A-Z].*)/', match: false, message: 'Your name may not contain uppercase characters.')]
     private $name;
 
     /**
      * 1-100 character description
      * @var string|null
-     * @Assert\Length(
-     *      min = 1,
-     *      max = 100,
-     *      minMessage = "Your description must be at least {{ limit }} characters long",
-     *      maxMessage = "Your description cannot be longer than {{ limit }} characters"
-     * )
      */
+    #[Assert\Length(min: 1, max: 100, minMessage: 'Your description must be at least {{ limit }} characters long', maxMessage: 'Your description cannot be longer than {{ limit }} characters')]
     private $description;
 
     /**
      * the parameters for the command
      * @var ApplicationCommandOption[]|ArrayCollection|null
-     * @Assert\Count(
-     *      max = 25,
-     *      maxMessage = "You cannot specify more than {{ limit }} options per command"
-     * )
-     * @Assert\Valid()
      */
+    #[Assert\Count(max: 25, maxMessage: 'You cannot specify more than {{ limit }} options per command')]
+    #[Assert\Valid]
     private $options;
 
     /**
@@ -114,16 +97,15 @@ class ChatInputCommand extends ApplicationCommand
         if (!$this->options->contains($option)) {
             $this->options[] = $option;
         }
+        
         return $this;
     }
 
     /**
      * @return int
-     * @Assert\LessThanOrEqual(4000,
-     *      message = "Your combined name, description, and value properties for each command and its subcommands and groups ({{ value }}) cannot be longer than {{ compared_value }} characters"
-     * )
-     * @Ignore()
      */
+    #[Assert\LessThanOrEqual(4000, message: 'Your combined name, description, and value properties for each command and its subcommands and groups ({{ value }}) cannot be longer than {{ compared_value }} characters')]
+    #[Ignore]
     public function getNameDescriptionValueCharacterLengthRecursively()
     {
         $length = $this->getNameDescriptionValueCharacterLength();
@@ -142,6 +124,7 @@ class ChatInputCommand extends ApplicationCommand
                     }
                 }
             }
+            
             if (!empty($option->getChoices())) {
                 foreach ($option->getChoices() as $i) {
                     $length += $i->getNameDescriptionValueCharacterLength();

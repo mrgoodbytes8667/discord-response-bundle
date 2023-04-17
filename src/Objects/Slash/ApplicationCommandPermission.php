@@ -63,6 +63,7 @@ class ApplicationCommandPermission
         if ($type instanceof ApplicationCommandPermissionType) {
             $type = $type->value;
         }
+        
         $this->type = $type;
         return $this;
     }

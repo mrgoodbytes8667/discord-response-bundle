@@ -17,10 +17,8 @@ class Footer
 
     /**
      * @var string
-     * @Assert\Length(
-     *     max = 256
-     * )
      */
+    #[Assert\Length(max: 256)]
     private $text;
 
     /**

@@ -20,8 +20,8 @@ class AllowedMentions
 {
     /**
      * @var string[]|null
-     * @Assert\Unique()
      */
+    #[Assert\Unique]
     private ?array $parse = [];
 
     /**
@@ -105,10 +105,12 @@ class AllowedMentions
             if ($hasParse) {
                 $allowedMentions->setParse($parse);
             }
+            
             if ($hasRoles) {
                 $allowedMentions->setRoles($roles);
             }
         }
+        
         return $allowedMentions;
     }
 
@@ -130,11 +132,11 @@ class AllowedMentions
     }
 
     /**
-     * @Assert\Callback
      *
      * @param ExecutionContextInterface $context
      * @param mixed|null $payload Ignored
      */
+    #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload)
     {
         $parses = $this->getParse();
@@ -152,6 +154,7 @@ class AllowedMentions
                             ->addViolation()
                         ;
                     }
+                    
                     break;
                 case 'users':
                     if(!empty($this->getUsers()))
@@ -161,6 +164,7 @@ class AllowedMentions
                             ->addViolation()
                         ;
                     }
+                    
                     break;
                 default:
                     $context->buildViolation("Parse can only contain 'everyone', 'roles', and 'users'.")

@@ -31,6 +31,7 @@ class Author
         if(!empty($iconUrl)) {
             $author->setIconUrl($iconUrl);
         }
+        
         if(!empty($url)) {
             $author->setUrl($url);
         }

@@ -53,6 +53,7 @@ class InteractionResponse
         if ($type instanceof InteractionResponseType) {
             $type = $type->value;
         }
+        
         $this->type = $type;
         return $this;
     }

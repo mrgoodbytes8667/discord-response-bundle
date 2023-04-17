@@ -42,8 +42,8 @@ class ApplicationCommand implements ApplicationCommandInterface, IdInterface
     /**
      * whether the command is enabled by default when the app is added to a guild
      * @var bool|null Default true
-     * @SerializedName("default_permission")
      */
+    #[SerializedName('default_permission')]
     private $defaultPermission = true;
 
     /**
@@ -54,8 +54,8 @@ class ApplicationCommand implements ApplicationCommandInterface, IdInterface
 
     /**
      * @var mixed
-     * @Ignore()
      */
+    #[Ignore]
     private $entityId;
 
     /**
@@ -77,9 +77,11 @@ class ApplicationCommand implements ApplicationCommandInterface, IdInterface
                 if (!ApplicationCommandType::isValid($type)) {
                     throw new UnexpectedValueException(sprintf('The value "%d" is not a member of the "%s" class.', $type, ApplicationCommandType::class));
                 }
+                
                 $type = ApplicationCommandType::tryFrom($type);
             }
         }
+        
         $this->type = $type;
         return $this;
     }
@@ -130,8 +132,8 @@ class ApplicationCommand implements ApplicationCommandInterface, IdInterface
 
     /**
      * @return mixed
-     * @Ignore()
      */
+    #[Ignore]
     public function getEntityId(): mixed
     {
         return $this->entityId;

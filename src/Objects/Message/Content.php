@@ -24,10 +24,8 @@ class Content
 {
     /**
      * @var string|null
-     * @Assert\Length(
-     *     max = 2000
-     * )
      */
+    #[Assert\Length(max: 2000)]
     private ?string $content = null;
 
     /**
@@ -42,49 +40,46 @@ class Content
 
     /**
      * @var Embed[]|null
-     * @Assert\Valid()
      * @Assert\All({
      *     @Assert\Type(type="\Bytes\DiscordResponseBundle\Objects\Embed\Embed"),
      *     @Assert\NotNull()
      * })
      */
+    #[Assert\Valid]
     private $embeds;
 
     /**
      * @var AllowedMentions|null
-     * @SerializedName("allowed_mentions")
-     * @Assert\Valid()
      */
+    #[SerializedName('allowed_mentions')]
+    #[Assert\Valid]
     private $allowedMentions;
 
     /**
      * @var MessageReference|null
-     * @Assert\Valid()
      */
+    #[Assert\Valid]
     private $messageReference;
 
     /**
      * @var Component[]|null
-     * @Assert\Valid()
      * @Assert\All({
      *     @Assert\Type(type="\Bytes\DiscordResponseBundle\Objects\Message\Component"),
      *     @Assert\NotNull()
      * })
      */
+    #[Assert\Valid]
     private $components;
 
     /**
      * @var string[]|null
-     * @SerializedName("sticker_ids")
-     * @Assert\Count(
-     *      max = 3,
-     *      maxMessage = "You cannot specify more than {{ limit }} stickers per message."
-     * )
      * @Assert\All({
      *     @Assert\Type(type="string"),
      *     @Assert\NotNull()
      * })
      */
+    #[SerializedName('sticker_ids')]
+    #[Assert\Count(max: 3, maxMessage: 'You cannot specify more than {{ limit }} stickers per message.')]
     private $sticker_ids;
 
     /**
@@ -179,6 +174,7 @@ class Content
         if (!$this->embeds->contains($embed)) {
             $this->embeds->add($embed);
         }
+        
         return $this;
     }
 
@@ -227,6 +223,7 @@ class Content
         {
             return null;
         }
+        
         return $this->components->toArray();
     }
 
@@ -249,19 +246,21 @@ class Content
         if (!$this->components->contains($component)) {
             $this->components->add($component);
         }
+        
         return $this;
     }
 
     /**
      * @return string[]|null
-     * @SerializedName("sticker_ids")
      */
+    #[SerializedName('sticker_ids')]
     public function getStickerIds(): ?array
     {
         if($this->sticker_ids->isEmpty())
         {
             return null;
         }
+        
         return $this->sticker_ids->toArray();
     }
 
@@ -284,6 +283,7 @@ class Content
         if (!$this->sticker_ids->contains($stickerId)) {
             $this->sticker_ids->add($stickerId);
         }
+        
         return $this;
     }
 
@@ -301,31 +301,37 @@ class Content
         if (empty($allowedMentions)) {
             $allowedMentions = AllowedMentions::create();
         }
+        
         $static = new static();
         if (!empty($embeds)) {
             $static->setEmbeds(Arr::wrap($embeds));
         }
+        
         if (!empty($components)) {
             $static->setComponents(Arr::wrap($components));
         }
+        
         $static->setAllowedMentions($allowedMentions);
         if (!empty($content)) {
             $static->setContent($content);
         }
+        
         if (!is_null($stickers)) {
             $static->setStickerIds($stickers);
         }
+        
         if (!is_null($tts)) {
             $static->setTts($tts);
         }
+        
         return $static;
     }
 
     /**
      * @param ExecutionContextInterface $context
      * @param $payload
-     * @Assert\Callback
      */
+    #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload)
     {
         if (empty($this->content) && $this->embeds->isEmpty() && $this->sticker_ids->isEmpty()) {

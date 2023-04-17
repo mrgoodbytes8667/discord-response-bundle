@@ -75,15 +75,15 @@ class Member implements ErrorInterface
     /**
      * when the user joined the guild
      * @var \DateTimeInterface|null
-     * @SerializedName("joined_at")
      */
+    #[SerializedName('joined_at')]
     private $joinedAt;
 
     /**
      * when the user started boosting the guild
      * @var \DateTimeInterface|null
-     * @SerializedName("premium_since")
      */
+    #[SerializedName('premium_since')]
     private $premiumSince;
 
     /**

@@ -29,31 +29,17 @@ class ApplicationCommandOption implements NameInterface
     /**
      * 1-32 character name matching ^[\w-]{1,32}$
      * @var string|null
-     * @Assert\Length(
-     *      min = 1,
-     *      max = 32,
-     *      minMessage = "Your name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your name cannot be longer than {{ limit }} characters"
-     * )
-     * @Assert\Regex("/^[\w-]{1,32}$/")
-     * @Assert\Regex(
-     *     pattern="/([A-Z].*)/",
-     *     match=false,
-     *     message="Your option name may not contain uppercase characters."
-     * )
      */
+    #[Assert\Length(min: 1, max: 32, minMessage: 'Your name must be at least {{ limit }} characters long', maxMessage: 'Your name cannot be longer than {{ limit }} characters')]
+    #[Assert\Regex('/^[\w-]{1,32}$/')]
+    #[Assert\Regex(pattern: '/([A-Z].*)/', match: false, message: 'Your option name may not contain uppercase characters.')]
     private $name;
 
     /**
      * 1-100 character description
      * @var string|null
-     * @Assert\Length(
-     *      min = 1,
-     *      max = 100,
-     *      minMessage = "Your description must be at least {{ limit }} characters long",
-     *      maxMessage = "Your description cannot be longer than {{ limit }} characters"
-     * )
      */
+    #[Assert\Length(min: 1, max: 100, minMessage: 'Your description must be at least {{ limit }} characters long', maxMessage: 'Your description cannot be longer than {{ limit }} characters')]
     private $description;
 
     /**
@@ -65,19 +51,16 @@ class ApplicationCommandOption implements NameInterface
     /**
      * choices for STRING, INTEGER, and NUMBER types for the user to pick from
      * @var ApplicationCommandOptionChoice[]|ArrayCollection|null
-     * @Assert\Count(
-     *      max = 25,
-     *      maxMessage = "You cannot specify more than {{ limit }} choices per command/option"
-     * )
-     * @Assert\Valid()
      */
+    #[Assert\Count(max: 25, maxMessage: 'You cannot specify more than {{ limit }} choices per command/option')]
+    #[Assert\Valid]
     private $choices;
 
     /**
      * if the option is a subcommand or subcommand group type, this nested options will be the parameters
      * @var ApplicationCommandOption[]|ArrayCollection|null
-     * @Assert\Valid()
      */
+    #[Assert\Valid]
     private $options;
 
     /**
@@ -181,6 +164,7 @@ class ApplicationCommandOption implements NameInterface
         if (!$this->choices->contains($choice)) {
             $this->choices[] = $choice;
         }
+        
         return $this;
     }
 
@@ -211,15 +195,15 @@ class ApplicationCommandOption implements NameInterface
         if (!$this->options->contains($option)) {
             $this->options[] = $option;
         }
+        
         return $this;
     }
 
     /**
      * @param ExecutionContextInterface $context
      * @param $payload
-     *
-     * @Assert\Callback
      */
+    #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload)
     {
         if (!empty($this->type) && !ApplicationCommandOptionType::isValid($this->type)) {

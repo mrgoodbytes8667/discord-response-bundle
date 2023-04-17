@@ -19,13 +19,8 @@ class UserCommand extends ApplicationCommand
     /**
      * 1-32 character name
      * @var string|null
-     * @Assert\Length(
-     *      min = 1,
-     *      max = 32,
-     *      minMessage = "Your name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your name cannot be longer than {{ limit }} characters"
-     * )
      */
+    #[Assert\Length(min: 1, max: 32, minMessage: 'Your name must be at least {{ limit }} characters long', maxMessage: 'Your name cannot be longer than {{ limit }} characters')]
     private $name;
 
     /**
