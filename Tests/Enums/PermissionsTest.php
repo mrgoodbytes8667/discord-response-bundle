@@ -71,4 +71,14 @@ class PermissionsTest extends TestCase
         yield ['flags' => [Permissions::MANAGE_WEBHOOKS, Permissions::USE_EXTERNAL_EMOJIS, Permissions::MOVE_MEMBERS], 'int' => 553910272];
         yield ['flags' => [], 'int' => 0];
     }
+
+    /**
+     * @return void
+     */
+    public function testHydration()
+    {
+        $values = Permissions::values();
+        $hydrated = Permissions::hydratePermissions($values);
+        self::assertEquals(Permissions::cases(), $hydrated);
+    }
 }

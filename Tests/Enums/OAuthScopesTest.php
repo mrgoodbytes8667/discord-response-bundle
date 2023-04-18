@@ -122,4 +122,13 @@ class OAuthScopesTest extends EnumTestCase
         $methods = OAuthScopes::cases();
         $this->assertCount(21, $methods);
     }
+
+    /**
+     * @return void
+     */
+    public function testHydration() {
+        $values = OAuthScopes::values();
+        $hydrated = OAuthScopes::hydrateScopes($values);
+        self::assertEquals(OAuthScopes::cases(), $hydrated);
+    }
 }
