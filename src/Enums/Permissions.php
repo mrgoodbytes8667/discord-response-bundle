@@ -485,6 +485,21 @@ enum Permissions: int implements IntBackedEnumInterface
         return (($flags & $permission) == $permission);
     }
 
+    public static function hydratePermissions(array $permissions)
+    {
+        array_walk($permissions, array('self', 'walkHydratePermissions'));
+        return $permissions;
+    }
+
+    /**
+     * @param $value
+     * @param $key
+     */
+    protected static function walkHydratePermissions(&$value, $key)
+    {
+        $value = Permissions::normalizeToEnum($value);
+    }
+
     /**
      * @return int[]
      */

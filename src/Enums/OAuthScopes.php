@@ -300,4 +300,19 @@ enum OAuthScopes: string implements StringBackedEnumInterface
     {
         return OAuthScopes::APPLICATIONS_COMMANDS;
     }
+
+    public static function hydrateScopes(array $scopes)
+    {
+        array_walk($scopes, array('self', 'walkHydrateScopes'));
+        return $scopes;
+    }
+
+    /**
+     * @param $value
+     * @param $key
+     */
+    protected static function walkHydrateScopes(&$value, $key)
+    {
+        $value = OAuthScopes::normalizeToEnum($value);
+    }
 }
