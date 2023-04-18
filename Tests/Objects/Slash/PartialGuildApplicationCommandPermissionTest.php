@@ -40,7 +40,7 @@ class PartialGuildApplicationCommandPermissionTest extends TestCase
         $this->assertCount(1, $object->getPermissions());
 
         $id = $this->faker->snowflake();
-        $type = $this->faker->randomElement([ApplicationCommandPermissionType::role(), ApplicationCommandPermissionType::user()]);
+        $type = $this->faker->randomElement([ApplicationCommandPermissionType::ROLE, ApplicationCommandPermissionType::USER]);
         $permission = $this->faker->boolean();
 
         $perm2 = ApplicationCommandPermission::create($id, $type, $permission);
@@ -91,7 +91,7 @@ class PartialGuildApplicationCommandPermissionTest extends TestCase
 
         $id = $this->faker->snowflake();
         /** @var ApplicationCommandPermissionType $type */
-        $type = $this->faker->randomElement([ApplicationCommandPermissionType::role(), ApplicationCommandPermissionType::user()]);
+        $type = $this->faker->randomElement([ApplicationCommandPermissionType::ROLE, ApplicationCommandPermissionType::USER]);
         $permission = $this->faker->boolean();
 
         $object = PartialGuildApplicationCommandPermission::create($commandId, [ApplicationCommandPermission::create($id, $type, $permission)]);
@@ -139,7 +139,7 @@ class PartialGuildApplicationCommandPermissionTest extends TestCase
         PartialGuildApplicationCommandPermission::create($commandId, [
             ApplicationCommandPermission::create(
                 $this->faker->snowflake(),
-                $this->faker->randomElement([ApplicationCommandPermissionType::role(), ApplicationCommandPermissionType::user()]),
+                $this->faker->randomElement([ApplicationCommandPermissionType::ROLE, ApplicationCommandPermissionType::USER]),
                 $this->faker->boolean())
         ]);
     }

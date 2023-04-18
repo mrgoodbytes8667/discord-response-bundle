@@ -55,9 +55,9 @@ class ComponentTest extends TestCase
      */
     public function provideType()
     {
-        yield [ComponentType::actionRow()];
-        yield [ComponentType::button()];
-        yield [ComponentType::selectMenu()];
+        yield [ComponentType::ACTION_ROW];
+        yield [ComponentType::BUTTON];
+        yield [ComponentType::SELECT_MENU];
     }
 
     /**
@@ -131,11 +131,11 @@ class ComponentTest extends TestCase
      */
     public function provideStyle()
     {
-        yield [ButtonStyle::primary()];
-        yield [ButtonStyle::secondary()];
-        yield [ButtonStyle::success()];
-        yield [ButtonStyle::danger()];
-        yield [ButtonStyle::link()];
+        yield [ButtonStyle::PRIMARY];
+        yield [ButtonStyle::SECONDARY];
+        yield [ButtonStyle::SUCCESS];
+        yield [ButtonStyle::DANGER];
+        yield [ButtonStyle::LINK];
     }
 
     /**
@@ -415,7 +415,7 @@ class ComponentTest extends TestCase
         }
 
         try {
-            $component = Component::createButton(style: ButtonStyle::link(), customId: self::CHARACTERS_100 . 'xyz', url: $this->faker->word(), label: self::CHARACTERS_80 . 'xyz', emoji: $emoji, disabled: $disabled);
+            $component = Component::createButton(style: ButtonStyle::LINK, customId: self::CHARACTERS_100 . 'xyz', url: $this->faker->word(), label: self::CHARACTERS_80 . 'xyz', emoji: $emoji, disabled: $disabled);
             $this->validate($component);
         } catch (ValidationFailedException $exception) {
             $this->assertEquals(2, count($exception->getViolations()));
@@ -431,7 +431,7 @@ class ComponentTest extends TestCase
         }
 
         try {
-            $component = Component::create(type: ComponentType::button(), customId: $customId, style: ButtonStyle::link(), url: $url);
+            $component = Component::create(type: ComponentType::BUTTON, customId: $customId, style: ButtonStyle::LINK, url: $url);
             $this->validate($component);
         } catch (ValidationFailedException $exception) {
             $this->assertEquals(1, count($exception->getViolations()));
@@ -443,7 +443,7 @@ class ComponentTest extends TestCase
         }
 
         try {
-            $component = Component::create(type: ComponentType::button(), customId: $customId, style: ButtonStyle::primary(), url: $url);
+            $component = Component::create(type: ComponentType::BUTTON, customId: $customId, style: ButtonStyle::PRIMARY, url: $url);
             $this->validate($component);
         } catch (ValidationFailedException $exception) {
             $this->assertEquals(1, count($exception->getViolations()));
@@ -455,7 +455,7 @@ class ComponentTest extends TestCase
         }
 
         try {
-            $component = Component::create(type: ComponentType::button(), style: ButtonStyle::link());
+            $component = Component::create(type: ComponentType::BUTTON, style: ButtonStyle::LINK);
             $this->validate($component);
         } catch (ValidationFailedException $exception) {
             $this->assertEquals(1, count($exception->getViolations()));
@@ -467,7 +467,7 @@ class ComponentTest extends TestCase
         }
 
         try {
-            $component = Component::create(type: ComponentType::button(), style: ButtonStyle::primary());
+            $component = Component::create(type: ComponentType::BUTTON, style: ButtonStyle::PRIMARY);
             $this->validate($component);
         } catch (ValidationFailedException $exception) {
             $this->assertEquals(1, count($exception->getViolations()));
@@ -485,7 +485,7 @@ class ComponentTest extends TestCase
     public function testCreateInteractiveButtonUsingLinkFailure()
     {
         $this->expectException(\UnexpectedValueException::class);
-        Component::createInteractiveButton(ButtonStyle::link(), $this->faker->text(25));
+        Component::createInteractiveButton(ButtonStyle::LINK, $this->faker->text(25));
     }
 
     /**
@@ -568,10 +568,10 @@ class ComponentTest extends TestCase
     {
         $this->setupFaker();
         yield ['customId' => $this->faker->text(100), 'disabled' => $this->faker->boolean(), 'style' => $this->faker->randomElement([
-            ButtonStyle::primary(),
-            ButtonStyle::secondary(),
-            ButtonStyle::success(),
-            ButtonStyle::danger()
+            ButtonStyle::PRIMARY,
+            ButtonStyle::SECONDARY,
+            ButtonStyle::SUCCESS,
+            ButtonStyle::DANGER
         ]), 'label' => $this->faker->text(80), 'emoji' => new PartialEmoji(), 'url' => $this->faker->url(), 'options' => [], 'placeholder' => null, 'minValues' => 1, 'maxValues' => 1, 'components' => []];
     }
 }

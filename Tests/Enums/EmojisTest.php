@@ -53,7 +53,7 @@ class EmojisTest extends TestCase
 
     public function testToPartialEmoji()
     {
-        $e = Emojis::weatherTimeGlobeWithMeridians()->toPartialEmoji();
+        $e = Emojis::WEATHER_TIME_GLOBE_WITH_MERIDIANS->toPartialEmoji();
         $this->assertInstanceOf(PartialEmoji::class, $e);
         $this->assertEquals('🌐', $e->getName());
     }

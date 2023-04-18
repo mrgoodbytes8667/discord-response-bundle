@@ -35,9 +35,7 @@ class ApplicationCommandPermissionTypeTest extends TestCase
     {
         $this->assertTrue(ApplicationCommandPermissionType::isValid($value));
         $type = ApplicationCommandPermissionType::from($value);
-        EnumAssertions::assertSameEnum($enum, $type);
-        EnumAssertions::assertSameEnumLabel($enum, $type->label);
-        EnumAssertions::assertSameEnumValue($enum, $type->value);
+        static::assertEquals($enum, $type);
     }
 
     /**
@@ -53,7 +51,7 @@ class ApplicationCommandPermissionTypeTest extends TestCase
      */
     public function provideEnums()
     {
-        yield ['value' => 1, 'enum' => ApplicationCommandPermissionType::role()];
-        yield ['value' => 2, 'enum' => ApplicationCommandPermissionType::user()];
+        yield ['value' => 1, 'enum' => ApplicationCommandPermissionType::ROLE];
+        yield ['value' => 2, 'enum' => ApplicationCommandPermissionType::USER];
     }
 }

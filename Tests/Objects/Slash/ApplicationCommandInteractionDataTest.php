@@ -115,9 +115,9 @@ class ApplicationCommandInteractionDataTest extends TestCase
      */
     public function provideComponentType()
     {
-        yield [ComponentType::actionRow()];
-        yield [ComponentType::button()];
-        yield [ComponentType::selectMenu()];
+        yield [ComponentType::ACTION_ROW];
+        yield [ComponentType::BUTTON];
+        yield [ComponentType::SELECT_MENU];
     }
 
     /**

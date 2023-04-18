@@ -4,93 +4,141 @@
 namespace Bytes\DiscordResponseBundle\Enums;
 
 
-use BadMethodCallException;
-use Bytes\EnumSerializerBundle\Enums\Enum;
+use Bytes\EnumSerializerBundle\Enums\IntBackedEnumInterface;
+use Bytes\EnumSerializerBundle\Enums\IntBackedEnumTrait;
+use JetBrains\PhpStorm\Deprecated;
+use ValueError;
 
 /**
  * Class ChannelTypes
  * @package Bytes\DiscordResponseBundle\Enums
  *
- * @method static self guildText() a text channel within a server
- * @method static self dm() a direct message between users
- * @method static self guildVoice() a voice channel within a server
- * @method static self groupDm() a direct message between multiple users
- * @method static self guildCategory() an organizational category that contains up to 50 channels
- * @method static self guildNews() a channel that users can follow and crosspost into their own server
- * @method static self guildStore() a channel in which game developers can sell their game on Discord
+ * @link https://discord.com/developers/docs/resources/channel#channel-object-channel-types
  *
- * @link https://github.com/spatie/enum
+ * @version v0.15.0 As of 2023-04-17 Discord Documentation
  */
-class ChannelTypes extends Enum
+enum ChannelTypes: int implements IntBackedEnumInterface
 {
+    use IntBackedEnumTrait;
+
     /**
      * a text channel within a server
      */
-    const GUILD_TEXT = 0;
+    case GUILD_TEXT = 0;
 
     /**
      * a direct message between users
      */
-    const DM = 1;
+    case DM = 1;
 
     /**
      * a voice channel within a server
      */
-    const GUILD_VOICE = 2;
+    case GUILD_VOICE = 2;
 
     /**
      * a direct message between multiple users
      */
-    const GROUP_DM = 3;
+    case GROUP_DM = 3;
 
     /**
      * an organizational category that contains up to 50 channels
      */
-    const GUILD_CATEGORY = 4;
+    case GUILD_CATEGORY = 4;
 
     /**
      * a channel that users can follow and crosspost into their own server
      */
-    const GUILD_NEWS = 5;
+    case GUILD_NEWS = 5;
 
     /**
-     * a channel in which game developers can sell their game on Discord
+     * a temporary sub-channel within a GUILD_ANNOUNCEMENT channel
      */
-    const GUILD_STORE = 6;
+    case ANNOUNCEMENT_THREAD = 10;
+
+    /**
+     * a temporary sub-channel within a GUILD_TEXT or GUILD_FORUM channel
+     */
+    case PUBLIC_THREAD = 11;
+
+    /**
+     * a temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission
+     */
+    case PRIVATE_THREAD = 12;
+
+    /**
+     * a voice channel for hosting events with an audience
+     */
+    case GUILD_STAGE_VOICE = 13;
+
+    /**
+     * the channel in a hub containing the listed servers
+     */
+    case GUILD_DIRECTORY = 14;
+
+    /**
+     * Channel that can only contain threads
+     */
+    case GUILD_FORUM = 15;
+
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::GUILD_TEXT')]
+    public static function guildText(): ChannelTypes
+    {
+        return ChannelTypes::GUILD_TEXT;
+    }
+
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::DM')]
+    public static function dm(): ChannelTypes
+    {
+        return ChannelTypes::DM;
+    }
+
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::GUILD_VOICE')]
+    public static function guildVoice(): ChannelTypes
+    {
+        return ChannelTypes::GUILD_VOICE;
+    }
+
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::GROUP_DM')]
+    public static function groupDm(): ChannelTypes
+    {
+        return ChannelTypes::GROUP_DM;
+    }
+
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::GUILD_CATEGORY')]
+    public static function guildCategory(): ChannelTypes
+    {
+        return ChannelTypes::GUILD_CATEGORY;
+    }
+
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::GUILD_NEWS')]
+    public static function guildNews(): ChannelTypes
+    {
+        return ChannelTypes::GUILD_NEWS;
+    }
 
     /**
      * @param string $value
      * @return ChannelTypes|null
-     * @throws BadMethodCallException
+     * @throws ValueError
      */
-    public static function getFromDiscordJS(string $value): ?static
+    public static function getFromDiscordJS(string $value): ?ChannelTypes
     {
         return match (strtolower($value)) {
-            'dm' => static::from(static::DM),
-            'guild_text', 'text' => static::from(static::GUILD_TEXT),
-            'guild_voice', 'voice' => static::from(static::GUILD_VOICE),
-            'guild_category', 'category' => static::from(static::GUILD_CATEGORY),
-            'guild_news', 'news' => static::from(static::GUILD_NEWS),
-            'guild_store', 'store' => static::from(static::GUILD_STORE),
-            'unknown' => static::from(-1),
-            'group_dm' => static::from(static::GROUP_DM),
+            'dm' => ChannelTypes::DM,
+            'guild_text', 'text' => ChannelTypes::GUILD_TEXT,
+            'guild_voice', 'voice' => ChannelTypes::GUILD_VOICE,
+            'guild_category', 'category' => ChannelTypes::GUILD_CATEGORY,
+            'guild_news', 'news' => ChannelTypes::GUILD_NEWS,
+            'unknown' => throw new ValueError(),
+            'group_dm' => ChannelTypes::GROUP_DM,
             default => null,
         };
     }
 
-    /**
-     * @return int[]
-     */
-    protected static function values(): array
+    #[Deprecated('Since 0.15.0, there is no longer a guildStore type')]
+    public static function guildStore()
     {
-        return [
-            'guildText' => 0,
-            'dm' => 1,
-            'guildVoice' => 2,
-            'groupDm' => 3,
-            'guildCategory' => 4,
-            'guildNews' => 5,
-            'guildStore' => 6,
-        ];
+        return;
     }
 }

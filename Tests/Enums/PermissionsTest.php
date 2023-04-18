@@ -32,12 +32,12 @@ class PermissionsTest extends TestCase
      */
     public function testHasFlag()
     {
-        $this->assertTrue(Permissions::hasFlag(12, Permissions::ADMINISTRATOR()));
-        $this->assertFalse(Permissions::hasFlag(12, Permissions::MOVE_MEMBERS()));
+        $this->assertTrue(Permissions::hasFlag(12, Permissions::ADMINISTRATOR));
+        $this->assertFalse(Permissions::hasFlag(12, Permissions::MOVE_MEMBERS));
 
-        $this->assertTrue(Permissions::hasFlag(3221225472, Permissions::USE_SLASH_COMMANDS()));
-        $this->assertTrue(Permissions::hasFlag(3221225472, Permissions::MANAGE_EMOJIS()));
-        $this->assertFalse(Permissions::hasFlag(3221225472, Permissions::ADMINISTRATOR()));
+        $this->assertTrue(Permissions::hasFlag(3221225472, Permissions::USE_SLASH_COMMANDS));
+        $this->assertTrue(Permissions::hasFlag(3221225472, Permissions::MANAGE_EMOJIS));
+        $this->assertFalse(Permissions::hasFlag(3221225472, Permissions::ADMINISTRATOR));
     }
 
     /**
@@ -66,9 +66,9 @@ class PermissionsTest extends TestCase
      */
     public function providePermissions()
     {
-        yield ['flags' => [Permissions::BAN_MEMBERS(), Permissions::ADMINISTRATOR()], 'int' => 12];
-        yield ['flags' => [Permissions::MANAGE_WEBHOOKS(), Permissions::USE_EXTERNAL_EMOJIS(), Permissions::MOVE_MEMBERS(), Permissions::MANAGE_WEBHOOKS()], 'int' => 553910272];
-        yield ['flags' => [Permissions::MANAGE_WEBHOOKS(), Permissions::USE_EXTERNAL_EMOJIS(), Permissions::MOVE_MEMBERS()], 'int' => 553910272];
+        yield ['flags' => [Permissions::BAN_MEMBERS, Permissions::ADMINISTRATOR], 'int' => 12];
+        yield ['flags' => [Permissions::MANAGE_WEBHOOKS, Permissions::USE_EXTERNAL_EMOJIS, Permissions::MOVE_MEMBERS, Permissions::MANAGE_WEBHOOKS], 'int' => 553910272];
+        yield ['flags' => [Permissions::MANAGE_WEBHOOKS, Permissions::USE_EXTERNAL_EMOJIS, Permissions::MOVE_MEMBERS], 'int' => 553910272];
         yield ['flags' => [], 'int' => 0];
     }
 }

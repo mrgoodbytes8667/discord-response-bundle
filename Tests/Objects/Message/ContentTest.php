@@ -379,7 +379,7 @@ class ContentTest extends TestRolesSerializationCase
     public function testCreateManual()
     {
         $embed = $this->faker->embed();
-        $component = Component::create(ComponentType::actionRow());
+        $component = Component::create(ComponentType::ACTION_ROW);
         $content = Content::create(embeds: $embed, components: $component, tts: true);
 
         $this->assertCount(1, $content->getEmbeds());

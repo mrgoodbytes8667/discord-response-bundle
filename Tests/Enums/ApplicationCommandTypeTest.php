@@ -30,9 +30,7 @@ class ApplicationCommandTypeTest extends TestCase
     {
         $this->assertTrue(ApplicationCommandType::isValid($value));
         $type = ApplicationCommandType::from($value);
-        EnumAssertions::assertSameEnum($enum, $type);
-        EnumAssertions::assertSameEnumLabel($enum, $type->label);
-        EnumAssertions::assertSameEnumValue($enum, $type->value);
+        static::assertEquals($enum, $type);
     }
 
     /**
@@ -48,9 +46,9 @@ class ApplicationCommandTypeTest extends TestCase
      */
     public function provideEnums()
     {
-        yield ['value' => 1, 'enum' => ApplicationCommandType::chatInput()];
-        yield ['value' => 2, 'enum' => ApplicationCommandType::user()];
-        yield ['value' => 3, 'enum' => ApplicationCommandType::message()];
+        yield ['value' => 1, 'enum' => ApplicationCommandType::CHAT_INPUT];
+        yield ['value' => 2, 'enum' => ApplicationCommandType::USER];
+        yield ['value' => 3, 'enum' => ApplicationCommandType::MESSAGE];
     }
 
     /**
@@ -58,7 +56,7 @@ class ApplicationCommandTypeTest extends TestCase
      */
     public function testFormChoices()
     {
-        $choices = ApplicationCommandType::formChoices();
+        $choices = ApplicationCommandType::provideFormChoices();
         $this->assertCount(3, $choices);
 
         $this->assertArrayHasKey('Chat Input', $choices);

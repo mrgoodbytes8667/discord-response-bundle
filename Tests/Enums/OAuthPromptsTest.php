@@ -2,11 +2,9 @@
 
 namespace Bytes\DiscordResponseBundle\Tests\Enums;
 
-use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType;
+use BackedEnum;
 use Bytes\DiscordResponseBundle\Enums\OAuthPrompts;
-use Generator;
-use PHPUnit\Framework\TestCase;
-use Spatie\Enum\Phpunit\EnumAssertions;
+use Bytes\DiscordResponseBundle\Tests\EnumTestCase;
 
 /**
  * Class OAuthPromptsTest
@@ -14,37 +12,14 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  *
  * @covers \Bytes\DiscordResponseBundle\Enums\OAuthPrompts
  */
-class OAuthPromptsTest extends TestCase
+class OAuthPromptsTest extends EnumTestCase
 {
     /**
-     * @dataProvider provideEnums
-     * @param string $value
-     * @param OAuthPrompts $enum
+     * @return class-string<BackedEnum>
      */
-    public function testEnums(string $value, OAuthPrompts $enum)
+    public static function getEnumClass(): string
     {
-        $this->assertTrue(OAuthPrompts::isValid($value));
-        $type = OAuthPrompts::from($value);
-        EnumAssertions::assertSameEnum($enum, $type);
-        EnumAssertions::assertSameEnumLabel($enum, $type->label);
-        EnumAssertions::assertSameEnumValue($enum, $type->value);
-    }
-
-    /**
-     *
-     */
-    public function testInvalidEnums()
-    {
-        $this->assertFalse(ApplicationCommandOptionType::isValid('abc'));
-    }
-
-    /**
-     * @return Generator
-     */
-    public function provideEnums()
-    {
-        yield ['value' => 'none', 'enum' => OAuthPrompts::none()];
-        yield ['value' => 'consent', 'enum' => OAuthPrompts::consent()];
+        return OAuthPrompts::class;
     }
 
     /**

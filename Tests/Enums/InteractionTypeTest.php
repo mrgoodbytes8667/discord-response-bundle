@@ -3,45 +3,15 @@
 namespace Bytes\DiscordResponseBundle\Tests\Enums;
 
 use Bytes\DiscordResponseBundle\Enums\InteractionType;
-use Generator;
-use PHPUnit\Framework\TestCase;
-use Spatie\Enum\Phpunit\EnumAssertions;
+use Bytes\DiscordResponseBundle\Tests\EnumTestCase;
 
 /**
  *
  */
-class InteractionTypeTest extends TestCase
+class InteractionTypeTest extends EnumTestCase
 {
-    /**
-     * @dataProvider provideEnums
-     * @param string $value
-     * @param InteractionType $enum
-     */
-    public function testEnums(string $value, InteractionType $enum)
+    public static function getEnumClass(): string
     {
-        $this->assertTrue(InteractionType::isValid($value));
-        $type = InteractionType::from($value);
-        EnumAssertions::assertSameEnum($enum, $type);
-        EnumAssertions::assertSameEnumLabel($enum, $type->label);
-        EnumAssertions::assertSameEnumValue($enum, $type->value);
-        $this->assertNotEmpty(json_encode($type));
-    }
-
-    /**
-     *
-     */
-    public function testInvalidEnums()
-    {
-        $this->assertFalse(InteractionType::isValid('abc'));
-    }
-
-    /**
-     * @return Generator
-     */
-    public function provideEnums()
-    {
-        yield ['value' => 'ping', 'enum' => InteractionType::ping()];
-        yield ['value' => 'applicationCommand', 'enum' => InteractionType::applicationCommand()];
-        yield ['value' => 'messageComponent', 'enum' => InteractionType::messageComponent()];
+        return InteractionType::class;
     }
 }

@@ -165,7 +165,7 @@ class RoleTest extends TestCase
      */
     public function providePermissions()
     {
-        $all = self::extractAllFromEnum(Permissions::class);
+        $all = Permissions::cases();
         foreach (range(1, 10) as $index) {
             yield ['permissions' => Arr::random($all, rand(1, count($all) - 1))];
         }
