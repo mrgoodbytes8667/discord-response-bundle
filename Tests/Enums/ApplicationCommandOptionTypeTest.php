@@ -4,7 +4,6 @@ namespace Bytes\DiscordResponseBundle\Tests\Enums;
 
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType;
 use PHPUnit\Framework\TestCase;
-use Spatie\Enum\Phpunit\EnumAssertions;
 
 /**
  * Class ApplicationCommandOptionTypeTest
@@ -35,9 +34,7 @@ class ApplicationCommandOptionTypeTest extends TestCase
     {
         $this->assertTrue(ApplicationCommandOptionType::isValid($value));
         $type = ApplicationCommandOptionType::from($value);
-        EnumAssertions::assertSameEnum($enum, $type);
-        EnumAssertions::assertSameEnumLabel($enum, $type->label);
-        EnumAssertions::assertSameEnumValue($enum, $type->value);
+        static::assertEquals($enum, $type);
     }
 
     /**

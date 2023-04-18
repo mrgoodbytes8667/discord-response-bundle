@@ -33,7 +33,7 @@ use Faker\Provider\UserAgent;
 use Faker\Provider\Uuid;
 use Generator;
 use PHPUnit\Framework\TestCase;
-use Spatie\Enum\Faker\FakerEnumProvider;
+use Bytes\EnumSerializerBundle\Faker\FakerEnumProvider;
 
 /**
  * @property Discord|FakerEnumProvider|FakerGenerator|MiscProvider|Address|Barcode|Biased|Color|Company|DateTime|File|HtmlLorem|Image|Internet|Lorem|Medical|Miscellaneous|Payment|Person|PhoneNumber|Text|UserAgent|Uuid $faker

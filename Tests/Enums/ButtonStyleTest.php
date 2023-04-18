@@ -3,46 +3,15 @@
 namespace Bytes\DiscordResponseBundle\Tests\Enums;
 
 use Bytes\DiscordResponseBundle\Enums\ButtonStyle;
-use Generator;
-use PHPUnit\Framework\TestCase;
-use Spatie\Enum\Phpunit\EnumAssertions;
+use Bytes\DiscordResponseBundle\Tests\EnumTestCase;
 
 /**
  *
  */
-class ButtonStyleTest extends TestCase
+class ButtonStyleTest extends EnumTestCase
 {
-    /**
-     * @dataProvider provideEnums
-     * @param string $value
-     * @param ButtonStyle $enum
-     */
-    public function testEnums(string $value, ButtonStyle $enum)
+    public static function getEnumClass(): string
     {
-        $this->assertTrue(ButtonStyle::isValid($value));
-        $type = ButtonStyle::from($value);
-        EnumAssertions::assertSameEnum($enum, $type);
-        EnumAssertions::assertSameEnumLabel($enum, $type->label);
-        EnumAssertions::assertSameEnumValue($enum, $type->value);
-    }
-
-    /**
-     *
-     */
-    public function testInvalidEnums()
-    {
-        $this->assertFalse(ButtonStyle::isValid('abc'));
-    }
-
-    /**
-     * @return Generator
-     */
-    public function provideEnums()
-    {
-        yield ['value' => 'primary', 'enum' => ButtonStyle::PRIMARY];
-        yield ['value' => 'secondary', 'enum' => ButtonStyle::SECONDARY];
-        yield ['value' => 'success', 'enum' => ButtonStyle::SUCCESS];
-        yield ['value' => 'danger', 'enum' => ButtonStyle::DANGER];
-        yield ['value' => 'link', 'enum' => ButtonStyle::LINK];
+        return ButtonStyle::class;
     }
 }

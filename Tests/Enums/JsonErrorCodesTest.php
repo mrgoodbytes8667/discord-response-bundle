@@ -2,12 +2,12 @@
 
 namespace Bytes\DiscordResponseBundle\Tests\Enums;
 
+use BackedEnum;
 use Bytes\DiscordResponseBundle\Enums\ApplicationCommandOptionType;
 use Bytes\DiscordResponseBundle\Enums\JsonErrorCodes;
+use Bytes\DiscordResponseBundle\Tests\EnumTestCase;
 use Bytes\Tests\Common\DataProvider\NullProviderTrait;
 use Generator;
-use PHPUnit\Framework\TestCase;
-use Spatie\Enum\Phpunit\EnumAssertions;
 
 /**
  * Class JsonErrorCodesTest
@@ -15,33 +15,16 @@ use Spatie\Enum\Phpunit\EnumAssertions;
  *
  * @covers \Bytes\DiscordResponseBundle\Enums\JsonErrorCodes
  */
-class JsonErrorCodesTest extends TestCase
+class JsonErrorCodesTest extends EnumTestCase
 {
     use NullProviderTrait;
 
     /**
-     * @dataProvider provideEnums
-     * @param string $value
-     * @param JsonErrorCodes $enum
+     * @return class-string<BackedEnum>
      */
-    public function testEnums($value, JsonErrorCodes $enum)
+    public static function getEnumClass(): string
     {
-        $this->assertTrue(JsonErrorCodes::isValid($value));
-        $type = JsonErrorCodes::from($value);
-        EnumAssertions::assertSameEnum($enum, $type);
-        EnumAssertions::assertSameEnumLabel($enum, $type->label);
-        EnumAssertions::assertSameEnumValue($enum, $type->value);
-    }
-
-    /**
-     * @return Generator
-     */
-    public function provideEnums()
-    {
-        yield ['value' => 'generalError', 'enum' => JsonErrorCodes::GENERAL_ERROR];
-        yield ['value' => 'invalidOAuth2AccessTokenProvided', 'enum' => JsonErrorCodes::INVALID_OAUTH_2_ACCESS_TOKEN_PROVIDED];
-        yield ['value' => 0, 'enum' => JsonErrorCodes::GENERAL_ERROR];
-        yield ['value' => 50025, 'enum' => JsonErrorCodes::INVALID_OAUTH_2_ACCESS_TOKEN_PROVIDED];
+        return JsonErrorCodes::class;
     }
 
     /**

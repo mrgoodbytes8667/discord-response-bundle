@@ -35,9 +35,7 @@ class ApplicationCommandPermissionTypeTest extends TestCase
     {
         $this->assertTrue(ApplicationCommandPermissionType::isValid($value));
         $type = ApplicationCommandPermissionType::from($value);
-        EnumAssertions::assertSameEnum($enum, $type);
-        EnumAssertions::assertSameEnumLabel($enum, $type->label);
-        EnumAssertions::assertSameEnumValue($enum, $type->value);
+        static::assertEquals($enum, $type);
     }
 
     /**

@@ -456,12 +456,12 @@ enum Permissions: int implements IntBackedEnumInterface
     public static function getPermissions(int $flags, bool $asArrayOfEnums = false): ?array
     {
         $return = [];
-        foreach (static::values() as $index => $value) {
+        foreach (static::cases() as $index => $value) {
             if (static::hasFlag($flags, $value)) {
                 if ($asArrayOfEnums) {
-                    $return[] = static::from($index);
+                    $return[] = $value;
                 } else {
-                    $return[] = $index;
+                    $return[] = $value->name;
                 }
             }
         }

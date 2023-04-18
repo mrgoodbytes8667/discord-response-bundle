@@ -2,20 +2,22 @@
 
 namespace Bytes\DiscordResponseBundle\Tests\Enums;
 
+use Bytes\DiscordResponseBundle\Enums\ButtonStyle;
 use Bytes\DiscordResponseBundle\Enums\ChannelTypes;
-use Bytes\Tests\Common\TestEnumTrait;
-use PHPUnit\Framework\TestCase;
-use Spatie\Enum\Phpunit\EnumAssertions;
+use Bytes\DiscordResponseBundle\Tests\EnumTestCase;
 
 /**
  * Class ChannelTypesTest
  * @package Bytes\DiscordResponseBundle\Tests\Enums
  */
-class ChannelTypesTest extends TestCase
+class ChannelTypesTest extends EnumTestCase
 {
-    use TestEnumTrait;
+    public static function getEnumClass(): string
+    {
+        return ChannelTypes::class;
+    }
 
-    /**
+/**
      * @dataProvider provideDiscordJsValues
      * @param string $discordjs
      * @param ChannelTypes $enum
@@ -23,8 +25,7 @@ class ChannelTypesTest extends TestCase
     public function testGetFromDiscordJS(string $discordjs, ChannelTypes $enum)
     {
         $type = ChannelTypes::getFromDiscordJS($discordjs);
-        EnumAssertions::assertIsEnum($type);
-        EnumAssertions::assertSameEnum($enum, $type);
+        static::assertEquals($enum, $type);
     }
 
     /**
@@ -32,7 +33,7 @@ class ChannelTypesTest extends TestCase
      */
     public function testGetFromDiscordJSUnknown()
     {
-        $this->expectException(\BadMethodCallException::class);
+        $this->expectException(\ValueError::class);
         ChannelTypes::getFromDiscordJS('unknown');
     }
 

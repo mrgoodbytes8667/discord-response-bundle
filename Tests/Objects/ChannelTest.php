@@ -8,8 +8,8 @@ use Bytes\DiscordResponseBundle\Enums\ChannelTypes;
 use Bytes\DiscordResponseBundle\Objects\Channel;
 use Bytes\DiscordResponseBundle\Objects\Overwrite;
 use Bytes\DiscordResponseBundle\Objects\User;
+use Bytes\EnumSerializerBundle\Faker\FakerEnumProvider;
 use PHPUnit\Framework\TestCase;
-use Spatie\Enum\Faker\FakerEnumProvider;
 
 /**
  * Class ChannelTest
@@ -23,7 +23,7 @@ class ChannelTest extends TestCase
 
     protected function getProviders()
     {
-        return array_merge([Discord::class, \Spatie\Enum\Faker\FakerEnumProvider::class], $this->parentGetProviders());
+        return array_merge([Discord::class, FakerEnumProvider::class], $this->parentGetProviders());
     }
 
     /**
@@ -276,8 +276,8 @@ class ChannelTest extends TestCase
         $this->faker->addProvider(new FakerEnumProvider($this->faker));
         $enum = $this->faker->randomEnumValue(ChannelTypes::class);
         yield ['type' => $enum, 'expected' => $enum];
-        yield ['type' => 'dm', 'expected' => ChannelTypes::from(ChannelTypes::DM)->value];
-        yield ['type' => 'text', 'expected' => ChannelTypes::from(ChannelTypes::GUILD_TEXT)->value];
+        yield ['type' => 'dm', 'expected' => ChannelTypes::DM->value];
+        yield ['type' => 'text', 'expected' => ChannelTypes::GUILD_TEXT->value];
         yield ['type' => 'GUILD_TEXT', 'expected' => ChannelTypes::GUILD_TEXT->value];
         yield ['type' => 'GROUP_DM', 'expected' => ChannelTypes::GROUP_DM->value];
     }
