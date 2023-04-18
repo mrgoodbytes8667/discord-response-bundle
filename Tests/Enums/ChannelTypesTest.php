@@ -49,12 +49,11 @@ class ChannelTypesTest extends TestCase
      */
     public function provideDiscordJsValues()
     {
-        yield ['discordjs' => 'dm', 'enum' => ChannelTypes::dm()];
-        yield ['discordjs' => 'text', 'enum' => ChannelTypes::guildText()];
-        yield ['discordjs' => 'guild_text', 'enum' => ChannelTypes::guildText()];
-        yield ['discordjs' => 'voice', 'enum' => ChannelTypes::guildVoice()];
-        yield ['discordjs' => 'category', 'enum' => ChannelTypes::guildCategory()];
-        yield ['discordjs' => 'news', 'enum' => ChannelTypes::guildNews()];
-        yield ['discordjs' => 'store', 'enum' => ChannelTypes::guildStore()];
+        yield ['discordjs' => 'dm', 'enum' => ChannelTypes::DM];
+        yield ['discordjs' => 'text', 'enum' => ChannelTypes::GUILD_TEXT];
+        yield ['discordjs' => 'guild_text', 'enum' => ChannelTypes::GUILD_TEXT];
+        yield ['discordjs' => 'voice', 'enum' => ChannelTypes::GUILD_VOICE];
+        yield ['discordjs' => 'category', 'enum' => ChannelTypes::GUILD_CATEGORY];
+        yield ['discordjs' => 'news', 'enum' => ChannelTypes::GUILD_NEWS];
     }
 }

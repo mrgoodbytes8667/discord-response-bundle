@@ -65,7 +65,7 @@ class ChatInputCommand extends ApplicationCommand
             ->setDescription($description)
             ->setOptions($options)
             ->setDefaultPermission($defaultPermission)
-            ->setType(ApplicationCommandType::chatInput());
+            ->setType(ApplicationCommandType::CHAT_INPUT);
 
         return $command;
     }

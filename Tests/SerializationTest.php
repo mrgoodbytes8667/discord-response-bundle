@@ -606,11 +606,11 @@ class SerializationTest extends TestSerializationCase
     {
         $serializer = $this->createSerializer();
 
-        $output = $serializer->serialize(OAuthPrompts::consent(), 'json');
+        $output = $serializer->serialize(OAuthPrompts::CONSENT, 'json');
 
         $this->assertEquals($this->buildFixtureResponse('consent'), $output);
 
-        $output = $serializer->serialize(OAuthPrompts::none(), 'json');
+        $output = $serializer->serialize(OAuthPrompts::NONE, 'json');
 
         $this->assertEquals($this->buildFixtureResponse('none'), $output);
 

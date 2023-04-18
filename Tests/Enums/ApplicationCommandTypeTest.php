@@ -48,9 +48,9 @@ class ApplicationCommandTypeTest extends TestCase
      */
     public function provideEnums()
     {
-        yield ['value' => 1, 'enum' => ApplicationCommandType::chatInput()];
-        yield ['value' => 2, 'enum' => ApplicationCommandType::user()];
-        yield ['value' => 3, 'enum' => ApplicationCommandType::message()];
+        yield ['value' => 1, 'enum' => ApplicationCommandType::CHAT_INPUT];
+        yield ['value' => 2, 'enum' => ApplicationCommandType::USER];
+        yield ['value' => 3, 'enum' => ApplicationCommandType::MESSAGE];
     }
 
     /**

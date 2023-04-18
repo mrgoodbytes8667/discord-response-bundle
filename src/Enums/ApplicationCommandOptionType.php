@@ -40,61 +40,61 @@ enum ApplicationCommandOptionType: int implements IntBackedEnumInterface
      */
     case NUMBER = 10;
 
-    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::SUBCOMMAND')]
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::SUBCOMMAND')]
     public static function subCommand(): ApplicationCommandOptionType
     {
         return ApplicationCommandOptionType::SUBCOMMAND;
     }
 
-    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::SUB_COMMAND_GROUP')]
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::SUB_COMMAND_GROUP')]
     public static function subCommandGroup(): ApplicationCommandOptionType
     {
         return ApplicationCommandOptionType::SUB_COMMAND_GROUP;
     }
 
-    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::STRING')]
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::STRING')]
     public static function string(): ApplicationCommandOptionType
     {
         return ApplicationCommandOptionType::STRING;
     }
 
-    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::INTEGER')]
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::INTEGER')]
     public static function integer(): ApplicationCommandOptionType
     {
         return ApplicationCommandOptionType::INTEGER;
     }
 
-    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::BOOLEAN')]
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::BOOLEAN')]
     public static function boolean(): ApplicationCommandOptionType
     {
         return ApplicationCommandOptionType::BOOLEAN;
     }
 
-    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::USER')]
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::USER')]
     public static function user(): ApplicationCommandOptionType
     {
         return ApplicationCommandOptionType::USER;
     }
 
-    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::CHANNEL')]
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::CHANNEL')]
     public static function channel(): ApplicationCommandOptionType
     {
         return ApplicationCommandOptionType::CHANNEL;
     }
 
-    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::ROLE')]
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::ROLE')]
     public static function role(): ApplicationCommandOptionType
     {
         return ApplicationCommandOptionType::ROLE;
     }
 
-    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::MENTIONABLE')]
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::MENTIONABLE')]
     public static function mentionable(): ApplicationCommandOptionType
     {
         return ApplicationCommandOptionType::MENTIONABLE;
     }
 
-    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::NUMBER')]
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::NUMBER')]
     public static function number(): ApplicationCommandOptionType
     {
         return ApplicationCommandOptionType::NUMBER;

@@ -53,7 +53,7 @@ class ApplicationCommandPermissionTypeTest extends TestCase
      */
     public function provideEnums()
     {
-        yield ['value' => 1, 'enum' => ApplicationCommandPermissionType::role()];
-        yield ['value' => 2, 'enum' => ApplicationCommandPermissionType::user()];
+        yield ['value' => 1, 'enum' => ApplicationCommandPermissionType::ROLE];
+        yield ['value' => 2, 'enum' => ApplicationCommandPermissionType::USER];
     }
 }

@@ -40,8 +40,8 @@ class InteractionTypeTest extends TestCase
      */
     public function provideEnums()
     {
-        yield ['value' => 'ping', 'enum' => InteractionType::ping()];
-        yield ['value' => 'applicationCommand', 'enum' => InteractionType::applicationCommand()];
-        yield ['value' => 'messageComponent', 'enum' => InteractionType::messageComponent()];
+        yield ['value' => 'ping', 'enum' => InteractionType::PING];
+        yield ['value' => 'applicationCommand', 'enum' => InteractionType::APPLICATION_COMMAND];
+        yield ['value' => 'messageComponent', 'enum' => InteractionType::MESSAGE_COMPONENT];
     }
 }

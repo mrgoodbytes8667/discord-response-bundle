@@ -38,10 +38,10 @@ class JsonErrorCodesTest extends TestCase
      */
     public function provideEnums()
     {
-        yield ['value' => 'generalError', 'enum' => JsonErrorCodes::generalError()];
-        yield ['value' => 'invalidOAuth2AccessTokenProvided', 'enum' => JsonErrorCodes::invalidOAuth2AccessTokenProvided()];
-        yield ['value' => 0, 'enum' => JsonErrorCodes::generalError()];
-        yield ['value' => 50025, 'enum' => JsonErrorCodes::invalidOAuth2AccessTokenProvided()];
+        yield ['value' => 'generalError', 'enum' => JsonErrorCodes::GENERAL_ERROR];
+        yield ['value' => 'invalidOAuth2AccessTokenProvided', 'enum' => JsonErrorCodes::INVALID_OAUTH_2_ACCESS_TOKEN_PROVIDED];
+        yield ['value' => 0, 'enum' => JsonErrorCodes::GENERAL_ERROR];
+        yield ['value' => 50025, 'enum' => JsonErrorCodes::INVALID_OAUTH_2_ACCESS_TOKEN_PROVIDED];
     }
 
     /**
@@ -57,8 +57,8 @@ class JsonErrorCodesTest extends TestCase
      */
     public function provideUnknownEnums()
     {
-        yield [JsonErrorCodes::unknownEmoji()];
-        yield [JsonErrorCodes::unknownBan()];
+        yield [JsonErrorCodes::UNKNOWN_EMOJI];
+        yield [JsonErrorCodes::UNKNOWN_BAN];
     }
 
     /**
@@ -66,8 +66,8 @@ class JsonErrorCodesTest extends TestCase
      */
     public function provideValidEnums()
     {
-        yield [JsonErrorCodes::generalError()];
-        yield [JsonErrorCodes::invalidOAuth2AccessTokenProvided()];
+        yield [JsonErrorCodes::GENERAL_ERROR];
+        yield [JsonErrorCodes::INVALID_OAUTH_2_ACCESS_TOKEN_PROVIDED];
     }
 
     /**

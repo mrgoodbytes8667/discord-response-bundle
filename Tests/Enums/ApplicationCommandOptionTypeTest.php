@@ -53,15 +53,15 @@ class ApplicationCommandOptionTypeTest extends TestCase
      */
     public function provideEnums()
     {
-        yield ['value' => 1, 'enum' => ApplicationCommandOptionType::subCommand()];
-        yield ['value' => 2, 'enum' => ApplicationCommandOptionType::subCommandGroup()];
-        yield ['value' => 3, 'enum' => ApplicationCommandOptionType::string()];
-        yield ['value' => 4, 'enum' => ApplicationCommandOptionType::integer()];
-        yield ['value' => 5, 'enum' => ApplicationCommandOptionType::boolean()];
-        yield ['value' => 6, 'enum' => ApplicationCommandOptionType::user()];
-        yield ['value' => 7, 'enum' => ApplicationCommandOptionType::channel()];
-        yield ['value' => 8, 'enum' => ApplicationCommandOptionType::role()];
-        yield ['value' => 9, 'enum' => ApplicationCommandOptionType::mentionable()];
-        yield ['value' => 10, 'enum' => ApplicationCommandOptionType::number()];
+        yield ['value' => 1, 'enum' => ApplicationCommandOptionType::SUBCOMMAND];
+        yield ['value' => 2, 'enum' => ApplicationCommandOptionType::SUB_COMMAND_GROUP];
+        yield ['value' => 3, 'enum' => ApplicationCommandOptionType::STRING];
+        yield ['value' => 4, 'enum' => ApplicationCommandOptionType::INTEGER];
+        yield ['value' => 5, 'enum' => ApplicationCommandOptionType::BOOLEAN];
+        yield ['value' => 6, 'enum' => ApplicationCommandOptionType::USER];
+        yield ['value' => 7, 'enum' => ApplicationCommandOptionType::CHANNEL];
+        yield ['value' => 8, 'enum' => ApplicationCommandOptionType::ROLE];
+        yield ['value' => 9, 'enum' => ApplicationCommandOptionType::MENTIONABLE];
+        yield ['value' => 10, 'enum' => ApplicationCommandOptionType::NUMBER];
     }
 }

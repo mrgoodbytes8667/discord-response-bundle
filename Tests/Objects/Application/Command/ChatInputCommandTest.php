@@ -51,7 +51,7 @@ class ChatInputCommandTest extends TestCase
     public function provideValidChatInputCommands()
     {
         yield ['command' => ChatInputCommand::createChatCommand('sample', self::randomString(), [
-            Option::create(ACOT::string(), 'pick', 'Which is the word sample?', false, [
+            Option::create(ACOT::STRING, 'pick', 'Which is the word sample?', false, [
                 ApplicationCommandOptionChoice::create('Foo'),
                 ApplicationCommandOptionChoice::create('Bar'),
                 ApplicationCommandOptionChoice::create('Sample')
@@ -59,7 +59,7 @@ class ChatInputCommandTest extends TestCase
         ])];
 
         /** @var ACOT[] $optionTypes */
-        $optionTypes = self::extractAllFromEnum(ACOT::class);
+        $optionTypes = ACOT::cases();
 
         $subcommands = [];
 
@@ -70,7 +70,7 @@ class ChatInputCommandTest extends TestCase
         }
 
         $subcommands[] = Option::createSubcommand(self::randomValidName(), self::randomString(), [
-            Option::create(ACOT::string(), self::randomValidName(), self::randomString(), true, [
+            Option::create(ACOT::STRING, self::randomValidName(), self::randomString(), true, [
                 ApplicationCommandOptionChoice::create(self::randomString()),
                 ApplicationCommandOptionChoice::create(self::randomString()),
                 ApplicationCommandOptionChoice::create(self::randomString()),
@@ -195,7 +195,7 @@ class ChatInputCommandTest extends TestCase
     public function testCreateOptionNameHasUppercase()
     {
         $command = ChatInputCommand::createChatCommand('sample', self::randomString(), [
-            Option::create(ACOT::string(), 'Pick', 'Which is the word sample?', false, [
+            Option::create(ACOT::STRING, 'Pick', 'Which is the word sample?', false, [
                 ApplicationCommandOptionChoice::create('Foo'),
                 ApplicationCommandOptionChoice::create('Bar'),
                 ApplicationCommandOptionChoice::create('Sample')
@@ -220,7 +220,7 @@ class ChatInputCommandTest extends TestCase
     public function testCreateNameAndOptionNameHasUppercase()
     {
         $command = ChatInputCommand::createChatCommand('Sample', self::randomString(), [
-            Option::create(ACOT::string(), 'Pick', 'Which is the word sample?', false, [
+            Option::create(ACOT::STRING, 'Pick', 'Which is the word sample?', false, [
                 ApplicationCommandOptionChoice::create('Foo'),
                 ApplicationCommandOptionChoice::create('Bar'),
                 ApplicationCommandOptionChoice::create('Sample')
@@ -273,7 +273,7 @@ class ChatInputCommandTest extends TestCase
 
         // Subcommand isn't valid - name too long
         $command = ChatInputCommand::createChatCommand('sample', self::randomString(), [
-            Option::create(ACOT::string(), self::randomValidName(33), 'Which is the word sample?', false, [
+            Option::create(ACOT::STRING, self::randomValidName(33), 'Which is the word sample?', false, [
                 ApplicationCommandOptionChoice::create('Foo'),
                 ApplicationCommandOptionChoice::create('Bar'),
                 ApplicationCommandOptionChoice::create('Sample')
@@ -304,7 +304,7 @@ class ChatInputCommandTest extends TestCase
 
         // Subcommand isn't valid - name is right length but has an invalid character
         $command = ChatInputCommand::createChatCommand('sample', self::randomString(), [
-            Option::create(ACOT::string(), self::randomValidName(10) . ' a', self::randomString(), false, [
+            Option::create(ACOT::STRING, self::randomValidName(10) . ' a', self::randomString(), false, [
                 ApplicationCommandOptionChoice::create('Foo'),
                 ApplicationCommandOptionChoice::create('Bar'),
                 ApplicationCommandOptionChoice::create('Sample')
@@ -331,7 +331,7 @@ class ChatInputCommandTest extends TestCase
 
         // Subcommand isn't valid - description is too long
         $command = ChatInputCommand::createChatCommand(self::randomValidName(), self::randomString(), [
-            Option::create(ACOT::string(), self::randomValidName(), self::randomString(101), false, [
+            Option::create(ACOT::STRING, self::randomValidName(), self::randomString(101), false, [
                 ApplicationCommandOptionChoice::create('Foo'),
                 ApplicationCommandOptionChoice::create('Bar'),
                 ApplicationCommandOptionChoice::create('Sample')
@@ -382,7 +382,7 @@ class ChatInputCommandTest extends TestCase
     public function getCommandOptionTypes(): array
     {
         if (empty($this->commandOptionTypes)) {
-            $this->commandOptionTypes = $this->extractAllFromEnum(ACOT::class);
+            $this->commandOptionTypes = ACOT::cases();
         }
         return $this->commandOptionTypes;
     }
@@ -490,12 +490,12 @@ class ChatInputCommandTest extends TestCase
      */
     public function provideTypes()
     {
-        yield [ApplicationCommandType::chatInput()];
-        yield [ApplicationCommandType::message()];
-        yield [ApplicationCommandType::user()];
-        yield [ApplicationCommandType::chatInput()->value];
-        yield [ApplicationCommandType::message()->value];
-        yield [ApplicationCommandType::user()->value];
+        yield [ApplicationCommandType::CHAT_INPUT];
+        yield [ApplicationCommandType::MESSAGE];
+        yield [ApplicationCommandType::USER];
+        yield [ApplicationCommandType::CHAT_INPUT->value];
+        yield [ApplicationCommandType::MESSAGE->value];
+        yield [ApplicationCommandType::USER->value];
     }
 
     /**

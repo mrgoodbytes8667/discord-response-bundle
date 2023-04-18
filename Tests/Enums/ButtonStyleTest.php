@@ -39,10 +39,10 @@ class ButtonStyleTest extends TestCase
      */
     public function provideEnums()
     {
-        yield ['value' => 'primary', 'enum' => ButtonStyle::primary()];
-        yield ['value' => 'secondary', 'enum' => ButtonStyle::secondary()];
-        yield ['value' => 'success', 'enum' => ButtonStyle::success()];
-        yield ['value' => 'danger', 'enum' => ButtonStyle::danger()];
-        yield ['value' => 'link', 'enum' => ButtonStyle::link()];
+        yield ['value' => 'primary', 'enum' => ButtonStyle::PRIMARY];
+        yield ['value' => 'secondary', 'enum' => ButtonStyle::SECONDARY];
+        yield ['value' => 'success', 'enum' => ButtonStyle::SUCCESS];
+        yield ['value' => 'danger', 'enum' => ButtonStyle::DANGER];
+        yield ['value' => 'link', 'enum' => ButtonStyle::LINK];
     }
 }

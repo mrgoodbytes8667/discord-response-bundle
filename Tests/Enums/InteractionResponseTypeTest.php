@@ -49,11 +49,11 @@ class InteractionResponseTypeTest extends TestCase
      */
     public function provideData()
     {
-        yield ['entry' => InteractionResponseType::pong(), 'label' => 'pong', 'value' => 1];
-        yield ['entry' => InteractionResponseType::channelMessageWithSource(), 'label' => 'channelMessageWithSource', 'value' => 4];
-        yield ['entry' => InteractionResponseType::deferredChannelMessageWithSource(), 'label' => 'deferredChannelMessageWithSource', 'value' => 5];
-        yield ['entry' => InteractionResponseType::deferredUpdateMessage(), 'label' => 'deferredUpdateMessage', 'value' => 6];
-        yield ['entry' => InteractionResponseType::updateMessage(), 'label' => 'updateMessage', 'value' => 7];
+        yield ['entry' => InteractionResponseType::PONG, 'label' => 'pong', 'value' => 1];
+        yield ['entry' => InteractionResponseType::CHANNEL_MESSAGE_WITH_SOURCE, 'label' => 'channelMessageWithSource', 'value' => 4];
+        yield ['entry' => InteractionResponseType::DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE, 'label' => 'deferredChannelMessageWithSource', 'value' => 5];
+        yield ['entry' => InteractionResponseType::DEFERRED_UPDATE_MESSAGE, 'label' => 'deferredUpdateMessage', 'value' => 6];
+        yield ['entry' => InteractionResponseType::UPDATE_MESSAGE, 'label' => 'updateMessage', 'value' => 7];
     }
 
     /**

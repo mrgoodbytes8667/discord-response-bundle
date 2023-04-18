@@ -33,7 +33,7 @@ class UserCommand extends ApplicationCommand
         $command = new static();
         $command->setName($name)
             ->setDefaultPermission($defaultPermission)
-            ->setType(ApplicationCommandType::user());
+            ->setType(ApplicationCommandType::USER);
 
         return $command;
     }

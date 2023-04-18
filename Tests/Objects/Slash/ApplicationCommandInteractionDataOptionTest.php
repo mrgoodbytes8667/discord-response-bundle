@@ -117,7 +117,7 @@ class ApplicationCommandInteractionDataOptionTest extends TestCase
     {
         $this->setupFaker();
         foreach ([$this->faker->word(), $this->faker->userName(), $this->faker->numberBetween(), $this->faker->boolean(), null] as $value) {
-            foreach ([ApplicationCommandOptionType::string(), ApplicationCommandOptionType::string()->value, null] as $type) {
+            foreach ([ApplicationCommandOptionType::STRING, ApplicationCommandOptionType::STRING->value, null] as $type) {
                 yield ['name' => $this->faker->word(), 'type' => $type, 'value' => $value, 'options' => null];
                 yield ['name' => $this->faker->word(), 'type' => $type, 'value' => $value, 'options' => []];
                 foreach (range(1, 5) as $optionsRange) {

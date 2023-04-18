@@ -31,8 +31,8 @@ class ApplicationCommandPermissionTest extends TestCase
      */
     public function provideType()
     {
-        yield [ApplicationCommandPermissionType::role()];
-        yield [ApplicationCommandPermissionType::user()];
+        yield [ApplicationCommandPermissionType::ROLE];
+        yield [ApplicationCommandPermissionType::USER];
     }
 
     /**
@@ -87,7 +87,7 @@ class ApplicationCommandPermissionTest extends TestCase
     public function testCreate()
     {
         $id = $this->faker->snowflake();
-        $type = $this->faker->randomElement([ApplicationCommandPermissionType::role(), ApplicationCommandPermissionType::user()]);
+        $type = $this->faker->randomElement([ApplicationCommandPermissionType::ROLE, ApplicationCommandPermissionType::USER]);
         $permission = $this->faker->boolean();
 
         $object = ApplicationCommandPermission::create($id, $type, $permission);

@@ -2,42 +2,79 @@
 
 namespace Bytes\DiscordResponseBundle\Enums;
 
-use Bytes\EnumSerializerBundle\Enums\Enum;
-use JetBrains\PhpStorm\ArrayShape;
+use Bytes\EnumSerializerBundle\Enums\IntBackedEnumInterface;
+use Bytes\EnumSerializerBundle\Enums\IntBackedEnumTrait;
+use JetBrains\PhpStorm\Deprecated;
 
 /**
  * Button Style
  * @link https://discord.com/developers/docs/interactions/message-components#button-object-button-styles
  *
- * @method static self primary() blurple [requires custom_id]
- * @method static self secondary() grey [requires custom_id]
- * @method static self success() green [requires custom_id]
- * @method static self danger() red [requires custom_id]
- * @method static self link() grey, navigates to a URL [requires url]
- *
  * @version v0.9.12 As of 2021-08-03 Discord Documentation
  */
-class ButtonStyle extends Enum
+enum ButtonStyle: int implements IntBackedEnumInterface
 {
+    use IntBackedEnumTrait;
+
     /**
-     * @return int[]
+     * blurple [requires custom_id]
      */
-    #[ArrayShape(['primary' => "int", 'secondary' => "int", 'success' => "int", 'danger' => "int", 'link' => "int"])]
-    protected static function values(): array
+    case PRIMARY = 1;
+
+    /**
+     * grey [requires custom_id]
+     */
+    case SECONDARY = 2;
+
+    /**
+     * green [requires custom_id]
+     */
+    case SUCCESS = 3;
+
+    /**
+     * red [requires custom_id]
+     */
+    case DANGER = 4;
+
+    /**
+     * grey, navigates to a URL [requires url]
+     */
+    case LINK = 5;
+
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::PRIMARY')]
+    public static function primary(): ButtonStyle
     {
-        return [
-            'primary' => 1,
-            'secondary' => 2,
-            'success' => 3,
-            'danger' => 4,
-            'link' => 5,
-        ];
+        return ButtonStyle::PRIMARY;
+    }
+
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::SECONDARY')]
+    public static function secondary(): ButtonStyle
+    {
+        return ButtonStyle::SECONDARY;
+    }
+
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::SUCCESS')]
+    public static function success(): ButtonStyle
+    {
+        return ButtonStyle::SUCCESS;
+    }
+
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::DANGER')]
+    public static function danger(): ButtonStyle
+    {
+        return ButtonStyle::DANGER;
+    }
+
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::LINK')]
+    public static function link(): ButtonStyle
+    {
+        return ButtonStyle::LINK;
     }
 
     /**
      * @return int
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): int
     {
         return $this->value;
     }

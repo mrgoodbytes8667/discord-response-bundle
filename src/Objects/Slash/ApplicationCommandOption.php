@@ -94,7 +94,7 @@ class ApplicationCommandOption implements NameInterface
     public static function createSubcommand(string $name, string $description, ?array $options = [])
     {
         $option = new static();
-        $option->setType(ApplicationCommandOptionType::subCommand());
+        $option->setType(ApplicationCommandOptionType::SUBCOMMAND);
         $option->setName($name);
         $option->setDescription($description);
         $option->setOptions($options);
@@ -111,7 +111,7 @@ class ApplicationCommandOption implements NameInterface
     public static function createSubcommandGroup(string $name, string $description, ?array $options = [])
     {
         $option = new static();
-        $option->setType(ApplicationCommandOptionType::subCommandGroup());
+        $option->setType(ApplicationCommandOptionType::SUB_COMMAND_GROUP);
         $option->setName($name);
         $option->setDescription($description);
         $option->setOptions($options);

@@ -122,7 +122,7 @@ class Component
      */
     public static function createActionRow(array $components): static
     {
-        return static::create(ComponentType::actionRow(), components: $components);
+        return static::create(ComponentType::ACTION_ROW, components: $components);
     }
 
     /**
@@ -174,9 +174,9 @@ class Component
     public static function createButton(ButtonStyle $style, ?string $customId = null, ?string $url = null,
                                         ?string     $label = null, ?PartialEmoji $emoji = null, bool $disabled = false): static
     {
-        return static::create(ComponentType::button(), customId: !$style->equals(ButtonStyle::link()) ? $customId : null,
+        return static::create(ComponentType::BUTTON, customId: !$style->equals(ButtonStyle::LINK) ? $customId : null,
             disabled: $disabled, style: $style, label: $label, emoji: $emoji,
-            url: $style->equals(ButtonStyle::link()) ? $url : null);
+            url: $style->equals(ButtonStyle::LINK) ? $url : null);
     }
 
     /**
@@ -190,11 +190,11 @@ class Component
     public static function createInteractiveButton(ButtonStyle   $style, string $customId, ?string $label = null,
                                                    ?PartialEmoji $emoji = null, bool $disabled = false): static
     {
-        if ($style->equals(ButtonStyle::link())) {
+        if ($style->equals(ButtonStyle::LINK)) {
             throw new UnexpectedValueException('Interactive buttons cannot use the link style');
         }
         
-        return static::create(ComponentType::button(), customId: $customId, disabled: $disabled, style: $style,
+        return static::create(ComponentType::BUTTON, customId: $customId, disabled: $disabled, style: $style,
             label: $label, emoji: $emoji);
     }
 
@@ -207,7 +207,7 @@ class Component
      */
     public static function createLinkButton(string $url, ?string $label = null, ?PartialEmoji $emoji = null, bool $disabled = false): static
     {
-        return static::create(ComponentType::button(), disabled: $disabled, style: ButtonStyle::link(), label: $label,
+        return static::create(ComponentType::BUTTON, disabled: $disabled, style: ButtonStyle::LINK, label: $label,
             emoji: $emoji, url: $url);
     }
 
@@ -223,7 +223,7 @@ class Component
     public static function createSelectMenu(?string $customId = null, bool $disabled = false, ?array $options = [],
                                             ?string $placeholder = null, int $minValues = 1, ?int $maxValues = 1): static
     {
-        return static::create(ComponentType::selectMenu(), $customId, $disabled, options: $options,
+        return static::create(ComponentType::SELECT_MENU, $customId, $disabled, options: $options,
             placeholder: $placeholder, minValues: $minValues, maxValues: $maxValues);
     }
 
@@ -344,9 +344,9 @@ class Component
     {
         switch ($this->getType()) {
             // If this is a button
-            case ComponentType::button():
+            case ComponentType::BUTTON:
                 // If this is a link button
-                if ($this->getStyle()->equals(ButtonStyle::link())) {
+                if ($this->getStyle()->equals(ButtonStyle::LINK)) {
                     // Custom ID must be null
                     if (!is_null($this->getCustomId())) {
                         $context->buildViolation('The field "customId" cannot be populated for link buttons.')

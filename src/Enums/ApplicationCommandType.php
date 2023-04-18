@@ -4,52 +4,56 @@
 namespace Bytes\DiscordResponseBundle\Enums;
 
 
-use Bytes\EnumSerializerBundle\Enums\Enum;
-use function Symfony\Component\String\u;
+use Bytes\EnumSerializerBundle\Enums\IntBackedEnumInterface;
+use Bytes\EnumSerializerBundle\Enums\IntBackedEnumTrait;
+use JetBrains\PhpStorm\Deprecated;
 
 /**
- * @method static self chatInput() Slash commands; a text-based command that shows up when a user types /
- * @method static self user() A UI-based command that shows up when you right click or tap on a user
- * @method static self message() A UI-based command that shows up when you right click or tap on a message
- *
  * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types
  *
  * @version v0.11.0 As of 2021-09-13 Discord Documentation
  */
-class ApplicationCommandType extends Enum
+enum ApplicationCommandType: int implements IntBackedEnumInterface
 {
+    use IntBackedEnumTrait;
 
     /**
-     * @return int[]
+     * Slash commands; a text-based command that shows up when a user types /
      */
-    protected static function values(): array
+    case CHAT_INPUT = 1;
+
+    /**
+     * A UI-based command that shows up when you right click or tap on a user
+     */
+    case USER = 2;
+
+    /**
+     * A UI-based command that shows up when you right click or tap on a message
+     */
+    case MESSAGE = 3;
+
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::CHAT_INPUT')]
+    public static function chatInput(): ApplicationCommandType
     {
-        return [
-            "chatInput" => 1,
-            "user" => 2,
-            "message" => 3,
-        ];
+        return ApplicationCommandType::CHAT_INPUT;
     }
 
-    /**
-     * @return array
-     */
-    public static function formChoices(): array
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::USER')]
+    public static function user(): ApplicationCommandType
     {
-        $return = [];
-        foreach (static::values() as $r)
-        {
-            $choice = static::from($r);
-            $return[u($choice->label)->snake()->replace('_', ' ')->title(true)->toString()] = $choice->value;
-        }
+        return ApplicationCommandType::USER;
+    }
 
-        return $return;
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::MESSAGE')]
+    public static function message(): ApplicationCommandType
+    {
+        return ApplicationCommandType::MESSAGE;
     }
 
     /**
      * @return int
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): int
     {
         return $this->value;
     }

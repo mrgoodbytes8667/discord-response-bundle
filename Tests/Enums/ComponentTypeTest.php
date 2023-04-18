@@ -39,8 +39,8 @@ class ComponentTypeTest extends TestCase
      */
     public function provideEnums()
     {
-        yield ['value' => 'actionRow', 'enum' => ComponentType::actionRow()];
-        yield ['value' => 'button', 'enum' => ComponentType::button()];
-        yield ['value' => 'selectMenu', 'enum' => ComponentType::selectMenu()];
+        yield ['value' => 'actionRow', 'enum' => ComponentType::ACTION_ROW];
+        yield ['value' => 'button', 'enum' => ComponentType::BUTTON];
+        yield ['value' => 'selectMenu', 'enum' => ComponentType::SELECT_MENU];
     }
 }

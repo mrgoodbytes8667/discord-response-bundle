@@ -23,13 +23,13 @@ enum ApplicationCommandPermissionType: int implements IntBackedEnumInterface
     case ROLE = 1;
     case USER = 2;
 
-    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::ROLE')]
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::ROLE')]
     public static function role(): ApplicationCommandPermissionType
     {
         return ApplicationCommandPermissionType::ROLE;
     }
 
-    #[Deprecated('Since 0.15.0, use the enum variant', '%class%::USER')]
+    #[Deprecated('Since mrgoodbytes8667/discord-response-bundle v0.15.0, use the enum variant', '%class%::USER')]
     public static function user(): ApplicationCommandPermissionType
     {
         return ApplicationCommandPermissionType::USER;

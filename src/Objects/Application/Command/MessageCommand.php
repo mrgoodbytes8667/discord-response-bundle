@@ -33,7 +33,7 @@ class MessageCommand extends ApplicationCommand
         $command = new static();
         $command->setName($name)
             ->setDefaultPermission($defaultPermission)
-            ->setType(ApplicationCommandType::message());
+            ->setType(ApplicationCommandType::MESSAGE);
 
         return $command;
     }

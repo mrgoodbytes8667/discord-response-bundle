@@ -43,8 +43,8 @@ class OAuthPromptsTest extends TestCase
      */
     public function provideEnums()
     {
-        yield ['value' => 'none', 'enum' => OAuthPrompts::none()];
-        yield ['value' => 'consent', 'enum' => OAuthPrompts::consent()];
+        yield ['value' => 'none', 'enum' => OAuthPrompts::NONE];
+        yield ['value' => 'consent', 'enum' => OAuthPrompts::CONSENT];
     }
 
     /**
