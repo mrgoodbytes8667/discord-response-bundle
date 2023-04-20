@@ -36,13 +36,14 @@ class OAuthScopesTest extends EnumTestCase
             $this->assertContains(OAuthScopes::IDENTIFY->value, $scopes);
             $this->assertContains(OAuthScopes::CONNECTIONS->value, $scopes);
             $this->assertContains(OAuthScopes::GUILDS->value, $scopes);
+            $this->assertContains(OAuthScopes::ROLE_CONNECTIONS_WRITE->value, $scopes);
 
             $this->assertContainsOnly('string', $scopes);
 
             $this->assertNotContains(OAuthScopes::RPC_NOTIFICATIONS_READ->value, $scopes);
             $this->assertNotContains(OAuthScopes::BOT->value, $scopes);
 
-            $this->assertCount(3, $scopes);
+            $this->assertCount(4, $scopes);
         }
     }
 
@@ -112,15 +113,7 @@ class OAuthScopesTest extends EnumTestCase
     {
         $values = OAuthScopes::cases();
         $this->assertIsArray($values);
-        $this->assertCount(21, $values);
-
-        $labels = OAuthScopes::cases();
-
-        $this->assertIsArray($labels);
-        $this->assertCount(21, $labels);
-
-        $methods = OAuthScopes::cases();
-        $this->assertCount(21, $methods);
+        $this->assertCount(28, $values);
     }
 
     /**
