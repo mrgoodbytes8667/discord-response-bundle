@@ -2,18 +2,22 @@
 [![Packagist Version](https://img.shields.io/packagist/v/mrgoodbytes8667/discord-response-bundle?logo=packagist&logoColor=FFF&style=flat)](https://packagist.org/packages/mrgoodbytes8667/discord-response-bundle)
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/mrgoodbytes8667/discord-response-bundle?logo=php&logoColor=FFF&style=flat)](https://packagist.org/packages/mrgoodbytes8667/discord-response-bundle)
 ![Symfony Versions Supported](https://img.shields.io/endpoint?url=https%3A%2F%2Fshields.mrgoodbytes.dev%2Fshield%2Fsymfony%2F%255E6.1&logoColor=FFF&style=flat)
-![Symfony Versions Tested](https://img.shields.io/endpoint?url=https%3A%2F%2Fshields.mrgoodbytes.dev%2Fshield%2Fsymfony-test%2F%255E6.1&logoColor=FFF&style=flat)
-![Discord API Version](https://img.shields.io/badge/discord-v6%20%7C%20v8%20%7C%20v9-lightgrey?logo=discord&logoColor=FFF&style=flat)  
+![Symfony Versions Tested](https://img.shields.io/endpoint?url=https%3A%2F%2Fshields.mrgoodbytes.dev%2Fshield%2Fsymfony-test%2F%253E%253D6.1%2520%253C6.4&logoColor=FFF&style=flat)
+![Symfony LTS Version](https://img.shields.io/endpoint?url=https%3A%2F%2Fshields.mrgoodbytes.dev%2Fshield%2Flts%2F%255E6.1&logoColor=FFF&style=flat)
+![Symfony Stable Version](https://img.shields.io/endpoint?url=https%3A%2F%2Fshields.mrgoodbytes.dev%2Fshield%2Fstable%2F%255E6.1&logoColor=FFF&style=flat)
+![Symfony Dev Version](https://img.shields.io/endpoint?url=https%3A%2F%2Fshields.mrgoodbytes.dev%2Fshield%2Fdev%2F%255E6.1&logoColor=FFF&style=flat)
+![Discord API Version](https://img.shields.io/badge/discord-v6%20%7C%20v8%20%7C%20v9%20%7C%20v10-lightgrey?logo=discord&logoColor=FFF&style=flat)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/mrgoodbytes8667/discord-response-bundle/release.yml?label=stable&logo=github&logoColor=FFF&style=flat)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/mrgoodbytes8667/discord-response-bundle/run-tests.yml?logo=github&logoColor=FFF&style=flat)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/mrgoodbytes8667/discord-response-bundle/run-tests-by-version.yml?logo=github&logoColor=FFF&style=flat)
-[![codecov](https://img.shields.io/codecov/c/github/mrgoodbytes8667/discord-response-bundle/0.15?logo=codecov&logoColor=FFF&style=flat)](https://codecov.io/gh/mrgoodbytes8667/discord-response-bundle)
+[![codecov](https://img.shields.io/codecov/c/github/mrgoodbytes8667/discord-response-bundle/0.16?logo=codecov&logoColor=FFF&style=flat)](https://codecov.io/gh/mrgoodbytes8667/discord-response-bundle)
 ![Packagist License](https://img.shields.io/packagist/l/mrgoodbytes8667/discord-response-bundle?logo=creative-commons&logoColor=FFF&style=flat)  
 A Symfony bundle for Discord API response objects and enums
 
 ## Discord API Support
-Starting with release 0.7, there will be mixed support for the Discord API version 6 along with Discord API version 8. **Not all models are currently fully compatible with v8.**
-Starting with release 0.10, there will also be mixed support for Discord API version 9. **Not all models are currently fully compatible with v9.**
+* Starting with release 0.16, there will also be mixed support for Discord API version 10. **Not all models are currently fully compatible with v8, v9 or v10.**
+* Starting with release 0.10, there will also be mixed support for Discord API version 9. **Not all models are currently fully compatible with v8 or v9.**
+* Starting with release 0.7, there will be mixed support for the Discord API version 6 along with Discord API version 8. **Not all models are currently fully compatible with v8.**
 
 ## Installation
 
