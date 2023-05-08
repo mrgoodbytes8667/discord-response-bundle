@@ -13,6 +13,7 @@ use Bytes\ResponseBundle\Interfaces\ProfileImageInterface;
 use Bytes\ResponseBundle\Interfaces\UserIdInterface;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Class User
@@ -53,6 +54,7 @@ class User implements ErrorInterface, IdInterface, UserIdInterface, ImageBuilder
     /**
      * @var bool|null
      */
+    #[SerializedName('mfa_enabled')]
     private $mfaEnabled;
     
     /**
