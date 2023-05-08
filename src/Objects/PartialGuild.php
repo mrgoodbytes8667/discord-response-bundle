@@ -15,6 +15,7 @@ use Bytes\DiscordResponseBundle\Objects\Traits\NameTrait;
 use Bytes\DiscordResponseBundle\Routing\DiscordImageUrlBuilder;
 use Bytes\ResponseBundle\Interfaces\IdInterface;
 use JetBrains\PhpStorm\ArrayShape;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * Class PartialGuild
@@ -186,5 +187,17 @@ class PartialGuild implements ErrorInterface, IdInterface, NameInterface, GuildI
             'guildId' => $this->id,
             'guildIcon' => $this->icon,
         ];
+    }
+
+    /**
+     * Return the profile image
+     * @param int|null $width
+     * @param int|null $height
+     * @return string|null
+     */
+    #[Ignore]
+    public function getProfileImage(?int $width = null, ?int $height = null): ?string
+    {
+        return $this->getIconUrl();
     }
 }
