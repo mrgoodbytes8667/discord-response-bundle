@@ -64,7 +64,21 @@ abstract class TestGuildCase extends TestCase
         $guild->setId($guildId);
         $guild->setIcon($iconHash);
 
-        $this->assertEquals(sprintf('https://cdn.discordapp.com/icons/%s/%s.%s', $guildId, $iconHash, $expectedExtension), $guild->getIconUrl($extension));
+        $icon = sprintf('https://cdn.discordapp.com/icons/%s/%s.%s', $guildId, $iconHash, $expectedExtension);
+        $this->assertEquals($icon, $guild->getIconUrl($extension));
+    }
+
+    public function testProfileImage()
+    {
+        $guild = $this->createGuildClass();
+        $guildId = $this->faker->snowflake();
+        $guild->setId($guildId);
+        $iconHash = $this->faker->iconHash();
+        $guild->setIcon($iconHash);
+
+        $icon = sprintf('https://cdn.discordapp.com/icons/%s/%s.%s', $guildId, $iconHash, 'png');
+        self::assertEquals($icon, $guild->getIconUrl());
+        self::assertEquals($icon, $guild->getProfileImage());
     }
 
     /**

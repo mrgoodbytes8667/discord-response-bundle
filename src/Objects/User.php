@@ -9,14 +9,17 @@ use Bytes\DiscordResponseBundle\Objects\Interfaces\ImageBuilderInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\IDTrait;
 use Bytes\ResponseBundle\Interfaces\IdInterface;
+use Bytes\ResponseBundle\Interfaces\ProfileImageInterface;
 use Bytes\ResponseBundle\Interfaces\UserIdInterface;
 use JetBrains\PhpStorm\ArrayShape;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Class User
  * @package Bytes\DiscordResponseBundle\Objects
  */
-class User implements ErrorInterface, IdInterface, UserIdInterface, ImageBuilderInterface
+class User implements ErrorInterface, IdInterface, UserIdInterface, ImageBuilderInterface, ProfileImageInterface
 {
     use IDTrait, ErrorTrait;
     
@@ -51,6 +54,7 @@ class User implements ErrorInterface, IdInterface, UserIdInterface, ImageBuilder
     /**
      * @var bool|null
      */
+    #[SerializedName('mfa_enabled')]
     private $mfaEnabled;
     
     /**
@@ -319,5 +323,17 @@ class User implements ErrorInterface, IdInterface, UserIdInterface, ImageBuilder
             'userAvatar' => $this->avatar,
             'userDiscriminator' => $this->discriminator,
         ];
+    }
+
+    /**
+     * Return the profile image
+     * @param int|null $width
+     * @param int|null $height
+     * @return string|null
+     */
+    #[Ignore]
+    public function getProfileImage(?int $width = null, ?int $height = null): ?string
+    {
+        return $this->getAvatar();
     }
 }

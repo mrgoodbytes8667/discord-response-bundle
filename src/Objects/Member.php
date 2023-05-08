@@ -8,6 +8,8 @@ use Bytes\DiscordResponseBundle\Objects\Interfaces\ErrorInterface;
 use Bytes\DiscordResponseBundle\Objects\Traits\ErrorTrait;
 use Bytes\DiscordResponseBundle\Objects\Traits\GuildIDTrait;
 use Bytes\DiscordResponseBundle\Services\DiscordDatetimeInterface;
+use Bytes\ResponseBundle\Interfaces\ProfileImageInterface;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -22,7 +24,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *
  * @version v0.8.0 As of 2021-03-29 Discord Documentation
  */
-class Member implements ErrorInterface
+class Member implements ErrorInterface, ProfileImageInterface
 {
     use ErrorTrait, GuildIDTrait;
 
@@ -326,5 +328,17 @@ class Member implements ErrorInterface
     {
         $this->permissions = $permissions;
         return $this;
+    }
+
+    /**
+     * Return the profile image
+     * @param int|null $width
+     * @param int|null $height
+     * @return string|null
+     */
+    #[Ignore]
+    public function getProfileImage(?int $width = null, ?int $height = null): ?string
+    {
+        return $this->getUser()->getProfileImage(width: $width, height: $height);
     }
 }

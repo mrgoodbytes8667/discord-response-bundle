@@ -293,4 +293,19 @@ class MemberTest extends TestCase
         $this->setupFaker();
         yield [$this->faker->permissionInteger()];
     }
+
+    /**
+     * @dataProvider provideUser
+     */
+    public function testGetProfileImage($user, $userId, $userName, $discriminator, $avatar, $publicFlags)
+    {
+        $member = new Member();
+        $this->assertNull($member->getUser());
+        $this->assertInstanceOf(Member::class, $member->setUser(null));
+        $this->assertNull($member->getUser());
+        $this->assertInstanceOf(Member::class, $member->setUser($user));
+        $this->assertEquals($user, $member->getUser());
+
+        self::assertEquals($avatar, $member->getProfileImage());
+    }
 }
