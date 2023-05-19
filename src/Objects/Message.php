@@ -37,12 +37,12 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     /**
      * the author of this message (not guaranteed to be a valid user, see below)
      */
-    private ?\Bytes\DiscordResponseBundle\Objects\User $author = null;
+    private ?User $author = null;
 
     /**
      * member properties for this message's author
      */
-    private ?\Bytes\DiscordResponseBundle\Objects\Member $member = null;
+    private ?Member $member = null;
 
     /**
      * contents of the message
@@ -52,12 +52,12 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     /**
      * when this message was sent
      */
-    private ?\DateTimeInterface $timestamp = null;
+    private ?DateTimeInterface $timestamp = null;
 
     /**
      * when this message was edited (or null if never)
      */
-    private ?\DateTimeInterface $editedTimestamp = null;
+    private ?DateTimeInterface $editedTimestamp = null;
 
     /**
      * whether this was a TTS message
@@ -72,11 +72,11 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     /**
      * users specifically mentioned in the message
      * array of user objects, with an additional partial member field
-     * @var mixed|null
+     * @var array|null
      *
      * @todo
      */
-    private $mentions;
+    private ?array $mentions = [];
 
     /**
      * roles specifically mentioned in this message
@@ -146,7 +146,7 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
      * reference data sent with crossposted messages and replies
      */
     #[SerializedName('message_reference')]
-    private ?\Bytes\DiscordResponseBundle\Objects\MessageReference $messageReference = null;
+    private ?MessageReference $messageReference = null;
 
     /**
      * message flags ORd together, describes extra features of the message
@@ -160,14 +160,14 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
      * to, so its state is unknown. If the field exists but is null, the referenced message was deleted.
      */
     #[SerializedName('referenced_message')]
-    private ?\Bytes\DiscordResponseBundle\Objects\Message $referencedMessage = null;
+    private ?Message $referencedMessage = null;
 
     /**
      * sent if the message is a response to an Interaction
      */
-    private ?\Bytes\DiscordResponseBundle\Objects\Slash\MessageInteraction $interaction = null;
+    private ?MessageInteraction $interaction = null;
 
-    private ?\Bytes\DiscordResponseBundle\Objects\Channel $thread = null;
+    private ?Channel $thread = null;
 
     /**
      * @var Component[]|null
@@ -320,7 +320,7 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     }
 
     /**
-     * @return mixed|null
+     * @return array|null
      */
     public function getMentions()
     {
@@ -328,7 +328,7 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     }
 
     /**
-     * @param mixed|null $mentions
+     * @param array|null $mentions
      * @return $this
      */
     public function setMentions($mentions): self
