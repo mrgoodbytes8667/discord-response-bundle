@@ -1,0 +1,86 @@
+{
+  "id": "1309153981471889152",
+  "type": 0,
+  "content": "",
+  "channel_id": "782386837775786028",
+  "author": {
+    "id": "817040013408862248",
+    "username": "FakeBot",
+    "global_name": null,
+    "avatar": "ed5b7151897f9398b2ce7b663510149f",
+    "discriminator": "9221",
+    "public_flags": 524288,
+    "bot": true,
+    "avatar_decoration": null
+  },
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://twitch.tv/fakeuser",
+      "title": "fakeuser is streaming!",
+      "color": 16738565,
+      "timestamp": "2023-05-19T15:49:02+00:00",
+      "fields": [
+        {
+          "name": "🎮 Game",
+          "value": "The Legend of Zelda: Tears of the Kingdom",
+          "inline": true
+        },
+        {
+          "name": "Status",
+          "value": "I am a fake user and I am streaming",
+          "inline": true
+        },
+        {
+          "name": "🕓 Started At",
+          "value": "3:49 PM UTC",
+          "inline": true
+        }
+      ],
+      "author": {
+        "name": "fakeuser",
+        "url": "https://twitch.tv/fakeuser",
+        "icon_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/4e371842-f9d1-44ce-af94-f2338691779b-profile_image-300x300.jpg",
+        "proxy_icon_url": "https://images-ext-2.discordapp.net/external/daJL54wUm_otIbcfnkInLzK3J18JO4WVdNPuXpCriKA/https/static-cdn.jtvnw.net/jtv_user_pictures/4f371842-f9d0-44ce-af94-f2338691779b-profile_image-300x300.jpg"
+      },
+      "thumbnail": {
+        "url": "https://static-cdn.jtvnw.net/ttv-boxart/512198_IGDB-85x113.jpg?2b15cd19-5e5a-4fdf-9e81-052f5592402b",
+        "proxy_url": "https://images-ext-2.discordapp.net/external/hOUcd0NoweTom1wvKJaZSoRU-rmP5bEQFosB7TotKi4/%3F2b15cd49-1e5a-4fdf-9e81-152f5592402b/https/static-cdn.jtvnw.net/ttv-boxart/512198_IGDB-85x113.jpg",
+        "width": 85,
+        "height": 113
+      },
+      "footer": {
+        "text": "Some Footer Text",
+        "icon_url": "https://some.domain/fakebot.be2cc93f.png",
+        "proxy_icon_url": "https://images-ext-1.discordapp.net/external/SEsK_vTnjoAxp2YyWovL1d3JpAtCDT0XF3nCzEZBakk/https/some.domain/fakebot.be2cc93f.png"
+      }
+    }
+  ],
+  "mentions": [],
+  "mention_roles": [],
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false,
+  "timestamp": "2023-05-19T16:21:56.253000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [
+    {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 5,
+          "label": "fakeuser",
+          "emoji": {
+            "name": "twitch",
+            "id": "874387373650235391"
+          },
+          "url": "https://twitch.tv/fakeuser"
+        }
+      ]
+    }
+  ],
+  "referenced_message": null
+}

@@ -99,9 +99,9 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
 
     /**
      * any attached files
-     * @var mixed|null
+     * @var array|null
      */
-    private $attachments;
+    private ?array $attachments = [];
 
     /**
      * any embedded content
@@ -391,7 +391,7 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     }
 
     /**
-     * @return mixed|null
+     * @return array|null
      */
     public function getAttachments()
     {
@@ -399,7 +399,7 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     }
 
     /**
-     * @param mixed|null $attachments
+     * @param array|null $attachments
      * @return $this
      */
     public function setAttachments($attachments): self
