@@ -28,7 +28,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *
  * @property string|null $channelID id of the channel the message was sent in
  *
- * @version v0.9.12 As of 2021-08-03 Discord Documentation
+ * @version v0.16.0 As of 2023-05-19 Discord Documentation
  */
 class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelIdInterface, MessageInterface
 {
@@ -181,6 +181,20 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     private ?array $stickerItems = null;
 
     /**
+     * A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the
+     * message in a thread, it can be used to estimate the relative position of the message in a thread in company with
+     * total_message_sent on parent thread
+     * @var int|null
+     */
+    private ?int $position = null;
+
+    /**
+     * data of the role subscription purchase or renewal that prompted this ROLE_SUBSCRIPTION_PURCHASE message
+     * @var mixed|null
+     */
+    private $roleSubscriptionData = null;
+
+    /**
      * @return string|null
      */
     public function getMessageId(): ?string
@@ -278,7 +292,7 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
         if (is_string($editedTimestamp)) {
             $editedTimestamp = new DateTime($editedTimestamp);
         }
-        
+
         $this->editedTimestamp = $editedTimestamp;
         return $this;
     }
@@ -658,6 +672,42 @@ class Message implements ErrorInterface, IdInterface, GuildIdInterface, ChannelI
     public function setStickerItems(?array $stickerItems): self
     {
         $this->stickerItems = $stickerItems;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int|null $position
+     * @return $this
+     */
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
+        return $this;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getRoleSubscriptionData(): mixed
+    {
+        return $this->roleSubscriptionData;
+    }
+
+    /**
+     * @param mixed|null $roleSubscriptionData
+     * @return $this
+     */
+    public function setRoleSubscriptionData(mixed $roleSubscriptionData): self
+    {
+        $this->roleSubscriptionData = $roleSubscriptionData;
         return $this;
     }
 }
